@@ -10,38 +10,71 @@ public class App
     /**
      * Connection to the database
     **/
-    public void connect(){
-        try {
+    public void connect()
+    {
+        try
+        {
             // Load Database driver
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e)
+        {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
-        // Connection to the database
-        Connection con = null;
-        int retries = 100;
-        for (int i = 0; i < retries; ++i) {
+        int retries = 10;
+        for (int i = 0; i < retries; ++i)
+        {
             System.out.println("Connecting to database...");
-            try {
+            try
+            {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "root123!@#");
                 System.out.println("Successfully connected");
-                // Wait a bit
-                Thread.sleep(10000);
-                // Exit for loop
                 break;
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle)
+            {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
-            } catch (InterruptedException ie) {
+            }
+            catch (InterruptedException ie)
+            {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
+    public void cityInWorldDesc(){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT * FROM city ORDER by Population DESC";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    String ccode = rs.getString("CountryCode");
+                    String district = rs.getString("District");
+                    int pop = rs.getInt("Population");
+
+                    // print the results
+                    System.out.format("'ID' = %s,'Name' = %s,'CountryCode' = %s,'District' = %s,'Population' = %s\n", id, name, ccode, district, pop);
+                }
+                st.close();
+            } catch (Exception e) {
+                System.out.println("Error Getting City Data");
+            }
+        }
+    }
+
     /**
      * Disconnect from database
      * **/
@@ -62,6 +95,9 @@ public class App
 
         // Connect to database
         a.connect();
+
+        // Get City Info In the world by descending of population
+        a.cityInWorldDesc();
 
         // Disconnect from database
         a.disconnect();
