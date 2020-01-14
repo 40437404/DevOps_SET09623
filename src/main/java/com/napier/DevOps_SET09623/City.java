@@ -18,7 +18,7 @@ public class City {
     /**
      * Country code of the country of that city
      */
-    public String countrycode;
+    public String countryCode;
 
     /**
      * District name

@@ -1,6 +1,8 @@
 package com.napier.DevOps_SET09623;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class App
 {
@@ -11,11 +13,13 @@ public class App
 
         // Connect to database
         app.connect();
-        // Get Employee
-        City cty = app.topPopulatedCities(10);
+        // Number of cities
+        int nCity = 10;
+        // Get Cities
+        ArrayList<City> cty = new ArrayList<City>();
+        cty = app.topPopulatedCities(nCity);
         // Display results
         app.displayTopPopulatedCities(cty);
-
         // Disconnect from database
         app.disconnect();
     }
@@ -84,30 +88,34 @@ public class App
             }
         }
     }
-    public City topPopulatedCities(int limit)
+    public ArrayList<City> topPopulatedCities(int limit)
     {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = "SELECT * FROM city order by Population DESC LIMIT " + limit;
+            String strSelect = String.format("SELECT * FROM city order by Population DESC LIMIT %d", limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
-            // Check one is returned
-            if (rset.next())
+            // Return new city if valid.
+            ArrayList<City> cty = new ArrayList<City>();
+            if (rset.next() == false)
             {
-                City cty = new City();
-                cty.id = rset.getInt("ID");
-                cty.name = rset.getString("Name");
-                cty.countrycode = rset.getString("CountryCode");
-                cty.district = rset.getString("District");
-                cty.population = rset.getInt("Population");
+                return null;
+            }
+            else {
+                do {
+                    City city = new City();
+                    city.id = rset.getInt("ID");
+                    city.name = rset.getString("Name");
+                    city.countryCode = rset.getString("CountryCode");
+                    city.district = rset.getString("District");
+                    city.population = rset.getInt("Population");
+                    cty.add(city);
+                } while (rset.next());
                 return cty;
             }
-            else
-                return null;
         }
         catch (Exception e)
         {
@@ -116,17 +124,23 @@ public class App
             return null;
         }
     }
-    public void displayTopPopulatedCities(City cty)
+    public void displayTopPopulatedCities(ArrayList<City> cty)
     {
         if (cty != null)
         {
-            System.out.println(
-                    "ID: " + cty.id + "\n" +
-                            "Name: " + cty.name + "\n" +
-                            "Country Code: " + cty.countrycode + "\n" +
-                            "District: " + cty.district + "\n" +
-                            "Population: " + cty.population
-            );
+            int i = 1;
+            for (City city: cty)
+            {
+                System.out.println(
+                        "No: " + i + "\n" +
+                                "ID: " + city.id + "\n" +
+                                "Name: " + city.name + "\n" +
+                                "Country Code: " + city.countryCode + "\n" +
+                                "District: " + city.district + "\n" +
+                                "Population: " + city.population
+                );
+                i++;
+            }
         }
     }
 }
