@@ -66,11 +66,37 @@ public class App
                     int pop = rs.getInt("Population");
 
                     // print the results
-                    System.out.format("'ID' = %s,'Name' = %s,'CountryCode' = %s,'District' = %s,'Population' = %s\n", id, name, ccode, district, pop);
+                    System.out.format("ID = %s,Name = %s,CountryCode = %s,District = %s,Population = %s\n", id, name, ccode, district, pop);
                 }
                 st.close();
             } catch (Exception e) {
-                System.out.println("Error Getting City Data");
+                System.out.println("Error Getting City Data From World");
+            }
+        }
+    }
+    public void cityInContinentDesc(String continent){
+        if (con != null){
+            try{
+                // sql query
+                String query = ("SELECT city.ID,city.Name,city.CountryCode,city.Population,country.Continent FROM city INNER JOIN country on city.CountryCode = country.Code WHERE country.Continent = '"+ continent +"' ORDER BY city.Population DESC;");
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    String ccode = rs.getString("CountryCode");
+                    int pop = rs.getInt("Population");
+                    String cont = rs.getString("Continent");
+
+                    // print the results
+                    System.out.format("ID = %s,Name = %s,CountryCode = %s,Population = %s,Continent = %s\n", id, name, ccode, pop,cont);
+                }
+                st.close();
+            }catch (Exception e){
+                System.out.println("Error Getting City Data From Continent");
             }
         }
     }
@@ -98,6 +124,10 @@ public class App
 
         // Get City Info In the world by descending of population
         a.cityInWorldDesc();
+
+        // Give continent data
+        String continent = "Asia";
+        a.cityInContinentDesc(continent);
 
         // Disconnect from database
         a.disconnect();
