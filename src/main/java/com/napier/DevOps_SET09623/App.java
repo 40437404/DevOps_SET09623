@@ -66,7 +66,7 @@ public class App
                     int pop = rs.getInt("Population");
 
                     // print the results
-                    System.out.format("'ID' = %s,'Name' = %s,'CountryCode' = %s,'District' = %s,'Population' = %s\n", id, name, ccode, district, pop);
+                    System.out.format("ID = %s,Name = %s,CountryCode = %s,District = %s,Population = %s\n", id, name, ccode, district, pop);
                 }
                 st.close();
             } catch (Exception e) {
@@ -75,6 +75,32 @@ public class App
         }
     }
 
+    public void nPopulateCapitalcityInContinent(String ncontinent,int nlimit){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT city.ID,city.Name,city.Population,country.Continent FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Continent = '"+ ncontinent +"' ORDER BY city.Population DESC limit "+ nlimit +";";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    int pop = rs.getInt("Population");
+                    String conti = rs.getString("Continent");
+
+                    // print the results
+                    System.out.format("ID = %s,Name = %s,Population = %s,Continent = %s\n", id, name, pop,conti);
+                }
+                st.close();
+            } catch (Exception e) {
+                System.out.println("Error Getting City Data");
+            }
+        }
+    }
     /**
      * Disconnect from database
      * **/
@@ -98,6 +124,11 @@ public class App
 
         // Get City Info In the world by descending of population
         a.cityInWorldDesc();
+
+        // N populate capital city in continent
+        String ncontinent = "Asia";
+        int nlimit = 15;
+        a.nPopulateCapitalcityInContinent(ncontinent,nlimit);
 
         // Disconnect from database
         a.disconnect();
