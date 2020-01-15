@@ -47,7 +47,7 @@ public class App
             }
         }
     }
-    public void nPopulateCountriesInTheWorld(String Continent,int Limit){
+    public void nPopulateCountriesInTheContinent(String Continent,int Limit){
         if (con != null)
         {
             try { //To Catch Error
@@ -88,7 +88,7 @@ public class App
         // Variable Preparation
         String Continent = "Asia";
         int Limit = 10;
-        a.nPopulateCountriesInTheWorld(Continent,Limit);
+        a.nPopulateCountriesInTheContinent(Continent,Limit);
         // Disconnect from database
         a.disconnect();
     }
