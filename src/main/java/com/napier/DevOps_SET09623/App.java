@@ -47,11 +47,11 @@ public class App
             }
         }
     }
-    public void nPopulateCountriesInTheWorld(){
+    public void nPopulateCountriesInTheContinent(String Continent,int Limit){
         if (con != null)
         {
             try { //To Catch Error
-                String execute = "SELECT * FROM country ORDER BY Population DESC limit 10";
+                String execute = "SELECT * FROM country where Continent= '"+ Continent +"' ORDER BY Population DESC limit "+ Limit +";";
                 //Preparing mysql command as a string
                 Statement st = con.createStatement(); //Statement Creation
                 ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
@@ -59,7 +59,8 @@ public class App
                     String Code = rs.getString("Code"); //Creating Variable For Country Code
                     String name = rs.getString("Name"); //Creating Variable For Country Name
                     int populationnumber = rs.getInt("Population"); //Creating Variable For Population
-                    System.out.format("Code = %s, Name = %s,Population = %s\n", Code, name, populationnumber); //Output Statement
+                    String conti = rs.getString("Continent"); //Creating Variable For Continent
+                    System.out.format("Code = %s, Name = %s,Population = %s, Continent = %s\n", Code, name, populationnumber,conti); //Output Statement
                 }
                 st.close(); //Closing Statement
             } catch (Exception e) {
@@ -84,7 +85,10 @@ public class App
     public static void main(String[] args) {
         App a = new App(); // Create new Application
         a.connect();// Connect to database
-        a.nPopulateCountriesInTheWorld();
+        // Variable Preparation
+        String Continent = "Asia";
+        int Limit = 10;
+        a.nPopulateCountriesInTheContinent(Continent,Limit);
         // Disconnect from database
         a.disconnect();
     }
