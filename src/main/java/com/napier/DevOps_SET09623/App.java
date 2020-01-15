@@ -1,10 +1,16 @@
 package com.napier.DevOps_SET09623;
 
 import java.sql.*;
+import java.util.*;
 
 public class App
 {
-    public static void main(String[] args)
+    private Connection con = null;
+
+    /**
+     * Connection to the database
+     **/
+    public void connect()
     {
         try
         {
@@ -13,16 +19,14 @@ public class App
         }
         catch (ClassNotFoundException e)
         {
-            System.out.println("Could not load SQL driver");
-            System.exit(-1);
+            System.out.println("Could not load SQL driver"); //Error Message
+            System.exit(-1); //system.exit
         }
 
-        // Connection to the database
-        Connection con = null;
-        int retries = 100;
+        int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
-            System.out.println("Connecting to database...");
+            System.out.println("Connecting to database..."); //Progress Message
             try
             {
                 // Wait a bit for db to start
@@ -30,9 +34,6 @@ public class App
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "root123!@#");
                 System.out.println("Successfully connected");
-                // Wait a bit
-                Thread.sleep(10000);
-                // Exit for loop
                 break;
             }
             catch (SQLException sqle)
@@ -45,18 +46,50 @@ public class App
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
-
+    }
+    public void nPopulateCountriesInTheWorld(String Continent,int Limit){
         if (con != null)
         {
-            try
-            {
+            try { //To Catch Error
+                String execute = "SELECT * FROM country where Continent= '"+ Continent +"' ORDER BY Population DESC limit "+ Limit +";";
+                //Preparing mysql command as a string
+                Statement st = con.createStatement(); //Statement Creation
+                ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
+                while (rs.next()) { //Preparing Output
+                    String Code = rs.getString("Code"); //Creating Variable For Country Code
+                    String name = rs.getString("Name"); //Creating Variable For Country Name
+                    int populationnumber = rs.getInt("Population"); //Creating Variable For Population
+                    String conti = rs.getString("Continent"); //Creating Variable For Continent
+                    System.out.format("Code = %s, Name = %s,Population = %s, Continent = %s\n", Code, name, populationnumber,conti); //Output Statement
+                }
+                st.close(); //Closing Statement
+            } catch (Exception e) {
+                e.printStackTrace(); // To Print Out System Error Messages
+            }
+        }
+    }
+    /**
+     * Disconnect from database
+     * **/
+    public void disconnect(){ //Disconnect Function
+        if (con != null) {
+            try {
                 // Close connection
                 con.close();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error closing connection to database");
             }
         }
+    }
+
+    public static void main(String[] args) {
+        App a = new App(); // Create new Application
+        a.connect();// Connect to database
+        // Variable Preparation
+        String Continent = "Asia";
+        int Limit = 10;
+        a.nPopulateCountriesInTheWorld(Continent,Limit);
+        // Disconnect from database
+        a.disconnect();
     }
 }
