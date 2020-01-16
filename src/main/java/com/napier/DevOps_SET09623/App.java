@@ -2,10 +2,13 @@ package com.napier.DevOps_SET09623;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class App
 {
+    /**
+     * Main function of the program
+     * @param args an array of command-line arguments for the application
+     */
     public static void main(String[] args)
     {
         // Create new Application
@@ -16,7 +19,7 @@ public class App
         // Number of cities
         int nCity = 10;
         // Get Cities
-        ArrayList<City> cty = new ArrayList<City>();
+        ArrayList<City> cty;
         cty = app.topPopulatedCities(nCity);
         // Display results
         app.displayTopPopulatedCities(cty);
@@ -60,7 +63,7 @@ public class App
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
@@ -88,6 +91,12 @@ public class App
             }
         }
     }
+
+    /**
+     * Get top populated cities around the world
+     * @param limit number of countries
+     * @return get an ArrayList of top populated cities
+     */
     public ArrayList<City> topPopulatedCities(int limit)
     {
         try
@@ -98,12 +107,10 @@ public class App
             String strSelect = String.format("SELECT * FROM city order by Population DESC LIMIT %d", limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new city if valid.
-            ArrayList<City> cty = new ArrayList<City>();
-            if (rset.next() == false)
-            {
+            // Get top populated cities if valid.
+            ArrayList<City> cty = new ArrayList<>();
+            if (!rset.next())
                 return null;
-            }
             else {
                 do {
                     City city = new City();
@@ -124,6 +131,11 @@ public class App
             return null;
         }
     }
+
+    /**
+     * Display top populated cities around the world
+     * @param cty ArrayList containing top populated cities
+     */
     public void displayTopPopulatedCities(ArrayList<City> cty)
     {
         if (cty != null)
