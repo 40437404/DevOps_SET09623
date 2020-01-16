@@ -486,10 +486,10 @@ public class App
         {
             System.out.println(String.format(
                     "%s Name: " + name + "\n" +
-                            "Population of %d: " + result[0] + "\n" +
+                            "Population of %s: " + result[0] + "\n" +
                             "Population in Cities: " + result[1] + "\n" +
                             "Population outside Cities: " + result[2]
-                    ,type)
+                    , type)
             );
         }
     }
