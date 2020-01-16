@@ -12,12 +12,12 @@ public class App
         // Connect to database
         app.connect();
         // Number of cities
-        String country = "Japan";
+        String region = "Caribbean";
         // Get Population
         int[] result = new int[3];
-        result = app.getPopulationOfCountry(country);
+        result = app.getPopulationOfRegion(region);
         // Display results
-        app.displayPopulationOfCountry(country, result);
+        app.displayPopulationOfCountry(region, result);
 
         // Disconnect from database
         app.disconnect();
@@ -87,33 +87,36 @@ public class App
             }
         }
     }
-    public int[] getPopulationOfCountry(String country)
+    public int[] getPopulationOfRegion(String region)
     {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getCountryPopulation = String.format(
-                    "SELECT Population FROM country WHERE Name='%s';"
-                    , country);
+            String getRegionPopulation = String.format(
+                    "SELECT Population FROM country WHERE Region='%s';"
+                    , region);
             // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getCountryPopulation);
+            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
             // Return population if valid.
-            int population;
+            int population = 0;
             if (rset1.next() == false)
             {
                 return null;
             }
             else {
-                population = rset1.getInt("Population");
+                do
+                {
+                    population += rset1.getInt("Population");
+                } while(rset1.next());
             }
-            String getCityPopulationOfCountry = String.format(
+            String getCityPopulationOfRegion = String.format(
                     "SELECT city.Population FROM city INNER JOIN country WHERE " +
-                            "city.CountryCode=country.Code AND country.Name='%s';"
-                    , country);
+                            "city.CountryCode=country.Code AND country.Region='%s';"
+                    , region);
             // Execute SQL statement
-            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfCountry);
+            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfRegion);
             // Return population if valid.
             int populationOfCity = 0;
             if (rset2.next() == false)
@@ -144,8 +147,8 @@ public class App
         if (result != null)
         {
             System.out.println(
-                    "Country Name: " + country + "\n" +
-                            "Population of Country: " + result[0] + "\n" +
+                    "Region Name: " + country + "\n" +
+                            "Population of Region: " + result[0] + "\n" +
                             "Population in Cities: " + result[1] + "\n" +
                             "Population outside Cities: " + result[2]
             );
