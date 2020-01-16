@@ -25,6 +25,11 @@ public class App
         String country = "Japan";
         //
         String region = "Caribbean";
+        // Get Population
+        int[] result = new int[3];
+        result = app.getPopulationOfRegion(region);
+        // Display results
+        app.displayPopulationOfCountry(region, result);
 
         // Get top populated cities worldwide
         ArrayList<City> getTopCities;
@@ -282,6 +287,73 @@ public class App
                 );
                 i++;
             }
+        }
+    }
+    public int[] getPopulationOfRegion(String region)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getRegionPopulation = String.format(
+                    "SELECT Population FROM country WHERE Region='%s';"
+                    , region);
+            // Execute SQL statement
+            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
+            // Return population if valid.
+            int population = 0;
+            if (rset1.next() == false)
+            {
+                return null;
+            }
+            else {
+                do
+                {
+                    population += rset1.getInt("Population");
+                } while(rset1.next());
+            }
+            String getCityPopulationOfRegion = String.format(
+                    "SELECT city.Population FROM city INNER JOIN country WHERE " +
+                            "city.CountryCode=country.Code AND country.Region='%s';"
+                    , region);
+            // Execute SQL statement
+            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfRegion);
+            // Return population if valid.
+            int populationOfCity = 0;
+            if (rset2.next() == false)
+            {
+                return null;
+            }
+            else {
+                do {
+                    populationOfCity += rset2.getInt("Population");
+                } while (rset2.next());
+            }
+            int populationOfNotCity = population - populationOfCity;
+            int[] result = new int[3];
+            result[0] = population;
+            result[1] = populationOfCity;
+            result[2] = populationOfNotCity;
+            return result;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+    public  void displayPopulationOfCountry(String country, int[] result)
+    {
+        if (result != null)
+        {
+            System.out.println(
+                    "Region Name: " + country + "\n" +
+                            "Population of Region: " + result[0] + "\n" +
+                            "Population in Cities: " + result[1] + "\n" +
+                            "Population outside Cities: " + result[2]
+            );
         }
     }
 }
