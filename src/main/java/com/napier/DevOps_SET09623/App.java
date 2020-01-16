@@ -2,6 +2,7 @@ package com.napier.DevOps_SET09623;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class App
 {
@@ -18,9 +19,15 @@ public class App
         app.connect();
         // Number of cities
         int nCity = 10;
+        // Number of cities
+        String district = "Zuid-Holland";
         // Get Cities
         ArrayList<City> cty;
         cty = app.topPopulatedCities(nCity);
+        // Display results
+        app.displayTopPopulatedCities(cty);
+
+        cty = app.PopulatedCitiesInDistrict(district);
         // Display results
         app.displayTopPopulatedCities(cty);
         // Disconnect from database
@@ -136,6 +143,63 @@ public class App
      * Display top populated cities around the world
      * @param cty ArrayList containing top populated cities
      */
+    public void displayTopPopulatedCities(ArrayList<City> cty)
+    {
+        if (cty != null)
+        {
+            int i = 1;
+            for (City city: cty)
+            {
+                System.out.println(
+                        "No: " + i + "\n" +
+                                "ID: " + city.id + "\n" +
+                                "Name: " + city.name + "\n" +
+                                "Country Code: " + city.countryCode + "\n" +
+                                "District: " + city.district + "\n" +
+                                "Population: " + city.population
+                );
+                i++;
+            }
+        }
+    }
+    public ArrayList<City> PopulatedCitiesInDistrict(String district)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT * from city where District='%s' ORDER BY Population DESC;"
+                    , district);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            ArrayList<City> cty = new ArrayList<City>();
+            if (rset.next() == false)
+            {
+                return null;
+            }
+            else {
+                do {
+                    City city = new City();
+                    city.id = rset.getInt("ID");
+                    city.name = rset.getString("Name");
+                    city.countryCode = rset.getString("CountryCode");
+                    city.district = rset.getString("District");
+                    city.population = rset.getInt("Population");
+                    cty.add(city);
+                } while (rset.next());
+                return cty;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities");
+            return null;
+        }
+    }
     public void displayTopPopulatedCities(ArrayList<City> cty)
     {
         if (cty != null)
