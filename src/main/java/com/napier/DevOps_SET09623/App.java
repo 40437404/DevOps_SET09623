@@ -25,6 +25,8 @@ public class App
         String country = "Japan";
         // Region name
         String region = "Caribbean";
+        // Number of cities
+        String continent = "Asia";
         // Array of results
         long[] result;
 
@@ -56,6 +58,11 @@ public class App
         result = app.getPopulationOfRegion(region);
         // Display results
         app.displayPopulationOfCountry(region, result);
+
+        // Get Population
+        result = app.getPopulationOfContinent(continent);
+        // Display results
+        app.displayPopulationOfContinent(continent, result);
 
         // Disconnect from database
         app.disconnect();
@@ -294,6 +301,69 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get population");
             return null;
+        }
+    }
+
+    public long[] getPopulationOfContinent(String continent)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getRegionPopulation = String.format(
+                    "SELECT SUM(Population) FROM country WHERE Continent='%s';"
+                    , continent);
+            // Execute SQL statement
+            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
+            // Return population if valid.
+            long population;
+            if (!rset1.next())
+            {
+                return null;
+            }
+            else {
+                population = rset1.getLong("SUM(Population)");
+            }
+            String getCityPopulationOfContinent = String.format(
+                    "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
+                            "city.CountryCode=country.Code AND country.Continent='%s';"
+                    , continent);
+            // Execute SQL statement
+            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfContinent);
+            // Return population if valid.
+            long populationOfCity = 0;
+            if (!rset2.next())
+            {
+                return null;
+            }
+            else {
+                populationOfCity += rset2.getLong("SUM(city.Population)");
+            }
+            long populationOfNotCity = population - populationOfCity;
+            long[] result = new long[3];
+            result[0] = population;
+            result[1] = populationOfCity;
+            result[2] = populationOfNotCity;
+            return result;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+    public  void displayPopulationOfContinent(String continent, long[] result)
+    {
+        if (result != null)
+        {
+            System.out.println(
+                    "Continent Name: " + continent + "\n" +
+                            "Population of Continent: " + result[0] + "\n" +
+                            "Population in Cities: " + result[1] + "\n" +
+                            "Population outside Cities: " + result[2]
+            );
         }
     }
 
