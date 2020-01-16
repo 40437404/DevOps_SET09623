@@ -489,7 +489,7 @@ public class App
                             "Population of %s: " + result[0] + "\n" +
                             "Population in Cities: " + result[1] + "\n" +
                             "Population outside Cities: " + result[2]
-                    , type)
+                    , type, type)
             );
         }
     }
