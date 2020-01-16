@@ -47,12 +47,12 @@ public class App
             }
         }
     }
-    public void continentLarge2small(String ncontinent){
+    public void regionLarge2small(String nregion){
         if (con != null)
         {
             try {
                 // sql query
-                String query = "SELECT Code,Name,Continent,Population FROM world.country WHERE country.Continent='"+ ncontinent +"' ORDER BY Population DESC ";
+                String query = "SELECT Code,Name,Region,Population FROM world.country WHERE country.Region='"+ nregion +"' ORDER BY Population DESC ";
                 // create the java statement
                 Statement st = con.createStatement();
                 // execute the query, and get a java resultset
@@ -61,15 +61,15 @@ public class App
                 while (rs.next()) {
                     String ccode = rs.getString("CODE");
                     String name = rs.getString("Name");
-                    String cont = rs.getString("Continent");
+                    String reg = rs.getString("Region");
                     String pplo = rs.getString("Population");
 
                     // print the results
-                    System.out.format("CODE = %s,Name = %s,Continent = %s,Population = %s\n",ccode, name,cont, pplo);
+                    System.out.format("CODE = %s,Name = %s,Region = %s,Population = %s\n",ccode, name,reg, pplo);
                 }
                 st.close();
             } catch (Exception e) {
-                System.out.println("Fail to load data");
+                e.printStackTrace();
             }
         }
     }
@@ -96,10 +96,10 @@ public class App
         // Connect to database
         a.connect();
 
-        // Get City Info In the world by descending of population
+        // Get Region Info In the world by population
 
-        String ncontinent = "Asia";
-        a.continentLarge2small(ncontinent);
+        String nregion = "Eastern Asia";
+        a.regionLarge2small(nregion);
 
         // Disconnect from database
         a.disconnect();
