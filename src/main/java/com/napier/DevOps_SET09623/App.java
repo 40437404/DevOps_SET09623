@@ -44,10 +44,11 @@ public class App
         // Display results
         app.displayTopPopulatedCities(getTopCitiesInCountry);
 
-        ArrayList<City> cty = new ArrayList<City>();
-        cty = app.populatedCapitalCitiesInRegion(region, nCity);
+        // Get populated capital cities in a region
+        ArrayList<City> capitalCitiesInRegion;
+        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, nCity);
         // Display results
-        app.displayPopulatedCapitalCitiesInRegion(cty);
+        app.displayTopPopulatedCities(capitalCitiesInRegion);
 
         // Disconnect from database
         app.disconnect();
@@ -205,6 +206,37 @@ public class App
     }
 
     /**
+     * Get top populated capital cities in a region
+     * @param region region name
+     * @param nCity number of cities
+     * @return return an ArrayList of top populated cities in that country
+     */
+    public ArrayList<City> populatedCapitalCitiesInRegion(String region, int nCity)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population FROM " +
+                            "country INNER JOIN city WHERE country.Capital=city.ID AND Region='%s' " +
+                            "ORDER BY city.Population DESC LIMIT %d;"
+                    , region, nCity);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities");
+            return null;
+        }
+    }
+
+    /**
      * Get Cities from SQL query
      * @param rset SQL query result
      * @return return an ArrayList containing cities
@@ -234,65 +266,6 @@ public class App
      * @param cty ArrayList containing top populated cities
      */
     public void displayTopPopulatedCities(ArrayList<City> cty)
-    {
-        if (cty != null)
-        {
-            int i = 1;
-            for (City city: cty)
-            {
-                System.out.println(
-                        "No: " + i + "\n" +
-                                "ID: " + city.id + "\n" +
-                                "Name: " + city.name + "\n" +
-                                "Country Code: " + city.countryCode + "\n" +
-                                "District: " + city.district + "\n" +
-                                "Population: " + city.population
-                );
-                i++;
-            }
-        }
-    }
-    public ArrayList<City> populatedCapitalCitiesInRegion(String region, int nCity)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population FROM " +
-                            "country INNER JOIN city WHERE country.Capital=city.ID AND Region='%s' " +
-                            "ORDER BY city.Population DESC LIMIT %d;"
-                    , region, nCity);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new city if valid.
-            ArrayList<City> cty = new ArrayList<City>();
-            if (rset.next() == false)
-            {
-                return null;
-            }
-            else {
-                do {
-                    City city = new City();
-                    city.id = rset.getInt("ID");
-                    city.name = rset.getString("Name");
-                    city.countryCode = rset.getString("CountryCode");
-                    city.district = rset.getString("District");
-                    city.population = rset.getInt("Population");
-                    cty.add(city);
-                } while (rset.next());
-                return cty;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities");
-            return null;
-        }
-    }
-    public void displayPopulatedCapitalCitiesInRegion(ArrayList<City> cty)
     {
         if (cty != null)
         {
