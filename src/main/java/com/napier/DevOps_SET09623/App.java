@@ -47,33 +47,32 @@ public class App
             }
         }
     }
-    public void cityInWorldDesc(){
+    public void countryLarge2small(){
         if (con != null)
         {
             try {
                 // sql query
-                String query = "SELECT * FROM city ORDER by Population DESC";
+                String query = "SELECT CODE,Name,Population FROM world.country ORDER BY Population DESC ";
                 // create the java statement
                 Statement st = con.createStatement();
                 // execute the query, and get a java resultset
                 ResultSet rs = st.executeQuery(query);
                 // iterate through the java resultset
                 while (rs.next()) {
-                    int id = rs.getInt("ID");
+                    String ccode = rs.getString("CODE");
                     String name = rs.getString("Name");
-                    String ccode = rs.getString("CountryCode");
-                    String district = rs.getString("District");
-                    int pop = rs.getInt("Population");
+                    String pplo = rs.getString("Population");
 
                     // print the results
-                    System.out.format("'ID' = %s,'Name' = %s,'CountryCode' = %s,'District' = %s,'Population' = %s\n", id, name, ccode, district, pop);
+                    System.out.format("CODE = %s,Name = %s,Population = %s\n",ccode, name, pplo);
                 }
                 st.close();
             } catch (Exception e) {
-                System.out.println("Error Getting City Data");
+                System.out.println("Fail to load data");
             }
         }
     }
+
 
     /**
      * Disconnect from database
@@ -97,7 +96,7 @@ public class App
         a.connect();
 
         // Get City Info In the world by descending of population
-        a.cityInWorldDesc();
+        a.countryLarge2small();
 
         // Disconnect from database
         a.disconnect();
