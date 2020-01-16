@@ -65,7 +65,14 @@ public class App
         name = region;
         app.displayPopulationOfPlace(type, name, result);
 
-        // Get Population
+        // Get Population of a country
+        result = app.getPopulationOfCountry(country);
+        // Display results
+        type = "Country";
+        name = country;
+        app.displayPopulationOfPlace(type, name, result);
+
+        // Get Population of a continent
         result = app.getPopulationOfContinent(continent);
         // Display results
         type = "Continent";
@@ -313,6 +320,59 @@ public class App
     }
 
     /**
+     * Get population of a country
+     * @param country country name
+     * @return return the array of population
+     */
+    public long[] getPopulationOfCountry(String country)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getCountryPopulation = String.format(
+                    "SELECT Population FROM country WHERE Name='%s';"
+                    , country);
+            // Execute SQL statement
+            ResultSet rset1 = stmt.executeQuery(getCountryPopulation);
+            // Return population if valid.
+            long population;
+            if (!rset1.next())
+                return null;
+            else {
+                population = rset1.getLong("Population");
+            }
+            // Create string for SQL statement
+            String getCityPopulationOfCountry = String.format(
+                    "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
+                            "city.CountryCode=country.Code AND country.Name='%s';"
+                    , country);
+            // Execute SQL statement
+            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfCountry);
+            // Return population if valid.
+            long populationOfCity;
+            if (!rset2.next())
+                return null;
+            else {
+                populationOfCity = rset2.getLong("SUM(city.Population)");
+            }
+            long populationOfNotCity = population - populationOfCity;
+            long[] result = new long[3];
+            result[0] = population;
+            result[1] = populationOfCity;
+            result[2] = populationOfNotCity;
+            return result;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+
+    /**
      * Get population of a continent
      * @param continent continent name
      * @return return the array of population
@@ -336,6 +396,7 @@ public class App
             else {
                 population = rset1.getLong("SUM(Population)");
             }
+            // Create string for SQL statement
             String getCityPopulationOfContinent = String.format(
                     "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
                             "city.CountryCode=country.Code AND country.Continent='%s';"
