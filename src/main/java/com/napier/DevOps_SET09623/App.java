@@ -25,10 +25,14 @@ public class App
         String country = "Japan";
         // Region name
         String region = "Caribbean";
-        // Number of cities
+        // Continent name
         String continent = "Asia";
         // Array of results
         long[] result;
+        // Store type of place
+        String type;
+        // Store name of country, continent or region
+        String name;
 
         // Get top populated cities worldwide
         ArrayList<City> getTopCities;
@@ -57,12 +61,16 @@ public class App
         // Get Population of a region
         result = app.getPopulationOfRegion(region);
         // Display results
-        app.displayPopulationOfCountry(region, result);
+        type = "Region";
+        name = region;
+        app.displayPopulationOfPlace(type, name, result);
 
         // Get Population
         result = app.getPopulationOfContinent(continent);
         // Display results
-        app.displayPopulationOfContinent(continent, result);
+        type = "Continent";
+        name = continent;
+        app.displayPopulationOfPlace(type, name, result);
 
         // Disconnect from database
         app.disconnect();
@@ -304,6 +312,11 @@ public class App
         }
     }
 
+    /**
+     * Get population of a continent
+     * @param continent continent name
+     * @return return the array of population
+     */
     public long[] getPopulationOfContinent(String continent)
     {
         try
@@ -319,9 +332,7 @@ public class App
             // Return population if valid.
             long population;
             if (!rset1.next())
-            {
                 return null;
-            }
             else {
                 population = rset1.getLong("SUM(Population)");
             }
@@ -334,9 +345,7 @@ public class App
             // Return population if valid.
             long populationOfCity = 0;
             if (!rset2.next())
-            {
                 return null;
-            }
             else {
                 populationOfCity += rset2.getLong("SUM(city.Population)");
             }
@@ -352,18 +361,6 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get population");
             return null;
-        }
-    }
-    public  void displayPopulationOfContinent(String continent, long[] result)
-    {
-        if (result != null)
-        {
-            System.out.println(
-                    "Continent Name: " + continent + "\n" +
-                            "Population of Continent: " + result[0] + "\n" +
-                            "Population in Cities: " + result[1] + "\n" +
-                            "Population outside Cities: " + result[2]
-            );
         }
     }
 
@@ -418,18 +415,20 @@ public class App
 
     /**
      * Display population
-     * @param region country name
+     * @param type type of place (region, country or continent)
+     * @param name name of place
      * @param result array of population
      */
-    public  void displayPopulationOfCountry(String region, long[] result)
+    public  void displayPopulationOfPlace(String type, String name, long[] result)
     {
         if (result != null)
         {
-            System.out.println(
-                    "Region Name: " + region + "\n" +
-                            "Population of Region: " + result[0] + "\n" +
+            System.out.println(String.format(
+                    "%s Name: " + name + "\n" +
+                            "Population of %d: " + result[0] + "\n" +
                             "Population in Cities: " + result[1] + "\n" +
                             "Population outside Cities: " + result[2]
+                    ,type)
             );
         }
     }
