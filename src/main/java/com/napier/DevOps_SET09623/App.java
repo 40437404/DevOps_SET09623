@@ -30,16 +30,18 @@ public class App
         // Display results
         app.displayTopPopulatedCities(getTopCities);
 
-        // Get top populated in a district
+        // Get top populated cities in a district
         ArrayList<City> getTopCitiesInDistrict;
         getTopCitiesInDistrict = app.PopulatedCitiesInDistrict(district);
         // Display results
         app.displayTopPopulatedCities(getTopCitiesInDistrict);
-        // Get Cities
-        ArrayList<City> cty = new ArrayList<City>();
-        cty = app.populatedCitiesInACountry(country);
+
+        // Get top populated cities in a country
+        ArrayList<City> getTopCitiesInCountry;
+        getTopCitiesInCountry = app.populatedCitiesInACountry(country);
         // Display results
-        app.displayPopulatedCitiesInACountry(cty);
+        app.displayTopPopulatedCities(getTopCitiesInCountry);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -121,7 +123,9 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format("SELECT * FROM city order by Population DESC LIMIT %d", limit);
+            String strSelect = String.format(
+                    "SELECT * FROM city order by Population DESC LIMIT %d"
+                    , limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -134,6 +138,12 @@ public class App
             return null;
         }
     }
+
+    /**
+     * Get top populated cities in a district
+     * @param district name of the district
+     * @return return an ArrayList of top populated cities in that district
+     */
     public ArrayList<City> PopulatedCitiesInDistrict(String district)
     {
         try
@@ -144,6 +154,36 @@ public class App
             String strSelect = String.format(
                     "SELECT * from city where District='%s' ORDER BY Population DESC;"
                     , district);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities");
+            return null;
+        }
+    }
+
+    /**
+     * Get top populated cities in a country
+     * @param country name of the country
+     * @return return an ArrayList of top populated cities in that country
+     */
+    public ArrayList<City> populatedCitiesInACountry(String country)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.Id, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country where city.CountryCode = country.Code " +
+                            "AND country.Name = '%s' ORDER BY city.Population DESC"
+                    , country);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -181,70 +221,12 @@ public class App
             return cty;
         }
     }
+
     /**
      * Display top populated cities around the world
      * @param cty ArrayList containing top populated cities
      */
     public void displayTopPopulatedCities(ArrayList<City> cty)
-    {
-        if (cty != null)
-        {
-            int i = 1;
-            for (City city: cty)
-            {
-                System.out.println(
-                        "No: " + i + "\n" +
-                                "ID: " + city.id + "\n" +
-                                "Name: " + city.name + "\n" +
-                                "Country Code: " + city.countryCode + "\n" +
-                                "District: " + city.district + "\n" +
-                                "Population: " + city.population
-                );
-                i++;
-            }
-        }
-    }
-    public ArrayList<City> populatedCitiesInACountry(String country)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect = String.format(
-                    "SELECT city.Id, city.Name, city.CountryCode, city.District, city.Population " +
-                            "FROM city INNER JOIN country where city.CountryCode = country.Code " +
-                            "AND country.Name = '%s' ORDER BY city.Population DESC"
-            ,country);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new city if valid.
-            ArrayList<City> cty = new ArrayList<City>();
-            if (rset.next() == false)
-            {
-                return null;
-            }
-            else {
-                do {
-                    City city = new City();
-                    city.id = rset.getInt("ID");
-                    city.name = rset.getString("Name");
-                    city.countryCode = rset.getString("CountryCode");
-                    city.district = rset.getString("District");
-                    city.population = rset.getInt("Population");
-                    cty.add(city);
-                } while (rset.next());
-                return cty;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities");
-            return null;
-        }
-    }
-    public void displayPopulatedCitiesInACountry(ArrayList<City> cty)
     {
         if (cty != null)
         {
