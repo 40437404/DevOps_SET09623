@@ -47,12 +47,12 @@ public class App
             }
         }
     }
-    public void countryLarge2small(){
+    public void continentLarge2small(String ncontinent){
         if (con != null)
         {
             try {
                 // sql query
-                String query = "SELECT CODE,Name,Population FROM world.country ORDER BY Population DESC ";
+                String query = "SELECT Code,Name,Continent,Population FROM world.country WHERE country.Continent='"+ ncontinent +"' ORDER BY Population DESC ";
                 // create the java statement
                 Statement st = con.createStatement();
                 // execute the query, and get a java resultset
@@ -61,10 +61,11 @@ public class App
                 while (rs.next()) {
                     String ccode = rs.getString("CODE");
                     String name = rs.getString("Name");
+                    String cont = rs.getString("Continent");
                     String pplo = rs.getString("Population");
 
                     // print the results
-                    System.out.format("CODE = %s,Name = %s,Population = %s\n",ccode, name, pplo);
+                    System.out.format("CODE = %s,Name = %s,Continent = %s,Population = %s\n",ccode, name,cont, pplo);
                 }
                 st.close();
             } catch (Exception e) {
@@ -96,7 +97,9 @@ public class App
         a.connect();
 
         // Get City Info In the world by descending of population
-        a.countryLarge2small();
+
+        String ncontinent = "Asia";
+        a.continentLarge2small(ncontinent);
 
         // Disconnect from database
         a.disconnect();
