@@ -23,13 +23,10 @@ public class App
         String district = "Zuid-Holland";
         // Country name
         String country = "Japan";
-        //
+        // Region name
         String region = "Caribbean";
-        // Get Population
-        int[] result = new int[3];
-        result = app.getPopulationOfRegion(region);
-        // Display results
-        app.displayPopulationOfCountry(region, result);
+        // Array of results
+        long[] result;
 
         // Get top populated cities worldwide
         ArrayList<City> getTopCities;
@@ -54,6 +51,11 @@ public class App
         capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, nCity);
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInRegion);
+
+        // Get Population of a region
+        result = app.getPopulationOfRegion(region);
+        // Display results
+        app.displayPopulationOfCountry(region, result);
 
         // Disconnect from database
         app.disconnect();
@@ -89,7 +91,8 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "root123!@#");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false",
+                        "root", "root123!@#");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -137,7 +140,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
-                    "SELECT * FROM city order by Population DESC LIMIT %d"
+                    "SELECT * FROM city order by Population DESC LIMIT %d;"
                     , limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -175,7 +178,7 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities");
+            System.out.println("Failed to get top populated cities of the district");
             return null;
         }
     }
@@ -195,7 +198,7 @@ public class App
             String strSelect = String.format(
                     "SELECT city.Id, city.Name, city.CountryCode, city.District, city.Population " +
                             "FROM city INNER JOIN country where city.CountryCode = country.Code " +
-                            "AND country.Name = '%s' ORDER BY city.Population DESC"
+                            "AND country.Name = '%s' ORDER BY city.Population DESC;"
                     , country);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -205,7 +208,7 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities");
+            System.out.println("Failed to get top populated cities of the country");
             return null;
         }
     }
@@ -236,7 +239,60 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities");
+            System.out.println("Failed to get top populated cities of the region");
+            return null;
+        }
+    }
+
+    /**
+     * Get population of region
+     * @param region name of region
+     * @return return the array of population
+     */
+    public long[] getPopulationOfRegion(String region)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getRegionPopulation = String.format(
+                    "SELECT SUM(Population) FROM country WHERE Region='%s';"
+                    , region);
+            // Execute SQL statement
+            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
+            // Return population if valid.
+            long population;
+            if (!rset1.next())
+                return null;
+            else {
+                population = rset1.getLong("SUM(Population)");
+            }
+            // Create string for SQL statement
+            String getCityPopulationOfRegion = String.format(
+                    "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
+                            "city.CountryCode=country.Code AND country.Region='%s';"
+                    , region);
+            // Execute SQL statement
+            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfRegion);
+            // Return population if valid.
+            long populationOfCity;
+            if (!rset2.next())
+                return null;
+            else {
+                populationOfCity = rset2.getInt("SUM(city.Population)");
+            }
+            long populationOfNotCity = population - populationOfCity;
+            long[] result = new long[3];
+            result[0] = population;
+            result[1] = populationOfCity;
+            result[2] = populationOfNotCity;
+            return result;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
             return null;
         }
     }
@@ -289,67 +345,18 @@ public class App
             }
         }
     }
-    public int[] getPopulationOfRegion(String region)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String getRegionPopulation = String.format(
-                    "SELECT Population FROM country WHERE Region='%s';"
-                    , region);
-            // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
-            // Return population if valid.
-            int population = 0;
-            if (rset1.next() == false)
-            {
-                return null;
-            }
-            else {
-                do
-                {
-                    population += rset1.getInt("Population");
-                } while(rset1.next());
-            }
-            String getCityPopulationOfRegion = String.format(
-                    "SELECT city.Population FROM city INNER JOIN country WHERE " +
-                            "city.CountryCode=country.Code AND country.Region='%s';"
-                    , region);
-            // Execute SQL statement
-            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfRegion);
-            // Return population if valid.
-            int populationOfCity = 0;
-            if (rset2.next() == false)
-            {
-                return null;
-            }
-            else {
-                do {
-                    populationOfCity += rset2.getInt("Population");
-                } while (rset2.next());
-            }
-            int populationOfNotCity = population - populationOfCity;
-            int[] result = new int[3];
-            result[0] = population;
-            result[1] = populationOfCity;
-            result[2] = populationOfNotCity;
-            return result;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get population");
-            return null;
-        }
-    }
-    public  void displayPopulationOfCountry(String country, int[] result)
+
+    /**
+     * Display population
+     * @param region country name
+     * @param result array of population
+     */
+    public  void displayPopulationOfCountry(String region, long[] result)
     {
         if (result != null)
         {
             System.out.println(
-                    "Region Name: " + country + "\n" +
+                    "Region Name: " + region + "\n" +
                             "Population of Region: " + result[0] + "\n" +
                             "Population in Cities: " + result[1] + "\n" +
                             "Population outside Cities: " + result[2]
