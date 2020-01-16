@@ -1,10 +1,38 @@
 package com.napier.DevOps_SET09623;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class App
 {
     public static void main(String[] args)
+    {
+        // Create new Application
+        App app = new App();
+
+        // Connect to database
+        app.connect();
+        // Number of cities
+        String district = "Zuid-Holland";
+        // Get Cities
+        ArrayList<City> cty = new ArrayList<City>();
+        cty = app.PopulatedCitiesInDistrict(district);
+        // Display results
+        app.displayTopPopulatedCities(cty);
+        // Disconnect from database
+        app.disconnect();
+    }
+
+    /**
+     * Connection to MySQL database.
+     */
+    private Connection con = null;
+
+    /**
+     * Connect to the MySQL database.
+     */
+    public void connect()
     {
         try
         {
@@ -17,9 +45,7 @@ public class App
             System.exit(-1);
         }
 
-        // Connection to the database
-        Connection con = null;
-        int retries = 100;
+        int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
             System.out.println("Connecting to database...");
@@ -30,9 +56,6 @@ public class App
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "root123!@#");
                 System.out.println("Successfully connected");
-                // Wait a bit
-                Thread.sleep(10000);
-                // Exit for loop
                 break;
             }
             catch (SQLException sqle)
@@ -45,7 +68,13 @@ public class App
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
+    }
 
+    /**
+     * Disconnect from the MySQL database.
+     */
+    public void disconnect()
+    {
         if (con != null)
         {
             try
@@ -56,6 +85,63 @@ public class App
             catch (Exception e)
             {
                 System.out.println("Error closing connection to database");
+            }
+        }
+    }
+    public ArrayList<City> PopulatedCitiesInDistrict(String district)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT * from city where District='%s' ORDER BY Population DESC;"
+                    , district);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            ArrayList<City> cty = new ArrayList<City>();
+            if (rset.next() == false)
+            {
+                return null;
+            }
+            else {
+                do {
+                    City city = new City();
+                    city.id = rset.getInt("ID");
+                    city.name = rset.getString("Name");
+                    city.countryCode = rset.getString("CountryCode");
+                    city.district = rset.getString("District");
+                    city.population = rset.getInt("Population");
+                    cty.add(city);
+                } while (rset.next());
+                return cty;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities");
+            return null;
+        }
+    }
+    public void displayTopPopulatedCities(ArrayList<City> cty)
+    {
+        if (cty != null)
+        {
+            int i = 1;
+            for (City city: cty)
+            {
+                System.out.println(
+                        "No: " + i + "\n" +
+                                "ID: " + city.id + "\n" +
+                                "Name: " + city.name + "\n" +
+                                "Country Code: " + city.countryCode + "\n" +
+                                "District: " + city.district + "\n" +
+                                "Population: " + city.population
+                );
+                i++;
             }
         }
     }
