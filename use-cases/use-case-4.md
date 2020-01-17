@@ -37,13 +37,8 @@ Database contains all the data about the world.
 
 ### Success End Condition
 
-- The population of the world.
-- The population of a continent.
-- The population of a region.
-- The population of a country.
-- The population of a district.
-- The population of a city.
-
+- A report of cities, capital cities and countries information is available for user.
+- A report of top populated cities, countries, region and continent is available for user which the limit will be provided by user.
 ### 
 
 ### Failed End Condition
