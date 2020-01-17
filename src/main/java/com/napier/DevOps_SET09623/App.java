@@ -65,6 +65,12 @@ public class App
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInContinent);
 
+        // Get populated capital cities in the world
+        ArrayList<City> capitalCitiesInWorld;
+        capitalCitiesInWorld = app.populateCapitalCitiesInWorld(limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInWorld);
+
         // Get Population of a region
         result = app.getPopulationOfRegion(region);
         // Display results
@@ -339,29 +345,33 @@ public class App
             return null;
         }
     }
-    public void nCapitalCityInWorld (int ncap){
-        if (con != null)
-        {
-            try {
-                // sql query
-                String query = "SELECT city.ID,city.Name,city.Population FROM city INNER JOIN country ON city.ID = country.Capital ORDER BY city.Population DESC limit "+ ncap +";";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while (rs.next()) {
-                    int id = rs.getInt("ID");
-                    String name = rs.getString("Name");
-                    int pop = rs.getInt("Population");
 
-                    // print the results
-                    System.out.format("ID = %s,Name = %s,Population = %s\n", id, name,  pop);
-                }
-                st.close();
-            }catch (Exception e) {
-                System.out.println("Error Getting City Data");
-            }
+    /**
+     *
+     * @param nCity number of cities
+     * @return return an ArrayList of top populated capital cities in the world
+     */
+    public ArrayList<City> populateCapitalCitiesInWorld(int nCity)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                            "ORDER BY city.Population DESC limit %d;"
+            , nCity);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities of the world");
+            return null;
         }
     }
 
