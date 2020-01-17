@@ -2,7 +2,6 @@ package com.napier.DevOps_SET09623;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import static java.lang.String.format;
 
 public class App
@@ -20,7 +19,7 @@ public class App
         app.connect();
 
         // Number of cities
-        int nCity = 10;
+        int limit = 10;
         // District name
         String district = "Zuid-Holland";
         // Country name
@@ -38,7 +37,7 @@ public class App
 
         // Get top populated cities worldwide
         ArrayList<City> getTopCities;
-        getTopCities = app.topPopulatedCities(nCity);
+        getTopCities = app.topPopulatedCities(limit);
         // Display results
         app.displayTopPopulatedCities(getTopCities);
 
@@ -56,7 +55,7 @@ public class App
 
         // Get populated capital cities in a region
         ArrayList<City> capitalCitiesInRegion;
-        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, nCity);
+        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, limit);
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInRegion);
 
@@ -98,6 +97,13 @@ public class App
         getPopulatedCountriesOfWorld = app.worldCountryLargeToSmall();
         // Display results
         app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
+
+        // Get Populated certain number of Countries of a region
+        ArrayList<Country> getNPopulatedCountriesInRegion;
+        getNPopulatedCountriesInRegion = app.populateCountriesInRegion(region, limit);
+        // Display results
+        app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
+
 
         // Disconnect from database
         app.disconnect();
@@ -365,6 +371,33 @@ public class App
     }
 
     /**
+     * Get certain number of populated countries in a region
+     * @param region region name
+     * @param limit number of countries
+     * @return return an ArrayList of top populated countries in the region
+     */
+    public ArrayList<Country> populateCountriesInRegion(String region, int limit)
+    {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population FROM country " +
+                            "WHERE Region='%s' ORDER BY Population DESC LIMIT %d;"
+                    , region, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the world");
+            return null;
+        }
+    }
+
+    /**
      * Get population of region
      * @param region name of region
      * @return return the array of population
@@ -520,27 +553,6 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get population");
             return null;
-        }
-    }
-    public void nPopulateCountriesInTheRegion(String Region,int Limit){
-        if (con != null)
-        {
-            try { //To Catch Error
-                String execute = "SELECT * FROM country where Region= '"+ Region +"' ORDER BY Population DESC limit "+ Limit +";";
-                //Preparing mysql command as a string
-                Statement st = con.createStatement(); //Statement Creation
-                ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
-                while (rs.next()) { //Preparing Output
-                    String Code = rs.getString("Code"); //Creating Variable For Country Code
-                    String name = rs.getString("Name"); //Creating Variable For Country Name
-                    int populationnumber = rs.getInt("Population"); //Creating Variable For Population
-                    String region = rs.getString("Region"); //Creating Variable For Continent
-                    System.out.format("Code = %s, Name = %s,Population = %s, Region = %s\n", Code, name, populationnumber,region); //Output Statement
-                }
-                st.close(); //Closing Statement
-            } catch (Exception e) {
-                e.printStackTrace(); // To Print Out System Error Messages
-            }
         }
     }
 
