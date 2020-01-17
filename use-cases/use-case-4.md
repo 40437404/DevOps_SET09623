@@ -4,19 +4,8 @@
 
 ### Goal in Context
 
-1. As a user I want all the countries' population in the (world, continent, and region) organized, so I can view them in descending order.
-2. As a user I want top (N) populated countries in the (world, continent, and region) so that  I can provided the inputs (N) by myself.
-3. As a user I want all the cities population in the (world, continent, and region)  organized, so I can view them in descending order.
-4. As a user I want all the cities population in the (country and district)  organized, so I can view them in descending order.
-5. As a user I want top (N) populated cities in the world so that I can provided the inputs (N) by myself.
-6. As a user I want top (N) populated cities in the (region, country and continent) so that I can provided the inputs (N) by myself.
-7. As a user I want to view each (continent, region and country)  so that I can know the population of people, people living in cities, and people not living in cities.
-8. As a user I want top (N) populated capital cities in the region so that I can provided the inputs (N) by myself. 
-9. As a user I want top (N) populated capital cities in the (world and continent) so that I can provided the inputs (N) by myself.
-10. As a user I want the capital cities in the region organized, so that I can view them in descending order.
-11. As a user I want the capital cities in the (world and continent) organized, so that I can view them in descending order.
-12. As a user I want top (N) populated cities in the district so that I can provided the inputs (N) by myself.
-
+- As a user I want to view the countries, cities and capital cities population in largest to smallest.
+- As a user I want to view and input top (N) populated countries, cities and capital cities population.
 ### Scope
 
 Organization.
