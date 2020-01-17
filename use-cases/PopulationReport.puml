@@ -4,28 +4,20 @@
     rectangle db as "Database"
     note top of db: This Database contains all of the population around the globe
     rectangle "Population Report"{
-        usecase P1 as "Population Of The World"
-        usecase P2 as "Population Of a Continent"
-        usecase continent as "Continent"
-        usecase region as "Region"
-        usecase country as "Country"
-        usecase district as "District"
-        usecase P3 as "Population Of a Region"
-        usecase P4 as "Population Of a Country"
-        usecase P5 as "Population Of a District"
-        user -- P1
-        user -- continent
-        user -- region
-        user -- country
-        user -- district
-        continent --P2
-        region -- P3
-        country -- P4
-        district -- P5
-        db -- P1
-        db -- P2
-        db -- P3
-        db -- P4
-        db -- P5
+        usecase P1 as "View Population Of The World"
+        usecase P2 as "View Population Of a Continent"
+        usecase P3 as "View Population Of a Region"
+        usecase P4 as "View Population Of a Country"
+        usecase P5 as "View Population Of a District"
+        user - P1
+        user -P2
+        user - P3
+        user - P4
+        user - P5
+        db --- P1
+        db --- P2
+        db --- P3
+        db --- P4
+        db --- P5
     }
 @enduml

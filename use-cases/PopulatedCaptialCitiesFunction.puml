@@ -4,9 +4,9 @@
     rectangle db as "Database"
     note right of db: This Database contains all of the population around the globe
     rectangle "Populated Capital Cities Function"{
-        usecase PCaWORLD as "Populated Capital Cities In The World"
-        usecase PCaCONTINENT as "Populated Capital Cities In The Continent"
-        usecase PCaREGION as "Populated Capital Cities In The Region"
+        usecase PCaWORLD as "View Populated Capital Cities In The World"
+        usecase PCaCONTINENT as "View Populated Capital Cities In The Continent"
+        usecase PCaREGION as "View Populated Capital Cities In The Region"
         user - PCaWORLD
         user - PCaCONTINENT
         user - PCaREGION

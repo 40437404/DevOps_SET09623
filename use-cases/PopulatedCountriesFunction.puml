@@ -4,9 +4,9 @@
                rectangle db as "Database"
                note right of db: This Database contains all of the population around the globe
            rectangle "Populated Countries Function"{
-               usecase PCWORLD as "Populated Countries In The World"
-               usecase PCCONTINENT as "Populated Countries In The Continent"
-               usecase PCREGION as "Populated Countries In The Region"
+               usecase PCWORLD as "View Populated Countries In The World"
+               usecase PCCONTINENT as "View Populated Countries In The Continent"
+               usecase PCREGION as "View Populated Countries In The Region"
                user - PCWORLD
                user - PCCONTINENT
                user - PCREGION

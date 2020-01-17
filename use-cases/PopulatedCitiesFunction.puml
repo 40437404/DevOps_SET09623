@@ -4,11 +4,11 @@
         rectangle db as "Database"
         note right of db: This Database contains all of the population around the globe
     rectangle "Populated Cities Function"{
-        usecase PCiWORLD as "Populated Cities In The World"
-        usecase PCiCONTINENT as "Populated Cities In The Continent"
-        usecase PCiREGION as "Populated Cities In The Region"
-        usecase PC4 as "Populated Cities In The Country"
-        usecase PC5 as "Populated Cities In The District"
+        usecase PCiWORLD as "View Populated Cities In The World"
+        usecase PCiCONTINENT as "View Populated Cities In The Continent"
+        usecase PCiREGION as "View Populated Cities In The Region"
+        usecase PC4 as "View Populated Cities In The Country"
+        usecase PC5 as "View Populated Cities In The District"
         user - PCiWORLD
         user - PCiCONTINENT
         user - PCiREGION

@@ -5,15 +5,11 @@ rectangle db as "Database"
 note top of db: This Database contains all of the population around the globe
 rectangle "Top N Populated Cities Function"{
     usecase input as "Limitation Input (N)"
-    usecase continent as "Continent Input"
-    usecase region as "Region Input"
-    usecase country as "Country Input"
-    usecase district as "District Input"
-    usecase PC1 as "Populated Cities In The World"
-    usecase PC2 as "Populated Cities In a Continent"
-    usecase PC3 as "Populated Cities In a Region"
-    usecase PC4 as "Populated Cities In a Country"
-    usecase PC5 as "Populated Cities In a District"
+    usecase PC1 as "View Populated Cities In The World"
+    usecase PC2 as "View Populated Cities In a Continent"
+    usecase PC3 as "View Populated Cities In a Region"
+    usecase PC4 as "View Populated Cities In a Country"
+    usecase PC5 as "View Populated Cities In a District"
     db - PC1
     db -- PC2
     db --- PC3
@@ -22,13 +18,8 @@ rectangle "Top N Populated Cities Function"{
 }
 user -- input
 input -- PC1
-input -- continent
-input -- region
-input -- country
-input -- district
-continent -- PC2
-region -- PC3
-country -- PC4
-district -- PC5
-
+input -- PC2
+input -- PC3
+input - PC4
+input - PC5
 @enduml

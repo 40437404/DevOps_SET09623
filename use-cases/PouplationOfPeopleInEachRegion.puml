@@ -4,9 +4,9 @@
         rectangle db as "Database"
         note right of db: This Database contains all of the population around the globe
     rectangle "People Population in each Region"{
-        usecase PC1 as "Population Of People In Each Region"
-        usecase PC2 as "Population Of People Living In Each Region"
-        usecase PC3 as "Population Of People Not Living In Each Region"
+        usecase PC1 as "View Population Of People In Each Region"
+        usecase PC2 as "View Population Of People Living In Each Region"
+        usecase PC3 as "View Population Of People Not Living In Each Region"
         user - PC1
         user - PC2
         user - PC3
