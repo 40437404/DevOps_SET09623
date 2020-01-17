@@ -522,6 +522,27 @@ public class App
             return null;
         }
     }
+    public void nPopulateCountriesInTheRegion(String Region,int Limit){
+        if (con != null)
+        {
+            try { //To Catch Error
+                String execute = "SELECT * FROM country where Region= '"+ Region +"' ORDER BY Population DESC limit "+ Limit +";";
+                //Preparing mysql command as a string
+                Statement st = con.createStatement(); //Statement Creation
+                ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
+                while (rs.next()) { //Preparing Output
+                    String Code = rs.getString("Code"); //Creating Variable For Country Code
+                    String name = rs.getString("Name"); //Creating Variable For Country Name
+                    int populationnumber = rs.getInt("Population"); //Creating Variable For Population
+                    String region = rs.getString("Region"); //Creating Variable For Continent
+                    System.out.format("Code = %s, Name = %s,Population = %s, Region = %s\n", Code, name, populationnumber,region); //Output Statement
+                }
+                st.close(); //Closing Statement
+            } catch (Exception e) {
+                e.printStackTrace(); // To Print Out System Error Messages
+            }
+        }
+    }
 
     /**
      * Get Cities from SQL query
