@@ -1,0 +1,23 @@
+@startuml
+    actor user as "User"
+    note top of user: User can use several features in the system
+    rectangle db as "Database"
+    note top of db: This Database contains all of the population around the globe
+    rectangle "Population Report"{
+        usecase P1 as "View Population Of The World"
+        usecase P2 as "View Population Of a Continent"
+        usecase P3 as "View Population Of a Region"
+        usecase P4 as "View Population Of a Country"
+        usecase P5 as "View Population Of a District"
+        user - P1
+        user -P2
+        user - P3
+        user - P4
+        user - P5
+        db --- P1
+        db --- P2
+        db --- P3
+        db --- P4
+        db --- P5
+    }
+@enduml

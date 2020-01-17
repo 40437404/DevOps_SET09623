@@ -54,19 +54,19 @@
 | 40437538 (KZL)   | The top N populated countries in a continent where N is provided by the user. | Must     | 2      | In progress   |
 | 40437538 (KZL)   | The top N populated countries in a region where N is provided by the user. | Must     | 2      | In progress   |
 | 40437519 (ZBK)   | All the cities in the world organised by largest population to smallest. | Must     | 2      | Done          |
-| 40437519 (ZBK)   | All the cities in a continent organised by largest population to smallest. | Must     | 2      | In progress   |
-| 40437519 (ZBK)   | All the cities in a region organised by largest population to smallest. | Must     | 2      | In progress   |
+| 40437519 (ZBK)   | All the cities in a continent organised by largest population to smallest. | Must     | 2      | Done          |
+| 40437519 (ZBK)   | All the cities in a region organised by largest population to smallest. | Must     | 2      | Done          |
 | 40437404 (MMO)   | All the cities in a country organised by largest population to smallest. | Must     | 2      | In progress   |
 | 40437404 (MMO)   | All the cities in a district organised by largest population to smallest. | Must     | 2      | In progress   |
-| 40437404 (MMO)   | The top N populated cities in the world where N is provided by the user. | Must     | 2      | In progress   |
+| 40437404 (MMO)   | The top N populated cities in the world where N is provided by the user. | Must     | 2      | Done          |
 | 40437524  (BBTZ) | The top N populated cities in a continent where N is provided by the user. | Must     | 3      | To be started |
 | 40437524 (BBTZ)  | The top N populated cities in a region where N is provided by the user. | Must     | 3      | To be started |
 | 40437524 (BBTZ)  | The top N populated cities in a country where N is provided by the user. | Must     | 3      | To be started |
 | 40437538 (KZL)   | The top N populated cities in a district where N is provided by the user. | Must     | 3      | To be started |
 | 40437538 (KZL)   | All the capital cities in the world organised by largest population to smallest. | Must     | 3      | To be started |
 | 40437538 (KZL)   | All the capital cities in a continent organised by largest population to smallest. | Must     | 3      | To be started |
-| 40437519 (ZBK)   | All the capital cities in a region organised by largest to smallest. | Must     | 3      | To be started |
-| 40437519 (ZBK)   | The top N populated capital cities in the world where N is provided by the user. | Must     | 3      | To be started |
+| 40437519 (ZBK)   | All the capital cities in a region organised by largest to smallest. | Must     | 3      | Done          |
+| 40437519 (ZBK)   | The top N populated capital cities in the world where N is provided by the user. | Must     | 3      | Done          |
 | 40437519 (ZBK)   | The top N populated capital cities in a continent where N is provided by the user. | Must     | 3      | To be started |
 | 40437404 (MMO)   | The top N populated capital cities in a region where N is provided by the user. | Must     | 3      | To be started |
 | 40437404 (MMO)   | The population of people, people living in cities, and people not living in cities in each continent. | Must     | 3      | To be started |

@@ -1,0 +1,25 @@
+@startuml
+actor user as "User"
+note right of user: User can use several features in the system
+rectangle db as "Database"
+note top of db: This Database contains all of the population around the globe
+rectangle "Top N Populated Cities Function"{
+    usecase input as "Limitation Input (N)"
+    usecase PC1 as "View Populated Cities In The World"
+    usecase PC2 as "View Populated Cities In a Continent"
+    usecase PC3 as "View Populated Cities In a Region"
+    usecase PC4 as "View Populated Cities In a Country"
+    usecase PC5 as "View Populated Cities In a District"
+    db - PC1
+    db -- PC2
+    db --- PC3
+    db -- PC4
+    db - PC5
+}
+user -- input
+input -- PC1
+input -- PC2
+input -- PC3
+input - PC4
+input - PC5
+@enduml
