@@ -59,6 +59,12 @@ public class App
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInRegion);
 
+        // Get populated capital cities in a continent
+        ArrayList<City> capitalCitiesInContinent;
+        capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent, limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInContinent);
+
         // Get Population of a region
         result = app.getPopulationOfRegion(region);
         // Display results
@@ -276,7 +282,7 @@ public class App
      * Get top populated capital cities in a region
      * @param region region name
      * @param nCity number of cities
-     * @return return an ArrayList of top populated cities in that country
+     * @return return an ArrayList of top populated capital cities in that country
      */
     public ArrayList<City> populatedCapitalCitiesInRegion(String region, int nCity)
     {
@@ -302,30 +308,35 @@ public class App
             return null;
         }
     }
-    public void nPopulateCapitalcityInContinent(String ncontinent,int nlimit){
-        if (con != null)
-        {
-            try {
-                // sql query
-                String query = "SELECT city.ID,city.Name,city.Population,country.Continent FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Continent = '"+ ncontinent +"' ORDER BY city.Population DESC limit "+ nlimit +";";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while (rs.next()) {
-                    int id = rs.getInt("ID");
-                    String name = rs.getString("Name");
-                    int pop = rs.getInt("Population");
-                    String conti = rs.getString("Continent");
 
-                    // print the results
-                    System.out.format("ID = %s,Name = %s,Population = %s,Continent = %s\n", id, name, pop,conti);
-                }
-                st.close();
-            } catch (Exception e) {
-                System.out.println("Error Getting City Data");
-            }
+    /**
+     * Get top populated capital cities in a continent
+     * @param continent continent name
+     * @param nCity number of cities
+     * @return return an ArrayList of top populated capital cities in that continent
+     */
+    public ArrayList<City> populateCapitalCitiesInContinent(String continent, int nCity)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                            "WHERE country.Continent = '%s' " +
+                            "ORDER BY city.Population DESC limit %d;"
+            , continent, nCity);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities of the continent");
+            return null;
         }
     }
 
