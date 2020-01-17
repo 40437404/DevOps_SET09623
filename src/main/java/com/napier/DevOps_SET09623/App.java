@@ -42,7 +42,7 @@ public class App
 
         // Get top populated cities in a district
         ArrayList<City> getTopCitiesInDistrict;
-        getTopCitiesInDistrict = app.PopulatedCitiesInDistrict(district);
+        getTopCitiesInDistrict = app.populatedCitiesInDistrict(district);
         // Display results
         app.displayTopPopulatedCities(getTopCitiesInDistrict);
 
@@ -182,7 +182,7 @@ public class App
      * @param district name of the district
      * @return return an ArrayList of top populated cities in that district
      */
-    public ArrayList<City> PopulatedCitiesInDistrict(String district)
+    public ArrayList<City> populatedCitiesInDistrict(String district)
     {
         try
         {
