@@ -79,11 +79,17 @@ public class App
         name = continent;
         app.displayPopulationOfPlace(type, name, result);
 
-        // Get Populated Countries
+        // Get Populated Countries of a region
         ArrayList<Country> getPopulatedCountriesOfRegion;
-        getPopulatedCountriesOfRegion = app.regionLargeToSmall(region);
+        getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
         // Display results
         app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
+
+        // Get Populated Countries of a continent
+        ArrayList<Country> getPopulatedCountriesOfContinent;
+        getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
+        // Display results
+        app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
 
         // Disconnect from database
         app.disconnect();
@@ -277,7 +283,7 @@ public class App
      * @param region region name
      * @return return an ArrayList of top populated countries in that region
      */
-    public ArrayList<Country> regionLargeToSmall(String region)
+    public ArrayList<Country> regionCountryLargeToSmall(String region)
     {
         try
         {
@@ -297,6 +303,25 @@ public class App
         {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries of the region");
+            return null;
+        }
+    }
+    public ArrayList<Country> continentCountryLargeToSmall(String continent){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population FROM country WHERE " +
+                            "Continent='%s' ORDER BY Population DESC;"
+            , continent);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries of the continent");
             return null;
         }
     }
