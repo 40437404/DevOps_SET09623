@@ -59,6 +59,12 @@ public class App
         // Display results
         app.displayTopPopulatedCities(getCitiesInRegion);
 
+        // Get populated cities in a continent
+        ArrayList<City> getCitiesInContinent;
+        getCitiesInContinent = app.cityInContinentDesc(continent);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInContinent);
+
         // Get populated capital cities in a region
         ArrayList<City> capitalCitiesInRegion;
         capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, limit);
@@ -82,6 +88,7 @@ public class App
         capitalCitiesInRegionDesc = app.capitalCityInRegionDesc(region);
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
+
 
         // Get Population of a region
         result = app.getPopulationOfRegion(region);
@@ -295,8 +302,15 @@ public class App
             return null;
         }
     }
+
+    /**
+     * Get populated cities in region
+     * @param region region name
+     * @return return an ArrayList of populated cities in region
+     */
     public ArrayList<City> cityInRegionDesc(String region){
-        try{
+        try
+        {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -310,36 +324,40 @@ public class App
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
             return getCitiesFromQuery(rset);
-        }catch (Exception e){
+        }
+        catch (Exception e){
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the region");
             return null;
         }
     }
-    public void cityInContinentDesc(String continent){
-        if (con != null){
-            try{
-                // sql query
-                String query = ("SELECT city.ID,city.Name,city.CountryCode,city.Population,country.Continent FROM city INNER JOIN country on city.CountryCode = country.Code WHERE country.Continent = '"+ continent +"' ORDER BY city.Population DESC;");
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while (rs.next()) {
-                    int id = rs.getInt("ID");
-                    String name = rs.getString("Name");
-                    String ccode = rs.getString("CountryCode");
-                    int pop = rs.getInt("Population");
-                    String cont = rs.getString("Continent");
 
-                    // print the results
-                    System.out.format("ID = %s,Name = %s,CountryCode = %s,Population = %s,Continent = %s\n", id, name, ccode, pop,cont);
-                }
-                st.close();
-            }catch (Exception e){
-                System.out.println("Error Getting City Data From Continent");
-            }
+    /**
+     * Get populated cities in continent
+     * @param continent continent name
+     * @return return an ArrayList of populated cities in continent
+     */
+    public ArrayList<City> cityInContinentDesc(String continent){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country on city.CountryCode = country.Code " +
+                            "WHERE country.Continent = '%s' " +
+                            "ORDER BY city.Population DESC;"
+            , continent);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the continent");
+            return null;
         }
     }
 
