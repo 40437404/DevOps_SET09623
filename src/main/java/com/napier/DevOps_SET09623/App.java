@@ -424,6 +424,32 @@ public class App
             return null;
         }
     }
+    public void regionLarge2small(String nregion){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT Code,Name,Region,Population FROM world.country WHERE country.Region='"+ nregion +"' ORDER BY Population DESC ";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    String ccode = rs.getString("CODE");
+                    String name = rs.getString("Name");
+                    String reg = rs.getString("Region");
+                    String pplo = rs.getString("Population");
+
+                    // print the results
+                    System.out.format("CODE = %s,Name = %s,Region = %s,Population = %s\n",ccode, name,reg, pplo);
+                }
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Get Cities from SQL query
