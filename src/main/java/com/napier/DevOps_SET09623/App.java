@@ -79,6 +79,12 @@ public class App
         name = continent;
         app.displayPopulationOfPlace(type, name, result);
 
+        // Get Populated Countries
+        ArrayList<Country> getPopulatedCountriesOfRegion;
+        getPopulatedCountriesOfRegion = app.regionLargeToSmall(region);
+        // Display results
+        app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -267,6 +273,35 @@ public class App
     }
 
     /**
+     * Get top populated countries of a region
+     * @param region region name
+     * @return return an ArrayList of top populated countries in that region
+     */
+    public ArrayList<Country> regionLargeToSmall(String region)
+    {
+        try
+        {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population FROM country WHERE " +
+                            "Region='%s' ORDER BY Population DESC;"
+                    , region);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries of the region");
+            return null;
+        }
+    }
+
+    /**
      * Get population of region
      * @param region name of region
      * @return return the array of population
@@ -424,32 +459,6 @@ public class App
             return null;
         }
     }
-    public void regionLarge2small(String nregion){
-        if (con != null)
-        {
-            try {
-                // sql query
-                String query = "SELECT Code,Name,Region,Population FROM world.country WHERE country.Region='"+ nregion +"' ORDER BY Population DESC ";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while (rs.next()) {
-                    String ccode = rs.getString("CODE");
-                    String name = rs.getString("Name");
-                    String reg = rs.getString("Region");
-                    String pplo = rs.getString("Population");
-
-                    // print the results
-                    System.out.format("CODE = %s,Name = %s,Region = %s,Population = %s\n",ccode, name,reg, pplo);
-                }
-                st.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     /**
      * Get Cities from SQL query
@@ -457,12 +466,14 @@ public class App
      * @return return an ArrayList containing cities
      * @throws SQLException throws an instance of SQLException
      */
-    public ArrayList<City> getCitiesFromQuery(ResultSet rset) throws SQLException {
+    public ArrayList<City> getCitiesFromQuery(ResultSet rset) throws SQLException
+    {
         // Return new city if valid.
         ArrayList<City> cty = new ArrayList<>();
         if (!rset.next())
             return null;
-        else {
+        else
+            {
             do {
                 City city = new City();
                 city.id = rset.getInt("ID");
@@ -473,6 +484,26 @@ public class App
                 cty.add(city);
             } while (rset.next());
             return cty;
+        }
+    }
+
+    public ArrayList<Country> getCountryFromQuery(ResultSet rset) throws SQLException
+    {
+        // Return new country if valid
+        ArrayList<Country> country = new ArrayList<>();
+        if (!rset.next())
+            return  null;
+        else {
+            do {
+                Country ctry = new Country();
+                ctry.code = rset.getString("Code");
+                ctry.name = rset.getString("Name");
+                ctry.continent = rset.getString("Continent");
+                ctry.region = rset.getString("Region");
+                ctry.population = rset.getLong("Population");
+                country.add(ctry);
+            } while (rset.next());
+            return country;
         }
     }
 
@@ -494,6 +525,25 @@ public class App
                                 "Country Code: " + city.countryCode + "\n" +
                                 "District: " + city.district + "\n" +
                                 "Population: " + city.population
+                );
+                i++;
+            }
+        }
+    }
+    public void displayTopPopulatedCountries(ArrayList<Country> country)
+    {
+        if (country != null)
+        {
+            int i = 1;
+            for (Country ctry: country)
+            {
+                System.out.println(
+                        "No: " + i + "\n" +
+                                "Code: " + ctry.code + "\n" +
+                                "Name: " + ctry.name + "\n" +
+                                "Continent: " + ctry.continent + "\n" +
+                                "Region: " + ctry.region + "\n" +
+                                "Population: " + ctry.population
                 );
                 i++;
             }
