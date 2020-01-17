@@ -71,6 +71,12 @@ public class App
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInWorld);
 
+        // Get populated capital cities in the world
+        ArrayList<City> capitalCitiesInRegionDesc;
+        capitalCitiesInRegionDesc = app.capitalCityInRegionDesc(region);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
+
         // Get Population of a region
         result = app.getPopulationOfRegion(region);
         // Display results
@@ -530,30 +536,31 @@ public class App
             return null;
         }
     }
-    public void capitalCityInRegionDesc(String capregion){
-        if (con != null)
-        {
-            try {
-                // sql query
-                String query = "SELECT city.ID,city.Name,city.Population,country.Region FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Region = '"+ capregion +"' ORDER BY city.Population DESC;";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while (rs.next()) {
-                    int id = rs.getInt("ID");
-                    String name = rs.getString("Name");
-                    int pop = rs.getInt("Population");
-                    String reg = rs.getString("Region");
 
-                    // print the results
-                    System.out.format("ID = %s,Name = %s,Population = %s,Region = %s\n", id, name, pop,reg);
-                }
-                st.close();
-            } catch (Exception e) {
-                System.out.println("Error Getting Capital City Data");
-            }
+    /**
+     * Get all populated capital cities in region in descending order
+     * @param region region name
+     * @return return an ArrayList of populated cities in a region
+     */
+    public ArrayList<City> capitalCityInRegionDesc(String region){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                            "WHERE country.Region = '%s' " +
+                            "ORDER BY city.Population DESC;"
+            , region);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated capital cities in the region");
+            return null;
         }
     }
 
