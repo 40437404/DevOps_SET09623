@@ -1,6 +1,8 @@
 @startuml
     actor user as "User"
-    rectangle db as "Database"
+        note top of user: User can use several features in the system
+        rectangle db as "Database"
+        note right of db: This Database contains all of the population around the globe
     rectangle "People Population in each Region"{
         usecase PC1 as "Population Of People In Each Region"
         usecase PC2 as "Population Of People Living In Each Region"

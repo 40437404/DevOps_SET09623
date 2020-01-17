@@ -1,6 +1,8 @@
 @startuml
 actor user as "User"
+note right of user: User can use several features in the system
 rectangle db as "Database"
+note top of db: This Database contains all of the population around the globe
 rectangle "Top N Populated Cities Function"{
     usecase input as "Limitation Input (N)"
     usecase continent as "Continent Input"
