@@ -110,6 +110,12 @@ public class App
         // Display results
         app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
 
+        // Get Populated certain number of Countries of a continent
+        ArrayList<Country> getNPopulatedCountriesInWorld;
+        getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
+        // Display results
+        app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -417,6 +423,31 @@ public class App
                     "SELECT Code, Name, Continent, Region, Population FROM country " +
                             "WHERE Continent='%s' ORDER BY Population DESC limit %d;"
                     , continent, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get countries from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the continent");
+            return null;
+        }
+    }
+
+    /**
+     * Get certain number of populated countries in the world
+     * @param limit number of countries
+     * @return return an ArrayList of top populated countries in the world
+     */
+    public ArrayList<Country> populateCountriesInWorld(int limit){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population FROM country " +
+                            "ORDER BY Population DESC limit %d;"
+            , limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get countries from query
