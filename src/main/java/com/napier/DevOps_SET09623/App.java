@@ -65,6 +65,12 @@ public class App
         // Display results
         app.displayTopPopulatedCities(getCitiesInContinent);
 
+        // Get populated cities in the world
+        ArrayList<City> getCitiesInWorld;
+        getCitiesInWorld = app.cityInWorldDesc();
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInWorld);
+
         // Get populated capital cities in a region
         ArrayList<City> capitalCitiesInRegion;
         capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, limit);
@@ -357,6 +363,29 @@ public class App
         catch (Exception e){
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the continent");
+            return null;
+        }
+    }
+
+    /**
+     * Get populated cities in the world
+     * @return return an ArrayList of populated cities in the world
+     */
+    public ArrayList<City> cityInWorldDesc(){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = "SELECT * FROM city ORDER by Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the world");
             return null;
         }
     }
