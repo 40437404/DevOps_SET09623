@@ -100,10 +100,15 @@ public class App
 
         // Get Populated certain number of Countries of a region
         ArrayList<Country> getNPopulatedCountriesInRegion;
-        getNPopulatedCountriesInRegion = app.populateCountriesInRegion(region, limit);
+        getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
         // Display results
         app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
 
+        // Get Populated certain number of Countries of a continent
+        ArrayList<Country> getNPopulatedCountriesInContinent;
+        getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
+        // Display results
+        app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
 
         // Disconnect from database
         app.disconnect();
@@ -376,7 +381,7 @@ public class App
      * @param limit number of countries
      * @return return an ArrayList of top populated countries in the region
      */
-    public ArrayList<Country> populateCountriesInRegion(String region, int limit)
+    public ArrayList<Country> populatedCountriesInRegion(String region, int limit)
     {
         try {
             // create the java statement
@@ -388,11 +393,37 @@ public class App
                     , region, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
+            // Get countries from query
             return getCountryFromQuery(rset);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries in the world");
+            System.out.println("Failed to get top populated countries in the region");
+            return null;
+        }
+    }
+
+    /**
+     * Get certain number of populated countries in a continent
+     * @param continent continent name
+     * @param limit number of countries
+     * @return return an ArrayList of top populated countries in the continent
+     */
+    public ArrayList<Country> populatedCountriesInContinent(String continent, int limit){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population FROM country " +
+                            "WHERE Continent='%s' ORDER BY Population DESC limit %d;"
+                    , continent, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get countries from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the continent");
             return null;
         }
     }
