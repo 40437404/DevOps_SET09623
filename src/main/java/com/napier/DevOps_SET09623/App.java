@@ -3,6 +3,8 @@ package com.napier.DevOps_SET09623;
 import java.sql.*;
 import java.util.ArrayList;
 
+import static java.lang.String.format;
+
 public class App
 {
     /**
@@ -91,6 +93,12 @@ public class App
         // Display results
         app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
 
+        // Get Populated Countries of a continent
+        ArrayList<Country> getPopulatedCountriesOfWorld;
+        getPopulatedCountriesOfWorld = app.worldCountryLargeToSmall();
+        // Display results
+        app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -173,7 +181,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format(
+            String strSelect = format(
                     "SELECT * FROM city order by Population DESC LIMIT %d;"
                     , limit);
             // Execute SQL statement
@@ -201,7 +209,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format(
+            String strSelect = format(
                     "SELECT * from city where District='%s' ORDER BY Population DESC;"
                     , district);
             // Execute SQL statement
@@ -229,7 +237,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format(
+            String strSelect = format(
                     "SELECT city.Id, city.Name, city.CountryCode, city.District, city.Population " +
                             "FROM city INNER JOIN country where city.CountryCode = country.Code " +
                             "AND country.Name = '%s' ORDER BY city.Population DESC;"
@@ -260,7 +268,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format(
+            String strSelect = format(
                     "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population FROM " +
                             "country INNER JOIN city WHERE country.Capital=city.ID AND Region='%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
@@ -290,7 +298,7 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // sql query
-            String strSelect = String.format(
+            String strSelect = format(
                     "SELECT Code, Name, Continent, Region, Population FROM country WHERE " +
                             "Region='%s' ORDER BY Population DESC;"
                     , region);
@@ -306,12 +314,19 @@ public class App
             return null;
         }
     }
-    public ArrayList<Country> continentCountryLargeToSmall(String continent){
+
+    /**
+     * Get top populated countries of a continent
+     * @param continent continent name
+     * @return return an ArrayList of top populated countries in that continent
+     */
+    public ArrayList<Country> continentCountryLargeToSmall(String continent)
+    {
         try {
             // create the java statement
             Statement stmt = con.createStatement();
             // sql query
-            String strSelect = String.format(
+            String strSelect = format(
                     "SELECT Code, Name, Continent, Region, Population FROM country WHERE " +
                             "Continent='%s' ORDER BY Population DESC;"
             , continent);
@@ -322,6 +337,24 @@ public class App
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries of the continent");
+            return null;
+        }
+    }
+    public ArrayList<Country> worldCountryLargeToSmall()
+    {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = "SELECT Code, Name, Continent, Region, Population FROM " +
+                    "country ORDER BY Population DESC;";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the world");
             return null;
         }
     }
@@ -338,7 +371,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getRegionPopulation = String.format(
+            String getRegionPopulation = format(
                     "SELECT SUM(Population) FROM country WHERE Region='%s';"
                     , region);
             // Execute SQL statement
@@ -351,7 +384,7 @@ public class App
                 population = rset1.getLong("SUM(Population)");
             }
             // Create string for SQL statement
-            String getCityPopulationOfRegion = String.format(
+            String getCityPopulationOfRegion = format(
                     "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
                             "city.CountryCode=country.Code AND country.Region='%s';"
                     , region);
@@ -391,7 +424,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getCountryPopulation = String.format(
+            String getCountryPopulation = format(
                     "SELECT Population FROM country WHERE Name='%s';"
                     , country);
             // Execute SQL statement
@@ -404,7 +437,7 @@ public class App
                 population = rset1.getLong("Population");
             }
             // Create string for SQL statement
-            String getCityPopulationOfCountry = String.format(
+            String getCityPopulationOfCountry = format(
                     "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
                             "city.CountryCode=country.Code AND country.Name='%s';"
                     , country);
@@ -444,7 +477,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getRegionPopulation = String.format(
+            String getRegionPopulation = format(
                     "SELECT SUM(Population) FROM country WHERE Continent='%s';"
                     , continent);
             // Execute SQL statement
@@ -457,7 +490,7 @@ public class App
                 population = rset1.getLong("SUM(Population)");
             }
             // Create string for SQL statement
-            String getCityPopulationOfContinent = String.format(
+            String getCityPopulationOfContinent = format(
                     "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
                             "city.CountryCode=country.Code AND country.Continent='%s';"
                     , continent);
@@ -585,7 +618,7 @@ public class App
     {
         if (result != null)
         {
-            System.out.println(String.format(
+            System.out.println(format(
                     "%s Name: " + name + "\n" +
                             "Population of %s: " + result[0] + "\n" +
                             "Population in Cities: " + result[1] + "\n" +
