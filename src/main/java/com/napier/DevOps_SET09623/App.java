@@ -530,6 +530,32 @@ public class App
             return null;
         }
     }
+    public void capitalCityInRegionDesc(String capregion){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT city.ID,city.Name,city.Population,country.Region FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Region = '"+ capregion +"' ORDER BY city.Population DESC;";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    int pop = rs.getInt("Population");
+                    String reg = rs.getString("Region");
+
+                    // print the results
+                    System.out.format("ID = %s,Name = %s,Population = %s,Region = %s\n", id, name, pop,reg);
+                }
+                st.close();
+            } catch (Exception e) {
+                System.out.println("Error Getting Capital City Data");
+            }
+        }
+    }
 
     /**
      * Get population of region
