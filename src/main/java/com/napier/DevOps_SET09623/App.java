@@ -339,6 +339,31 @@ public class App
             return null;
         }
     }
+    public void nCapitalCityInWorld (int ncap){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT city.ID,city.Name,city.Population FROM city INNER JOIN country ON city.ID = country.Capital ORDER BY city.Population DESC limit "+ ncap +";";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    int pop = rs.getInt("Population");
+
+                    // print the results
+                    System.out.format("ID = %s,Name = %s,Population = %s\n", id, name,  pop);
+                }
+                st.close();
+            }catch (Exception e) {
+                System.out.println("Error Getting City Data");
+            }
+        }
+    }
 
     /**
      * Get top populated countries of a region
