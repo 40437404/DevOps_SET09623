@@ -302,6 +302,32 @@ public class App
             return null;
         }
     }
+    public void nPopulateCapitalcityInContinent(String ncontinent,int nlimit){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT city.ID,city.Name,city.Population,country.Continent FROM city INNER JOIN country ON city.ID = country.Capital WHERE country.Continent = '"+ ncontinent +"' ORDER BY city.Population DESC limit "+ nlimit +";";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    int pop = rs.getInt("Population");
+                    String conti = rs.getString("Continent");
+
+                    // print the results
+                    System.out.format("ID = %s,Name = %s,Population = %s,Continent = %s\n", id, name, pop,conti);
+                }
+                st.close();
+            } catch (Exception e) {
+                System.out.println("Error Getting City Data");
+            }
+        }
+    }
 
     /**
      * Get top populated countries of a region
