@@ -340,6 +340,11 @@ public class App
             return null;
         }
     }
+
+    /**
+     * Get top populated countries of the world
+     * @return return an ArrayList of top populated countries in the world
+     */
     public ArrayList<Country> worldCountryLargeToSmall()
     {
         try {
@@ -545,6 +550,12 @@ public class App
         }
     }
 
+    /**
+     * Get Countries from SQL query
+     * @param rset SQL query result
+     * @return return an ArrayList containing countries
+     * @throws SQLException throws an instance of SQLException
+     */
     public ArrayList<Country> getCountryFromQuery(ResultSet rset) throws SQLException
     {
         // Return new country if valid
@@ -588,6 +599,11 @@ public class App
             }
         }
     }
+
+    /**
+     * Display top populated countries
+     * @param country ArrayList containing top populated countries
+     */
     public void displayTopPopulatedCountries(ArrayList<Country> country)
     {
         if (country != null)
