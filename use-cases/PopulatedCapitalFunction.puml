@@ -5,11 +5,11 @@
         usecase PCaWORLD as "Populated Capital In The World"
         usecase PCaCONTINENT as "Populated Capital In The Continent"
         usecase PCaREGION as "Populated Capital In The Region"
-        user -> PCaWORLD
-        user -> PCaCONTINENT
-        user -> PCaREGION
-        db ---> PCaWORLD
-        db ---> PCaCONTINENT
-        db ---> PCaREGION
+        user - PCaWORLD
+        user - PCaCONTINENT
+        user - PCaREGION
+        db --- PCaWORLD
+        db --- PCaCONTINENT
+        db --- PCaREGION
     }
 @enduml

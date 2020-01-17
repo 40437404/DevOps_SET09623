@@ -1,15 +1,15 @@
 @startuml
-    actor user as "User"
-    rectangle db as "Database"
-    rectangle "Populated Countries Function"{
-        usecase PCWORLD as "Populated Countries In The World"
-        usecase PCCONTINENT as "Populated Countries In The Continent"
-        usecase PCREGION as "Populated Countries In The Region"
-        user -> PCWORLD
-        user -> PCCONTINENT
-        user -> PCREGION
-        db ---> PCWORLD
-        db ---> PCCONTINENT
-        db ---> PCREGION
-    }
+           actor user as "User"
+           rectangle db as "Database"
+           rectangle "Populated Countries Function"{
+               usecase PCWORLD as "Populated Countries In The World"
+               usecase PCCONTINENT as "Populated Countries In The Continent"
+               usecase PCREGION as "Populated Countries In The Region"
+               user - PCWORLD
+               user - PCCONTINENT
+               user - PCREGION
+               db --- PCWORLD
+               db --- PCCONTINENT
+               db --- PCREGION
+           }
 @enduml

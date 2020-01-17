@@ -1,0 +1,15 @@
+@startuml
+    actor user as "User"
+    rectangle db as "Database"
+    rectangle "People Population in each Country"{
+        usecase PC1 as "Population Of People In Each Country "
+        usecase PC2 as "Population Of People Living In Each Country"
+        usecase PC3 as "Population Of People Not Living In Each Country"
+        user - PC1
+        user - PC2
+        user - PC3
+        db --- PC1
+        db --- PC2
+        db --- PC3
+    }
+@enduml

@@ -5,11 +5,11 @@
         usecase PCiWORLD as "Populated Cities In The World"
         usecase PCiCONTINENT as "Populated Cities In The Continent"
         usecase PCiREGION as "Populated Cities In The Region"
-        user -> PCiWORLD
-        user -> PCiCONTINENT
-        user -> PCiREGION
-        db ---> PCiWORLD
-        db ---> PCiCONTINENT
-        db ---> PCiREGION
+        user - PCiWORLD
+        user - PCiCONTINENT
+        user - PCiREGION
+        db --- PCiWORLD
+        db --- PCiCONTINENT
+        db --- PCiREGION
     }
 @enduml

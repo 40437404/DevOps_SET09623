@@ -1,0 +1,32 @@
+@startuml
+actor user as "User"
+rectangle db as "Database"
+rectangle "Top N Populated Cities Function"{
+    usecase input as "Limitation Input (N)"
+    usecase continent as "Continent Input"
+    usecase region as "Region Input"
+    usecase country as "Country Input"
+    usecase district as "District Input"
+    usecase PC1 as "Populated Cities In The World"
+    usecase PC2 as "Populated Cities In a Continent"
+    usecase PC3 as "Populated Cities In a Region"
+    usecase PC4 as "Populated Cities In a Country"
+    usecase PC5 as "Populated Cities In a District"
+    db - PC1
+    db -- PC2
+    db --- PC3
+    db -- PC4
+    db - PC5
+}
+user -- input
+input -- PC1
+input -- continent
+input -- region
+input -- country
+input -- district
+continent -- PC2
+region -- PC3
+country -- PC4
+district -- PC5
+
+@enduml
