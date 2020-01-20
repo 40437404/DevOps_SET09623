@@ -90,7 +90,7 @@ public class App
         // Connect to database
         a.connect();
 
-        // Get City Info In the world by descending of population
+        // Get calculated population of the whole world
         a.theWholeWorldPopulation();
 
         // Disconnect from database
