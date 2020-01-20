@@ -47,11 +47,11 @@ public class App
             }
         }
     }
-    public void theWholeWorldPopulation(){
+    public void theWholeContinentPopulation(String continent){
         if (con != null) {
             try {
                 // sql query
-                String query = "SELECT SUM(Population) FROM world.country;";
+                String query = "SELECT SUM(Population) FROM  world.country where Continent = '"+ continent +"';";
                 // create the java statement
                 Statement st = con.createStatement();
                 // execute the query, and get a java resultset
@@ -60,11 +60,11 @@ public class App
                 while(rs.next()) {
                     long total = rs.getLong("SUM(Population)");
                     // print the results
-                    System.out.format("Total Population of the World = %s\n", total);
+                    System.out.format("Total Population of the Continent (%s) = %s\n", continent,total);
                 }
                 st.close();
             } catch (Exception e) {
-                System.out.println("Error Calculating World Population");
+                System.out.println("Error Calculating Continent Population");
             }
         }
     }
@@ -90,8 +90,9 @@ public class App
         // Connect to database
         a.connect();
 
-        // Get City Info In the world by descending of population
-        a.theWholeWorldPopulation();
+        String continent = "Africa";
+        // Get the whole population of continent
+        a.theWholeContinentPopulation(continent);
 
         // Disconnect from database
         a.disconnect();
