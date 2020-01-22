@@ -1,0 +1,17 @@
+@startuml
+    actor user as "User"
+        note top of user: User can use several features in the system
+        rectangle db as "Database"
+        note right of db: This Database contains all of the population around the globe
+    rectangle "People Population in each Continent"{
+        usecase PC1 as "Population Of People In Each Continent"
+        usecase PC2 as "Population Of People Living In Each Continent"
+        usecase PC3 as "Population Of People Not Living In Each Continent"
+        user - PC1
+        user - PC2
+        user - PC3
+        db --- PC1
+        db --- PC2
+        db --- PC3
+    }
+@enduml

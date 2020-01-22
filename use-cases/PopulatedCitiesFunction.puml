@@ -1,0 +1,23 @@
+@startuml
+    actor user as "User"
+        note top of user: User can use several features in the system
+        rectangle db as "Database"
+        note right of db: This Database contains all of the population around the globe
+    rectangle "Populated Cities Function"{
+        usecase PCiWORLD as "Populated Cities In The World"
+        usecase PCiCONTINENT as "Populated Cities In The Continent"
+        usecase PCiREGION as "Populated Cities In The Region"
+        usecase PC4 as "Populated Cities In The Country"
+        usecase PC5 as "Populated Cities In The District"
+        user - PCiWORLD
+        user - PCiCONTINENT
+        user - PCiREGION
+        user - PC4
+        user - PC5
+        db --- PCiWORLD
+        db --- PCiCONTINENT
+        db --- PCiREGION
+        db --- PC4
+        db --- PC5
+    }
+@enduml
