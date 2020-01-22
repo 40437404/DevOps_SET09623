@@ -47,19 +47,19 @@ public class App
             }
         }
     }
-    public void CCitiesInTheWorldL2S(){
+    public void TopNPopulatedCitiesInADistrict(String District, int Limit){
         if (con != null)
         {
             try { //To Catch Error
-                String execute = "SELECT * FROM country ORDER BY Population DESC limit 10";
+                String execute = "SELECT * FROM city where District= '"+ District +"' ORDER BY Population DESC limit "+ Limit +";";
                 //Preparing mysql command as a string
                 Statement st = con.createStatement(); //Statement Creation
                 ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
                 while (rs.next()) { //Preparing Output
-                    String Code = rs.getString("Code"); //Creating Variable For Country Code
+                    String Code = rs.getString("CountryCode"); //Creating Variable For Country Code
                     String name = rs.getString("Name"); //Creating Variable For Country Name
                     int populationnumber = rs.getInt("Population"); //Creating Variable For Population
-                    System.out.format("Code = %s, Name = %s,Population = %s\n", Code, name, populationnumber); //Output Statement
+                    System.out.format("CountryCode = %s, Name = %s,Population = %s\n", Code, name, populationnumber); //Output Statement
                 }
                 st.close(); //Closing Statement
             } catch (Exception e) {
@@ -67,6 +67,7 @@ public class App
             }
         }
     }
+
     /**
      * Disconnect from database
      * **/
@@ -85,7 +86,9 @@ public class App
         App a = new App(); // Create new Application
         a.connect();// Connect to database
         // Variable Preparation
-        a.CCitiesInTheWorldL2S();
+        String District = "Noord-Brabant";
+        int Limit= 10;
+        a.TopNPopulatedCitiesInADistrict(District,Limit);
         // Disconnect from database
         a.disconnect();
     }
