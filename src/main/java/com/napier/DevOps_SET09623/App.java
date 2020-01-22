@@ -47,7 +47,7 @@ public class App
             }
         }
     }
-    public void CCitiesInAContinentSortedbyL2S(String Continent,int Limit){
+    public void populationOfACountry(String Continent,int Limit){
         if (con != null)
         {
             try { //To Catch Error
@@ -88,7 +88,7 @@ public class App
         // Variable Preparation
         String Continent = "North America";
         int Limit = 10;
-        a.CCitiesInAContinentSortedbyL2S(Continent, Limit);
+        a.populationOfACountry(Continent, Limit);
         // Disconnect from database
         a.disconnect();
     }
