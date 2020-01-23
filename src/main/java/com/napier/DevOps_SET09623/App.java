@@ -942,5 +942,8 @@ public class App
                     , type, type)
             );
         }
+        else{
+            System.out.println("Failed to get continent data");
+        }
     }
 }
