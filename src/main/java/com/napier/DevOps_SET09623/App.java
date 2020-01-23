@@ -396,7 +396,7 @@ public class App
      * @param nCity number of cities
      * @return return an ArrayList of top populated capital cities in that country
      */
-    public ArrayList<City> populatedCapitalCitiesInRegion(String region, int nCity)
+    public ArrayList<City> populatedCapitalCitiesInRegion(String region, Integer nCity)
     {
         try
         {
