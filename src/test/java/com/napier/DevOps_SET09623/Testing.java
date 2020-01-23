@@ -1,3 +1,4 @@
+// 40437538@live.napier.ac.uk KYAW ZAW LWIN
 package com.napier.DevOps_SET09623;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -18,6 +19,8 @@ public class Testing
         app = new App();
     }
 
+            // World Starts from here//
+    // *********************************** //
     @Test
     void populateCapitalCitiesInWorldTestZero()
     {
@@ -31,47 +34,157 @@ public class Testing
     }
 
     @Test
+    void populateCapitalCitiesInWorldTestNull()
+    {
+        app.populateCapitalCitiesInWorld(0);
+    }
+
+    @Test
+    void populateCapitalCitiesInWorldTestWrong()
+    {
+        app.populateCapitalCitiesInWorld(999999999);
+    }
+                    //END OF WORLD//
+    //*********************************************//
+
+               //REGION STARTS FROM HERE//
+    //*********************************************//
+    @Test
+    void populatedCapitalCitiesInRegionTestZero()
+    {
+        app.populatedCapitalCitiesInRegion(null,0);
+    }
+
+    @Test
+    void populatedCapitalCitiesInRegionTestMany()
+    {
+        app.populatedCapitalCitiesInRegion("Australia and New Zealand", 100);
+    }
+
+    @Test
     void populatedCapitalCitiesInRegionTestNull()
     {
-        app.populatedCapitalCitiesInRegion(null, 0);
+        app.populatedCapitalCitiesInRegion(null,0);
     }
 
     @Test
     void populatedCapitalCitiesInRegionTestWrong()
     {
-        app.populatedCapitalCitiesInRegion("AAA", 0);
+        app.populatedCapitalCitiesInRegion("aaa",999999999);
+    }
+                //  End of Region //
+    // *********************************** //
+
+         // Continent Starts From here //
+    // *********************************** //
+    @Test
+    void populateCapitalCitiesInContinentTestZero()
+    {
+        app.populateCapitalCitiesInContinent(null,0);
     }
 
     @Test
-    void getPopulationOfContinentTestNull()
+    void populateCapitalCitiesInContinentTestMany()
     {
-        app.getPopulationOfContinent(null);
+        app.populateCapitalCitiesInContinent("Australia and New Zealand", 100);
     }
 
     @Test
-    void getPopulationOfContinentTestWrong()
+    void populateCapitalCitiesInContinentTestNull()
     {
-        app.getPopulationOfContinent("AAA");
+        app.populateCapitalCitiesInContinent(null,0);
     }
 
     @Test
-    void displayTopPopulatedCitiesTestNull()
+    void populateCapitalCitiesInContinentTestWrong()
     {
-        ArrayList<City> city = new ArrayList<>();
-        app.displayTopPopulatedCities(city);
+        app.populateCapitalCitiesInContinent("aaa",999999999);
+    }
+                // End Of Continent//
+    // *********************************** //
+
+                    // DESC //
+    // *********************************** //
+    @Test
+    void capitalCityInRegionDescTestZero()
+    {
+        app.capitalCityInRegionDesc(null);
     }
 
     @Test
-    void displayTopPopulatedCitiesTest()
+    void capitalCityInRegionDescTestMany()
     {
-        ArrayList<City> city = new ArrayList<>();
-        City cty = new City();
-        cty.id = 1;
-        cty.name = "Yangon";
-        cty.countryCode = "MMR";
-        cty.district = "Yangon";
-        cty.population = 2345678;
-        city.add(cty);
-        app.displayTopPopulatedCities(city);
+        app.capitalCityInRegionDesc("Australia and New Zealand");
     }
+
+    @Test
+    void capitalCityInRegionDescTestNull()
+    {
+        app.capitalCityInRegionDesc(null);
+    }
+
+    @Test
+    void capitalCityInRegionDescTestWrong()
+    {
+        app.capitalCityInRegionDesc("AAA");
+    }
+                    // END OF DESC //
+    // ******************************************* //
+
+    // POPULATION OF REGION //
+    // *********************************** //
+    @Test
+    void getPopulationOfRegionTestZero()
+    {
+        app.getPopulationOfRegion(null);
+    }
+
+    @Test
+    void getPopulationOfRegionTestMany()
+    {
+        app.getPopulationOfRegion("Australia and New Zealand");
+    }
+
+    @Test
+    void getPopulationOfRegionTestNull()
+    {
+        app.getPopulationOfRegion(null);
+    }
+
+    @Test
+    void getPopulationOfRegionTestWrong()
+    {
+        app.getPopulationOfRegion("AAA");
+    }
+    // END OF POPULATION OF REGION //
+    // ******************************************* //
+
+    // POPULATION OF REGION //
+    // *********************************** //
+    @Test
+    void getPopulationOfCountryTestZero()
+    {
+        app.getPopulationOfCountry(null);
+    }
+
+    @Test
+    void getPopulationOfCountryTestMany()
+    {
+        app.getPopulationOfCountry("Congo, The Democratic Republic of the");
+    }
+
+    @Test
+    void getPopulationOfCountryTestNull()
+    {
+        app.getPopulationOfCountry(null);
+    }
+
+    @Test
+    void getPopulationOfCountryTestWrong()
+    {
+        app.getPopulationOfCountry("AAA");
+    }
+    // END OF POPULATION OF REGION //
+    // ******************************************* //
 }
+// 40437538@live.napier.ac.uk KYAW ZAW LWIN
