@@ -898,6 +898,10 @@ public class App
                 i++;
             }
         }
+        else
+        {
+            System.out.println("No city found");
+        }
     }
 
     /**
@@ -922,6 +926,10 @@ public class App
                 i++;
             }
         }
+        else
+        {
+            System.out.println("No country found");
+        }
     }
 
     /**
@@ -941,6 +949,10 @@ public class App
                             "Population outside Cities: " + result[2]
                     , type, type)
             );
+        }
+        else
+        {
+            System.out.println("No population found");
         }
     }
 }
