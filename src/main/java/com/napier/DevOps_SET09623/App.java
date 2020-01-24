@@ -16,7 +16,7 @@ public class App
         App app = new App();
 
         // Connect to database
-        app.connect();
+        app.connect("localhost:33060");
 
         // Number of cities
         int limit = 10;
@@ -165,12 +165,12 @@ public class App
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
+    public void connect(String location)
     {
         try
         {
             // Load Database driver
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
         {
@@ -187,14 +187,14 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false",
-                        "root", "root123!@#");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?" +
+                        "allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + i);
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
