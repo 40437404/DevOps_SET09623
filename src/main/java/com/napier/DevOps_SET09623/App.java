@@ -16,7 +16,14 @@ public class App
         App app = new App();
 
         // Connect to database
-        app.connect("localhost:33060");
+        if (args.length < 1)
+        {
+            app.connect("localhost:3306");
+        }
+        else
+        {
+            app.connect(args[0]);
+        }
 
         // Number of cities
         int limit = 10;

@@ -18,6 +18,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <finalName>DevOps_SET09623</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.napier.DevOps_SET09623.App</mainClass>
@@ -26,6 +27,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                     <execution>
