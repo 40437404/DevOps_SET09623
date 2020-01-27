@@ -47,11 +47,11 @@ public class App
             }
         }
     }
-    public void theWholeWorldPopulation(){
+    public void thePopulationofCity(){
         if (con != null) {
             try {
                 // sql query
-                String query = "SELECT SUM(Population) FROM world.country;";
+                String query = "SELECT SUM(Population) FROM world.city;";
                 // create the java statement
                 Statement st = con.createStatement();
                 // execute the query, and get a java resultset
@@ -60,7 +60,7 @@ public class App
                 while(rs.next()) {
                     long total = rs.getLong("SUM(Population)");
                     // print the results
-                    System.out.format("Total Population of the World = %s\n", total);
+                    System.out.format("Total Population of the City = %s\n", total);
                 }
                 st.close();
             } catch (Exception e) {
@@ -90,8 +90,8 @@ public class App
         // Connect to database
         a.connect();
 
-        // Get calculated population of the whole world
-        a.theWholeWorldPopulation();
+        // Get calculated population of city
+        a.thePopulationofCity();
 
         // Disconnect from database
         a.disconnect();
