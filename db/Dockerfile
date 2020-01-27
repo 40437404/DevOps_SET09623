@@ -9,4 +9,4 @@ COPY world_db/*.sql /tmp/
 #THIS IIS SPECIFIC TO MYSQL
 COPY world_db/world.sql /docker-entrypoint-initdb.d
 #SET THE ROOT PASSWORD
-ENV MYSQL_ROOT_PASSWORD root123!@#
+ENV MYSQL_ROOT_PASSWORD example
