@@ -47,7 +47,7 @@ public class App
             }
         }
     }
-    public void thePopulationofCity(){
+    public void thePopulationOfCity(){
         if (con != null) {
             try {
                 // sql query
@@ -64,7 +64,7 @@ public class App
                 }
                 st.close();
             } catch (Exception e) {
-                System.out.println("Error Calculating World Population");
+                System.out.println("Error Calculating City Population");
             }
         }
     }
@@ -90,8 +90,8 @@ public class App
         // Connect to database
         a.connect();
 
-        // Get calculated population of city
-        a.thePopulationofCity();
+        // Get calculated population of the city
+        a.thePopulationOfCity();
 
         // Disconnect from database
         a.disconnect();
