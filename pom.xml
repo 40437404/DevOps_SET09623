@@ -6,7 +6,7 @@
 
     <groupId>com.napier.DevOps_SET09623</groupId>
     <artifactId>DevOps_SET09623</artifactId>
-    <version>0.1.0.1</version>
+    <version>0.1.0.2</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
