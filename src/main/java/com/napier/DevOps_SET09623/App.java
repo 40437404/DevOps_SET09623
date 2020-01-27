@@ -1,8 +1,10 @@
 package com.napier.DevOps_SET09623;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+
 import static java.lang.String.format;
+import static java.util.Map.*;
 
 public class App
 {
@@ -18,7 +20,7 @@ public class App
         // Connect to database
         if (args.length < 1)
         {
-            app.connect("localhost:3306");
+            app.connect("localhost:33060");
         }
         else
         {
@@ -159,6 +161,8 @@ public class App
         getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
         // Display results
         app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
+
+        app.sortLanguageByPercentage();
 
         // Disconnect from database
         app.disconnect();
@@ -821,6 +825,81 @@ public class App
             result[1] = populationOfCity;
             result[2] = populationOfNotCity;
             return result;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+
+    public void sortLanguageByPercentage()
+    {
+        String[] languages = new String[]{"Chinese","English", "Hindi", "Spanish", "Arabic"};
+        Float[] percentage = new Float[5];
+        int i = 0;
+        for (String language: languages)
+        {
+            percentage[i] = getLanguagePercentage(language);
+            i++;
+        }
+        Map<Float, String> languagePercentage = new TreeMap<>(Collections.reverseOrder());
+        int j = 0;
+        while (j < languages.length)
+        {
+            languagePercentage.put(percentage[j], languages[j]);
+            j++;
+        }
+        Set<Entry<Float, String>> set = languagePercentage.entrySet();
+        for (Object o : set) {
+            @SuppressWarnings("unchecked")
+            Entry<Float, String> me = (Entry<Float, String>) o;
+            System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
+        }
+    }
+
+    public Float getLanguagePercentage(String language)
+    {
+        try
+        {
+            long languagePopulation = 0;
+            long worldPopulation;
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getPopulation = format(
+                    "SELECT country.population, countrylanguage.percentage FROM countrylanguage " +
+                            "INNER JOIN country ON country.code=countrylanguage.countrycode " +
+                            "WHERE countrylanguage.language='%s';"
+                    , language);
+            // Execute SQL statement
+            ResultSet rset1 = stmt.executeQuery(getPopulation);
+            // Get population
+            if (!rset1.next())
+                return null;
+            else
+            {
+                long population;
+                double percentage;
+                long countryPopulation;
+                ArrayList<Long> countryPopulationArray = new ArrayList<>();
+                do {
+                    population = rset1.getLong("population");
+                    percentage = rset1.getDouble("percentage");
+                    countryPopulation = (long) ((percentage/100)*population);
+                    countryPopulationArray.add(countryPopulation);
+                } while(rset1.next());
+                for (long popul: countryPopulationArray)
+                    languagePopulation += popul;
+            }
+            String getWorldPopulation = "SELECT SUM(Population) FROM country;";
+            ResultSet rset2 = stmt.executeQuery(getWorldPopulation);
+            if (!rset2.next())
+                return null;
+            else
+                worldPopulation = rset2.getLong("SUM(Population)");
+            return ((float) languagePopulation/(float) worldPopulation) * 100;
         }
         catch (Exception e)
         {
