@@ -47,11 +47,11 @@ public class App
             }
         }
     }
-    public void nPopulateCountriesInTheRegion(String Region,int Limit){
+    public void populationOfACountry(String Name){
         if (con != null)
         {
             try { //To Catch Error
-                String execute = "SELECT * FROM country where Region= '"+ Region +"' ORDER BY Population DESC limit "+ Limit +";";
+                String execute = "SELECT * FROM country where Name= '"+ Name +"' ORDER BY Population";
                 //Preparing mysql command as a string
                 Statement st = con.createStatement(); //Statement Creation
                 ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
@@ -59,8 +59,7 @@ public class App
                     String Code = rs.getString("Code"); //Creating Variable For Country Code
                     String name = rs.getString("Name"); //Creating Variable For Country Name
                     int populationnumber = rs.getInt("Population"); //Creating Variable For Population
-                    String region = rs.getString("Region"); //Creating Variable For Continent
-                    System.out.format("Code = %s, Name = %s,Population = %s, Region = %s\n", Code, name, populationnumber,region); //Output Statement
+                    System.out.format("Code = %s, Name = %s,Population = %s\n", Code, name, populationnumber); //Output Statement
                 }
                 st.close(); //Closing Statement
             } catch (Exception e) {
@@ -86,9 +85,9 @@ public class App
         App a = new App(); // Create new Application
         a.connect();// Connect to database
         // Variable Preparation
-        String Region = "Middle East";
+        String Name = "Aruba";
         int Limit = 10;
-        a.nPopulateCountriesInTheRegion(Region,Limit);
+        a.populationOfACountry(Name);
         // Disconnect from database
         a.disconnect();
     }
