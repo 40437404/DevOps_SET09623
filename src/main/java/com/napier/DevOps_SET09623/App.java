@@ -47,11 +47,11 @@ public class App
             }
         }
     }
-    public void thePopulationOfCity(){
+    public void thePopulationOfdistrict(String District){
         if (con != null) {
             try {
                 // sql query
-                String query = "SELECT SUM(Population) FROM world.city;";
+                String query = "SELECT SUM(Population) FROM world.city where District='"+ District +"';";
                 // create the java statement
                 Statement st = con.createStatement();
                 // execute the query, and get a java resultset
@@ -60,7 +60,7 @@ public class App
                 while(rs.next()) {
                     long total = rs.getLong("SUM(Population)");
                     // print the results
-                    System.out.format("Total Population of the City = %s\n", total);
+                    System.out.format("Total Population of the District %s = %s\n",District, total);
                 }
                 st.close();
             } catch (Exception e) {
@@ -89,9 +89,9 @@ public class App
 
         // Connect to database
         a.connect();
-
+        String District = "Aceh";
         // Get calculated population of the city
-        a.thePopulationOfCity();
+        a.thePopulationOfdistrict(District);
 
         // Disconnect from database
         a.disconnect();
