@@ -968,6 +968,27 @@ public class App
         }
     }
 
+    public void theWholeContinentPopulation(String continent){
+        if (con != null) {
+            try {
+                // sql query
+                String query = "SELECT SUM(Population) FROM  world.country where Continent = '"+ continent +"';";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while(rs.next()) {
+                    long total = rs.getLong("SUM(Population)");
+                    // print the results
+                    System.out.format("Total Population of the Continent (%s) = %s\n", continent,total);
+                }
+                st.close();
+            } catch (Exception e) {
+                System.out.println("Error Calculating Continent Population");
+            }
+        }
+
     /**
      * Get population from each country, region, continent
      * @param places list of country, region, continent
