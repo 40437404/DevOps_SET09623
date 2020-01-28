@@ -6,6 +6,8 @@ package com.napier.DevOps_SET09623;
 public class Population {
     public String name;
     public long population;
-    public float populationInCities;
-    public float populationNotInCities;
+    public long populationInCities;
+    public long populationNotInCities;
+    public float percentagePopulationInCities;
+    public float percentagePopulationNotInCities;
 }
