@@ -188,6 +188,10 @@ public class App
         type = "Country";
         app.displayPopulationOfPlace(type, populationOfCountry);
 
+        // 26. Get population of the world
+        long total = app.populationOfTheWorld();
+        app.displayPopulation("World", total);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -939,25 +943,28 @@ public class App
         }
     }
 
-    public void theWholeWorldPopulation(){
-        if (con != null) {
-            try {
-                // sql query
-                String query = "SELECT SUM(Population) FROM world.country;";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while(rs.next()) {
-                    long total = rs.getLong("SUM(Population)");
-                    // print the results
-                    System.out.format("Total Population of the World = %s\n", total);
-                }
-                st.close();
-            } catch (Exception e) {
-                System.out.println("Error Calculating World Population");
+    /**
+     * 26. Get population of the world
+     */
+    public Long populationOfTheWorld(){
+        try {
+            // sql query
+            String query = "SELECT SUM(Population) FROM world.country;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(query);
+            // iterate through the java ResultSet
+            long total = 0;
+            while(rs.next()) {
+                total = rs.getLong("SUM(Population)");
             }
+            stmt.close();
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating World Population");
+            return null;
         }
     }
 
@@ -1148,5 +1155,15 @@ public class App
                         );
             }
         }
+    }
+
+    /**
+     * Display population of world, continent, region, country, district, city
+     * @param name world or name of continent, region, country, district, city
+     * @param total total population
+     */
+    public void displayPopulation(String name, long total)
+    {
+        System.out.format("Total Population of the %s = %s\n", name, total);
     }
 }
