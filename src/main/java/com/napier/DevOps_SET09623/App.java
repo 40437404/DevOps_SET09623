@@ -400,6 +400,33 @@ public class App
             return null;
         }
     }
+    public void PopulateCitiesinContinent(String ncontinent,int nlimit){
+        if (con != null)
+        {
+            try {
+                // sql query
+                String query = "SELECT city.ID,city.Name,city.Population,country.Continent,city.CountryCode FROM city INNER JOIN country ON city.CountryCode = country.Code WHERE country.Continent = '"+ ncontinent +"' ORDER BY city.Population DESC limit "+ nlimit +";";
+                // create the java statement
+                Statement st = con.createStatement();
+                // execute the query, and get a java resultset
+                ResultSet rs = st.executeQuery(query);
+                // iterate through the java resultset
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String name = rs.getString("Name");
+                    int polp = rs.getInt("Population");
+                    String cont = rs.getString("Continent");
+                    String cc = rs.getString("CountryCode");
+
+                    // print the results
+                    System.out.format("ID = %s,Name = %s,Population = %s,Continent = %s,CountryCode = %s\n", id, name, polp,cont,cc);
+                }
+                st.close();
+            } catch (Exception e) {
+                System.out.println("Error Getting City Data");
+            }
+        }
+    }
 
     /**
      * 12. Get top populated cities around the world
