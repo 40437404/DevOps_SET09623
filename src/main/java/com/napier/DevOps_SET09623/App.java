@@ -196,6 +196,10 @@ public class App
         long totalContinent = app.populationOfTheContinent(continent);
         app.displayPopulation(continent, totalContinent);
 
+        // 28. Get population of the region
+        long totalRegion = app.populationOfTheRegion(region);
+        app.displayPopulation(continent, totalRegion);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -1000,24 +1004,28 @@ public class App
         }
     }
 
-    public void populationOfARegion(String Region){
-        if (con != null)
-        {
-            try { //To Catch Error
-                String execute = "SELECT * FROM country where Region= '"+ Region +"' ORDER BY Population;";
-                //Preparing mysql command as a string
-                Statement st = con.createStatement(); //Statement Creation
-                ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
-                while (rs.next()) { //Preparing Output
-                    String Code = rs.getString("Code"); //Creating Variable For Country Code
-                    int populationnumber = rs.getInt("Population"); //Creating Variable For Population
-                    String region = rs.getString("Region"); //Creating Variable For Continent
-                    System.out.format("Code = %s,Population = %s, Region = %s\n", Code, populationnumber,region); //Output Statement
-                }
-                st.close(); //Closing Statement
-            } catch (Exception e) {
-                e.printStackTrace(); // To Print Out System Error Messages
+    /**
+     * 28. Get population of the region
+     * @param region region name
+     * @return return population
+     */
+    public Long populationOfTheRegion(String region){
+        try { //To Catch Error
+            String execute = "SELECT SUM(Population) FROM country WHERE Region= '"+ region +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
             }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Region Population");
+            return null;
         }
     }
 
