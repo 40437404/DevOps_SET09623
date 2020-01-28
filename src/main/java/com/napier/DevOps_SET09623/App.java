@@ -204,6 +204,10 @@ public class App
         long totalCountry = app.populationOfTheCountry(country);
         app.displayPopulation(continent, totalCountry);
 
+        // 30. Get population of the district
+        long totalDistrict = app.populationOfTheDistrict(district);
+        app.displayPopulation(continent, totalDistrict);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -1058,25 +1062,29 @@ public class App
         }
     }
 
-    public void thePopulationOfdistrict(String District){
-        if (con != null) {
-            try {
-                // sql query
-                String query = "SELECT SUM(Population) FROM world.city where District='"+ District +"';";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while(rs.next()) {
-                    long total = rs.getLong("SUM(Population)");
-                    // print the results
-                    System.out.format("Total Population of the District %s = %s\n",District, total);
-                }
-                st.close();
-            } catch (Exception e) {
-                System.out.println("Error Calculating City Population");
+    /**
+     * 30. Get population of the district
+     * @param district district name
+     * @return return population
+     */
+    public Long populationOfTheDistrict(String district){
+        try {
+            // sql query
+            String execute = "SELECT SUM(Population) FROM world.city where District='"+ district +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
             }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Region District");
+            return null;
         }
     }
 
