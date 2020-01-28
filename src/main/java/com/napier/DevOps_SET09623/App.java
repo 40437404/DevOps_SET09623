@@ -200,6 +200,10 @@ public class App
         long totalRegion = app.populationOfTheRegion(region);
         app.displayPopulation(continent, totalRegion);
 
+        // 29. Get population of the country
+        long totalCountry = app.populationOfTheCountry(country);
+        app.displayPopulation(continent, totalCountry);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -1025,6 +1029,31 @@ public class App
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Error Calculating Region Population");
+            return null;
+        }
+    }
+
+    /**
+     * 29. Get population of the country
+     * @param country country name
+     * @return return population
+     */
+    public Long populationOfTheCountry(String country){
+        try { //To Catch Error
+            String execute = "SELECT SUM(Population) FROM country WHERE Name= '"+ country +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Region Country");
             return null;
         }
     }
