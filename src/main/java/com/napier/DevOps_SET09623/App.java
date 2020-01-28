@@ -1125,6 +1125,61 @@ public class App
     }
 
     /**
+     * 32. Get Language percentage
+     * @param language languages
+     * @return return speaking percentage
+     */
+    public Float getLanguagePercentage(String language)
+    {
+        try
+        {
+            long languagePopulation = 0;
+            long worldPopulation;
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getPopulation = format(
+                    "SELECT country.population, countrylanguage.percentage FROM countrylanguage " +
+                            "INNER JOIN country ON country.code=countrylanguage.countrycode " +
+                            "WHERE countrylanguage.language='%s';"
+                    , language);
+            // Execute SQL statement
+            ResultSet rset1 = stmt.executeQuery(getPopulation);
+            // Get population
+            if (!rset1.next())
+                return null;
+            else
+            {
+                long population;
+                double percentage;
+                long countryPopulation;
+                ArrayList<Long> countryPopulationArray = new ArrayList<>();
+                do {
+                    population = rset1.getLong("population");
+                    percentage = rset1.getDouble("percentage");
+                    countryPopulation = (long) ((percentage/100)*population);
+                    countryPopulationArray.add(countryPopulation);
+                } while(rset1.next());
+                for (long popul: countryPopulationArray)
+                    languagePopulation += popul;
+            }
+            String getWorldPopulation = "SELECT SUM(Population) FROM country;";
+            ResultSet rset2 = stmt.executeQuery(getWorldPopulation);
+            if (!rset2.next())
+                return null;
+            else
+                worldPopulation = rset2.getLong("SUM(Population)");
+            return ((float) languagePopulation/(float) worldPopulation) * 100;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+
+    /**
      * Get population from each country, region, continent
      * @param places list of country, region, continent
      * @param column_name column name such as Name, Region, Continent
@@ -1188,6 +1243,9 @@ public class App
         }
     }
 
+    /**
+     * Sort language by percentage
+     */
     public void sortLanguageByPercentage()
     {
         String[] languages = new String[]{"Chinese","English", "Hindi", "Spanish", "Arabic"};
@@ -1210,56 +1268,6 @@ public class App
             @SuppressWarnings("unchecked")
             Entry<Float, String> me = (Entry<Float, String>) o;
             System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
-        }
-    }
-
-    public Float getLanguagePercentage(String language)
-    {
-        try
-        {
-            long languagePopulation = 0;
-            long worldPopulation;
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String getPopulation = format(
-                    "SELECT country.population, countrylanguage.percentage FROM countrylanguage " +
-                            "INNER JOIN country ON country.code=countrylanguage.countrycode " +
-                            "WHERE countrylanguage.language='%s';"
-                    , language);
-            // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getPopulation);
-            // Get population
-            if (!rset1.next())
-                return null;
-            else
-            {
-                long population;
-                double percentage;
-                long countryPopulation;
-                ArrayList<Long> countryPopulationArray = new ArrayList<>();
-                do {
-                    population = rset1.getLong("population");
-                    percentage = rset1.getDouble("percentage");
-                    countryPopulation = (long) ((percentage/100)*population);
-                    countryPopulationArray.add(countryPopulation);
-                } while(rset1.next());
-                for (long popul: countryPopulationArray)
-                    languagePopulation += popul;
-            }
-            String getWorldPopulation = "SELECT SUM(Population) FROM country;";
-            ResultSet rset2 = stmt.executeQuery(getWorldPopulation);
-            if (!rset2.next())
-                return null;
-            else
-                worldPopulation = rset2.getLong("SUM(Population)");
-            return ((float) languagePopulation/(float) worldPopulation) * 100;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get population");
-            return null;
         }
     }
 
