@@ -88,15 +88,21 @@ public class App
 
         // 9. Get populated cities in the region
         ArrayList<City> getCitiesInRegion;
-        getCitiesInRegion = app.cityInRegionDesc(continent);
+        getCitiesInRegion = app.cityInRegionDesc(region);
         // Display results
         app.displayTopPopulatedCities(getCitiesInRegion);
 
         // 10. Get populated cities in the country
         ArrayList<City> getCitiesInCountry;
-        getCitiesInCountry = app.cityInCountryDesc(continent);
+        getCitiesInCountry = app.cityInCountryDesc(country);
         // Display results
         app.displayTopPopulatedCities(getCitiesInCountry);
+
+        // 11. Get populated cities in the district
+        ArrayList<City> getCitiesInDistrict;
+        getCitiesInDistrict = app.cityInDistrictDesc(district);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInDistrict);
 
         // 12. Get top N populated cities worldwide
         ArrayList<City> getTopCitiesInWorld;
@@ -456,7 +462,7 @@ public class App
                     "WHERE country.Region = '"+ region +"' ORDER BY city.Population DESC;";
             // create the java statement
             Statement stmt = con.createStatement();
-            // execute the query, and get a java resultset
+            // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(getCitiesInRegion);
             // Get cities from query
             return getCitiesFromQuery(rset);
@@ -469,7 +475,7 @@ public class App
 
     /**
      * 10. Get populated cities in the country
-     * @param country name if country
+     * @param country name of country
      * @return return an ArrayList of populated cities in a country
      */
     public ArrayList<City> cityInCountryDesc(String country){
@@ -480,7 +486,7 @@ public class App
                     "WHERE country.Code = '"+ country +"' ORDER BY city.Population DESC;";
             // create the java statement
             Statement stmt = con.createStatement();
-            // execute the query, and get a java resultset
+            // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(getCitiesInCountry);
             // Get cities from query
             return getCitiesFromQuery(rset);
@@ -490,24 +496,26 @@ public class App
             return null;
         }
     }
-    public void TopNPopulatedCitiesInADistrict(String District, int Limit){
-        if (con != null)
-        {
-            try { //To Catch Error
-                String execute = "SELECT * FROM city where District= '"+ District +"' ORDER BY Population DESC limit "+ Limit +";";
-                //Preparing mysql command as a string
-                Statement st = con.createStatement(); //Statement Creation
-                ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
-                while (rs.next()) { //Preparing Output
-                    String Code = rs.getString("CountryCode"); //Creating Variable For Country Code
-                    String name = rs.getString("Name"); //Creating Variable For Country Name
-                    int populationnumber = rs.getInt("Population"); //Creating Variable For Population
-                    System.out.format("CountryCode = %s, Name = %s,Population = %s\n", Code, name, populationnumber); //Output Statement
-                }
-                st.close(); //Closing Statement
-            } catch (Exception e) {
-                e.printStackTrace(); // To Print Out System Error Messages
-            }
+
+    /**
+     * 11. Get populated cities in the district
+     * @param district name of district
+     * @return return an ArrayList of populated cities in a district
+     */
+    public ArrayList<City> cityInDistrictDesc(String district){
+        try { //To Catch Error
+            String getCitiesInDistrict = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city WHERE District= '"+ district +"' ORDER BY Population DESC;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rset = stmt.executeQuery(getCitiesInDistrict);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the district");
+            return null;
         }
     }
 
@@ -884,7 +892,7 @@ public class App
             {
                 // Create string for SQL statement
                 String getPopulation = format(
-                        "SELECT Population FROM country WHERE %s='%s';"
+                        "SELECT SUM(Population) FROM country WHERE %s='%s';"
                         , column_name, place);
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(getPopulation);
@@ -893,7 +901,7 @@ public class App
                 if (!rset.next())
                     return null;
                 else {
-                    population = rset.getLong("Population");
+                    population = rset.getLong("SUM(Population)");
                 }
                 // Create string for SQL statement
                 String getCityPopulation = format(
@@ -1045,7 +1053,7 @@ public class App
             for (Population population: result)
             {
                 System.out.println(
-                        type + "Name: " + population.name + "\n" +
+                        type + " Name: " + population.name + "\n" +
                                 "Population of "+ type +": " + population.population + "\n" +
                                 "Population in Cities: " + population.populationInCities + "\n" +
                                 "Percentage Population in Cities: " + population.percentagePopulationInCities + "%\n" +
