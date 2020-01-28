@@ -86,6 +86,11 @@ public class App
         // Display results
         app.displayTopPopulatedCities(getCitiesInContinent);
 
+        // 9. Get populated cities in the region
+        ArrayList<City> getCitiesInRegion;
+        getCitiesInRegion = app.cityInRegionDesc(continent);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInRegion);
 
         // 12. Get top N populated cities worldwide
         ArrayList<City> getTopCitiesInWorld;
@@ -408,6 +413,11 @@ public class App
         }
     }
 
+    /**
+     * 8. Get populated cities in the continent
+     * @param continent name of continent
+     * @return return an ArrayList of populated cities in a continent
+     */
     public ArrayList<City> cityInContinentDesc(String continent){
         try {
             // sql query
@@ -426,31 +436,28 @@ public class App
             return null;
         }
     }
-    public void PopulateCitiesinRegion(String nregion,int nlimit){
-        if (con != null)
-        {
-            try {
-                // sql query
-                String query = "SELECT city.ID,city.Name,city.Population,country.Region,city.CountryCode FROM city INNER JOIN country ON city.CountryCode = country.Code WHERE country.Region = '"+ nregion +"' ORDER BY city.Population DESC limit "+ nlimit +";";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while (rs.next()) {
-                    int id = rs.getInt("ID");
-                    String name = rs.getString("Name");
-                    int polp = rs.getInt("Population");
-                    String reg = rs.getString("Region");
-                    String cc = rs.getString("CountryCode");
 
-                    // print the results
-                    System.out.format("ID = %s,Name = %s,Population = %s,Region = %s,CountryCode = %s\n", id, name, polp,reg,cc);
-                }
-                st.close();
-            } catch (Exception e) {
-                System.out.println("Error Getting City Data");
-            }
+    /**
+     * 9. Get populated cities in the region
+     * @param region name of region
+     * @return return an ArrayList of populated cities in a region
+     */
+    public ArrayList<City> cityInRegionDesc(String region){
+        try {
+            // sql query
+            String getCitiesInRegion = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Region = '"+ region +"' ORDER BY city.Population DESC;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java resultset
+            ResultSet rset = stmt.executeQuery(getCitiesInRegion);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the region");
+            return null;
         }
     }
 
