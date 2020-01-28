@@ -189,8 +189,12 @@ public class App
         app.displayPopulationOfPlace(type, populationOfCountry);
 
         // 26. Get population of the world
-        long total = app.populationOfTheWorld();
-        app.displayPopulation("World", total);
+        long totalWorld = app.populationOfTheWorld();
+        app.displayPopulation("World", totalWorld);
+
+        // 27. Get population of the continent
+        long totalContinent = app.populationOfTheContinent(continent);
+        app.displayPopulation(continent, totalContinent);
 
         // Disconnect from database
         app.disconnect();
@@ -945,6 +949,7 @@ public class App
 
     /**
      * 26. Get population of the world
+     * @return return population
      */
     public Long populationOfTheWorld(){
         try {
@@ -968,26 +973,32 @@ public class App
         }
     }
 
-    public void theWholeContinentPopulation(String continent){
-        if (con != null) {
-            try {
-                // sql query
-                String query = "SELECT SUM(Population) FROM  world.country where Continent = '"+ continent +"';";
-                // create the java statement
-                Statement st = con.createStatement();
-                // execute the query, and get a java resultset
-                ResultSet rs = st.executeQuery(query);
-                // iterate through the java resultset
-                while(rs.next()) {
-                    long total = rs.getLong("SUM(Population)");
-                    // print the results
-                    System.out.format("Total Population of the Continent (%s) = %s\n", continent,total);
-                }
-                st.close();
-            } catch (Exception e) {
-                System.out.println("Error Calculating Continent Population");
+    /**
+     * 27. Get population of the continent
+     * @param continent continent name
+     * @return return population
+     */
+    public Long populationOfTheContinent(String continent) {
+        try {
+            // sql query
+            String query = "SELECT SUM(Population) FROM  world.country WHERE Continent = '" + continent + "';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(query);
+            // iterate through the java ResultSet
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
             }
+            stmt.close();
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Continent Population");
+            return null;
         }
+    }
 
     /**
      * Get population from each country, region, continent
