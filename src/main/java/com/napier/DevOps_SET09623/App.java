@@ -1,8 +1,10 @@
 package com.napier.DevOps_SET09623;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+
 import static java.lang.String.format;
+import static java.util.Map.*;
 
 public class App
 {
@@ -35,130 +37,186 @@ public class App
         String region = "Caribbean";
         // Continent name
         String continent = "Asia";
-        // Array of results
-        long[] result;
+        // City name
+        String city = "Tokyo";
         // Store type of place
         String type;
-        // Store name of country, continent or region
-        String name;
 
-        // Get top populated cities worldwide
-        ArrayList<City> getTopCities;
-        getTopCities = app.topPopulatedCities(limit);
-        // Display results
-        app.displayTopPopulatedCities(getTopCities);
-
-        // Get top populated cities in a district
-        ArrayList<City> getTopCitiesInDistrict;
-        getTopCitiesInDistrict = app.populatedCitiesInDistrict(district);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInDistrict);
-
-        // Get top populated cities in a country
-        ArrayList<City> getTopCitiesInCountry;
-        getTopCitiesInCountry = app.populatedCitiesInACountry(country);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInCountry);
-
-        // Get populated cities in a region
-        ArrayList<City> getCitiesInRegion;
-        getCitiesInRegion = app.cityInRegionDesc(region);
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInRegion);
-
-        // Get populated cities in a continent
-        ArrayList<City> getCitiesInContinent;
-        getCitiesInContinent = app.cityInContinentDesc(continent);
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInContinent);
-
-        // Get populated cities in the world
-        ArrayList<City> getCitiesInWorld;
-        getCitiesInWorld = app.cityInWorldDesc();
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInWorld);
-
-        // Get populated capital cities in a region
-        ArrayList<City> capitalCitiesInRegion;
-        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region, limit);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInRegion);
-
-        // Get populated capital cities in a continent
-        ArrayList<City> capitalCitiesInContinent;
-        capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent, limit);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInContinent);
-
-        // Get populated capital cities in the world
-        ArrayList<City> capitalCitiesInWorld;
-        capitalCitiesInWorld = app.populateCapitalCitiesInWorld(limit);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInWorld);
-
-        // Get populated capital cities in the world
-        ArrayList<City> capitalCitiesInRegionDesc;
-        capitalCitiesInRegionDesc = app.capitalCityInRegionDesc(region);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
-
-
-        // Get Population of a region
-        result = app.getPopulationOfRegion(region);
-        // Display results
-        type = "Region";
-        name = region;
-        app.displayPopulationOfPlace(type, name, result);
-
-        // Get Population of a country
-        result = app.getPopulationOfCountry(country);
-        // Display results
-        type = "Country";
-        name = country;
-        app.displayPopulationOfPlace(type, name, result);
-
-        // Get Population of a continent
-        result = app.getPopulationOfContinent(continent);
-        // Display results
-        type = "Continent";
-        name = continent;
-        app.displayPopulationOfPlace(type, name, result);
-
-        // Get Populated Countries of a region
-        ArrayList<Country> getPopulatedCountriesOfRegion;
-        getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
-        // Display results
-        app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
-
-        // Get Populated Countries of a continent
-        ArrayList<Country> getPopulatedCountriesOfContinent;
-        getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
-        // Display results
-        app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
-
-        // Get Populated Countries of a continent
+        // 1. Get Populated Countries of the world
         ArrayList<Country> getPopulatedCountriesOfWorld;
         getPopulatedCountriesOfWorld = app.worldCountryLargeToSmall();
         // Display results
         app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
 
-        // Get Populated certain number of Countries of a region
-        ArrayList<Country> getNPopulatedCountriesInRegion;
-        getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
+        // 2. Get Populated Countries of a continent
+        ArrayList<Country> getPopulatedCountriesOfContinent;
+        getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
         // Display results
-        app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
+        app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
 
-        // Get Populated certain number of Countries of a continent
+        // 3. Get Populated Countries of a region
+        ArrayList<Country> getPopulatedCountriesOfRegion;
+        getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
+        // Display results
+        app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
+
+        // 4. Get Populated certain number of Countries of world
+        ArrayList<Country> getNPopulatedCountriesInWorld;
+        getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
+        // Display results
+        app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
+
+        // 5. Get Populated certain number of Countries of a continent
         ArrayList<Country> getNPopulatedCountriesInContinent;
         getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
         // Display results
         app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
 
-        // Get Populated certain number of Countries of a continent
-        ArrayList<Country> getNPopulatedCountriesInWorld;
-        getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
+        // 6. Get Populated certain number of Countries of a region
+        ArrayList<Country> getNPopulatedCountriesInRegion;
+        getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
         // Display results
-        app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
+        app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
+
+        // 7. Get populated cities in the world
+        ArrayList<City> getCitiesInWorld;
+        getCitiesInWorld = app.cityInWorldDesc();
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInWorld);
+
+        // 8. Get populated cities in the continent
+        ArrayList<City> getCitiesInContinent;
+        getCitiesInContinent = app.cityInContinentDesc(continent);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInContinent);
+
+        // 9. Get populated cities in the region
+        ArrayList<City> getCitiesInRegion;
+        getCitiesInRegion = app.cityInRegionDesc(region);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInRegion);
+
+        // 10. Get populated cities in the country
+        ArrayList<City> getCitiesInCountry;
+        getCitiesInCountry = app.cityInCountryDesc(country);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInCountry);
+
+        // 11. Get populated cities in the district
+        ArrayList<City> getCitiesInDistrict;
+        getCitiesInDistrict = app.cityInDistrictDesc(district);
+        // Display results
+        app.displayTopPopulatedCities(getCitiesInDistrict);
+
+        // 12. Get top N populated cities worldwide
+        ArrayList<City> getTopCitiesInWorld;
+        getTopCitiesInWorld = app.topNPopulatedCitiesInWorld(limit);
+        // Display results
+        app.displayTopPopulatedCities(getTopCitiesInWorld);
+
+        // 13. Get top N populated cities in a continent
+        ArrayList<City> getTopCitiesInContinent;
+        getTopCitiesInContinent = app.topNPopulatedCitiesInContinent(continent, limit);
+        // Display results
+        app.displayTopPopulatedCities(getTopCitiesInContinent);
+
+        // 14. Get top N populated cities in a region
+        ArrayList<City> getTopCitiesInRegion;
+        getTopCitiesInRegion = app.topNPopulatedCitiesInRegion(region, limit);
+        // Display results
+        app.displayTopPopulatedCities(getTopCitiesInRegion);
+
+        // 15. Get top N populated cities in a country
+        ArrayList<City> getTopCitiesInCountry;
+        getTopCitiesInCountry = app.topNPopulatedCitiesInCountry(country, limit);
+        // Display results
+        app.displayTopPopulatedCities(getTopCitiesInCountry);
+
+        // 16. Get top N populated cities in a district
+        ArrayList<City> getTopCitiesInDistrict;
+        getTopCitiesInDistrict = app.topNPopulatedCitiesInDistrict(district, limit);
+        // Display results
+        app.displayTopPopulatedCities(getTopCitiesInDistrict);
+
+        // 17. Get populated capital cities in the world
+        ArrayList<City> capitalCitiesInWorld;
+        capitalCitiesInWorld = app.populateCapitalCitiesInWorld();
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInWorld);
+
+        // 18. Get populated capital cities in a continent
+        ArrayList<City> capitalCitiesInContinent;
+        capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInContinent);
+
+        // 19. Get populated capital cities in a region
+        ArrayList<City> capitalCitiesInRegion;
+        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInRegion);
+
+        // 20. Get N populated capital cities in the world
+        ArrayList<City> capitalCitiesInWorldDesc;
+        capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
+
+        // 21. Get N populated capital cities in the continent
+        ArrayList<City> capitalCitiesInContinentDesc;
+        capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
+
+        // 22. Get N populated capital cities in the region
+        ArrayList<City> capitalCitiesInRegionDesc;
+        capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
+
+        // 23. Get Population of a continent
+        ArrayList<Population> populationOfContinent = app.getPopulationOfContinent();
+        // Display results
+        type = "Continent";
+        app.displayPopulationOfPlace(type, populationOfContinent);
+
+        // 24. Get Population of a region
+        ArrayList<Population> populationOfRegion = app.getPopulationOfRegion();
+        // Display results
+        type = "Region";
+        app.displayPopulationOfPlace(type, populationOfRegion);
+
+        // 25. Get Population of a country
+        ArrayList<Population> populationOfCountry = app.getPopulationOfCountry();
+        // Display results
+        type = "Country";
+        app.displayPopulationOfPlace(type, populationOfCountry);
+
+        // 26. Get population of the world
+        long totalWorld = app.populationOfTheWorld();
+        app.displayPopulation("World", totalWorld);
+
+        // 27. Get population of the continent
+        long totalContinent = app.populationOfTheContinent(continent);
+        app.displayPopulation(continent, totalContinent);
+
+        // 28. Get population of the region
+        long totalRegion = app.populationOfTheRegion(region);
+        app.displayPopulation(region, totalRegion);
+
+        // 29. Get population of the country
+        long totalCountry = app.populationOfTheCountry(country);
+        app.displayPopulation(country, totalCountry);
+
+        // 30. Get population of the district
+        long totalDistrict = app.populationOfTheDistrict(district);
+        app.displayPopulation(district, totalDistrict);
+
+        // 31. Get population of the city
+        long totalCity = app.populationOfTheCity(city);
+        app.displayPopulation(city, totalCity);
+
+        app.sortLanguageByPercentage();
 
         // Disconnect from database
         app.disconnect();
@@ -231,11 +289,284 @@ public class App
     }
 
     /**
-     * Get top populated cities around the world
+     * 1. Get top populated countries of the world
+     * @return return an ArrayList of top populated countries in the world
+     */
+    public ArrayList<Country> worldCountryLargeToSmall()
+    {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = "SELECT Code, Name, Continent, Region, Population, Capital FROM " +
+                    "country ORDER BY Population DESC;";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the world");
+            return null;
+        }
+    }
+
+    /**
+     * 2. Get top populated countries of a continent
+     * @param continent continent name
+     * @return return an ArrayList of top populated countries in that continent
+     */
+    public ArrayList<Country> continentCountryLargeToSmall(String continent)
+    {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = format(
+                    "SELECT Code, Name, Continent, Region, Population, Capital FROM country WHERE " +
+                            "Continent='%s' ORDER BY Population DESC;"
+                    , continent);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries of the continent");
+            return null;
+        }
+    }
+
+    /**
+     * 3. Get top populated countries of a region
+     * @param region region name
+     * @return return an ArrayList of top populated countries in that region
+     */
+    public ArrayList<Country> regionCountryLargeToSmall(String region)
+    {
+        try
+        {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = format(
+                    "SELECT Code, Name, Continent, Region, Population, Capital FROM country WHERE " +
+                            "Region='%s' ORDER BY Population DESC;"
+                    , region);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCountryFromQuery(rset);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries of the region");
+            return null;
+        }
+    }
+
+    /**
+     * 4. Get certain number of populated countries in the world
+     * @param limit number of countries
+     * @return return an ArrayList of top populated countries in the world
+     */
+    public ArrayList<Country> populateCountriesInWorld(int limit){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population, Capital FROM country " +
+                            "ORDER BY Population DESC limit %d;"
+                    , limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get countries from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the continent");
+            return null;
+        }
+    }
+
+    /**
+     * 5. Get certain number of populated countries in a continent
+     * @param continent continent name
+     * @param limit number of countries
+     * @return return an ArrayList of top populated countries in the continent
+     */
+    public ArrayList<Country> populatedCountriesInContinent(String continent, int limit){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population, Capital FROM country " +
+                            "WHERE Continent='%s' ORDER BY Population DESC limit %d;"
+                    , continent, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get countries from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the continent");
+            return null;
+        }
+    }
+
+    /**
+     * 6. Get certain number of populated countries in a region
+     * @param region region name
+     * @param limit number of countries
+     * @return return an ArrayList of top populated countries in the region
+     */
+    public ArrayList<Country> populatedCountriesInRegion(String region, int limit)
+    {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT Code, Name, Continent, Region, Population, Capital FROM country " +
+                            "WHERE Region='%s' ORDER BY Population DESC LIMIT %d;"
+                    , region, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get countries from query
+            return getCountryFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated countries in the region");
+            return null;
+        }
+    }
+
+    /**
+     * 7. Get populated cities in the world
+     * @return return an ArrayList of populated cities in the world
+     */
+    public ArrayList<City> cityInWorldDesc(){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = "SELECT * FROM city ORDER by Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the world");
+            return null;
+        }
+    }
+
+    /**
+     * 8. Get populated cities in the continent
+     * @param continent name of continent
+     * @return return an ArrayList of populated cities in a continent
+     */
+    public ArrayList<City> cityInContinentDesc(String continent){
+        try {
+            // sql query
+            String getCitiesInContinent = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Continent='"+ continent +"' ORDER BY city.Population DESC";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rset = stmt.executeQuery(getCitiesInContinent);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the continent");
+            return null;
+        }
+    }
+
+    /**
+     * 9. Get populated cities in the region
+     * @param region name of region
+     * @return return an ArrayList of populated cities in a region
+     */
+    public ArrayList<City> cityInRegionDesc(String region){
+        try {
+            // sql query
+            String getCitiesInRegion = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Region = '"+ region +"' ORDER BY city.Population DESC;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rset = stmt.executeQuery(getCitiesInRegion);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the region");
+            return null;
+        }
+    }
+
+    /**
+     * 10. Get populated cities in the country
+     * @param country name of country
+     * @return return an ArrayList of populated cities in a country
+     */
+    public ArrayList<City> cityInCountryDesc(String country){
+        try {
+            // sql query
+            String getCitiesInCountry = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Code = '"+ country +"' ORDER BY city.Population DESC;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rset = stmt.executeQuery(getCitiesInCountry);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the country");
+            return null;
+        }
+    }
+
+    /**
+     * 11. Get populated cities in the district
+     * @param district name of district
+     * @return return an ArrayList of populated cities in a district
+     */
+    public ArrayList<City> cityInDistrictDesc(String district){
+        try { //To Catch Error
+            String getCitiesInDistrict = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city WHERE District= '"+ district +"' ORDER BY Population DESC;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rset = stmt.executeQuery(getCitiesInDistrict);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the district");
+            return null;
+        }
+    }
+
+    /**
+     * 12. Get top populated cities around the world
      * @param limit number of countries
      * @return get an ArrayList of top populated cities
      */
-    public ArrayList<City> topPopulatedCities(int limit)
+    public ArrayList<City> topNPopulatedCitiesInWorld(int limit)
     {
         try
         {
@@ -259,39 +590,69 @@ public class App
     }
 
     /**
-     * Get top populated cities in a district
-     * @param district name of the district
-     * @return return an ArrayList of top populated cities in that district
+     * 13. Get populated cities in continent
+     * @param continent continent name
+     * @return return an ArrayList of populated cities in continent
      */
-    public ArrayList<City> populatedCitiesInDistrict(String district)
-    {
+    public ArrayList<City> topNPopulatedCitiesInContinent(String continent, int limit){
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = format(
-                    "SELECT * from city where District='%s' ORDER BY Population DESC;"
-                    , district);
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country on city.CountryCode = country.Code " +
+                            "WHERE country.Continent = '%s' " +
+                            "ORDER BY city.Population DESC LIMIT %d;"
+                    , continent, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
             return getCitiesFromQuery(rset);
         }
-        catch (Exception e)
-        {
+        catch (Exception e){
             System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities of the district");
+            System.out.println("Failed to get populated cities of the continent");
             return null;
         }
     }
 
     /**
-     * Get top populated cities in a country
+     * 14. Get populated cities in region
+     * @param region region name
+     * @return return an ArrayList of populated cities in region
+     */
+    public ArrayList<City> topNPopulatedCitiesInRegion(String region, int limit){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                            "WHERE country.Region = '%s' " +
+                            "ORDER BY city.Population DESC LIMIT %d;"
+                    , region, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated cities of the region");
+            return null;
+        }
+    }
+
+    /**
+     * 15. Get top populated cities in a country
      * @param country name of the country
      * @return return an ArrayList of top populated cities in that country
      */
-    public ArrayList<City> populatedCitiesInACountry(String country)
+    public ArrayList<City> topNPopulatedCitiesInCountry(String country, int limit)
     {
         try
         {
@@ -301,8 +662,8 @@ public class App
             String strSelect = format(
                     "SELECT city.Id, city.Name, city.CountryCode, city.District, city.Population " +
                             "FROM city INNER JOIN country where city.CountryCode = country.Code " +
-                            "AND country.Name = '%s' ORDER BY city.Population DESC;"
-                    , country);
+                            "AND country.Name = '%s' ORDER BY city.Population DESC LIMIT %d;"
+                    , country, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -317,74 +678,47 @@ public class App
     }
 
     /**
-     * Get populated cities in region
-     * @param region region name
-     * @return return an ArrayList of populated cities in region
+     * 16. Get top populated cities in a district
+     * @param district name of the district
+     * @return return an ArrayList of top populated cities in that district
      */
-    public ArrayList<City> cityInRegionDesc(String region){
+    public ArrayList<City> topNPopulatedCitiesInDistrict(String district, int limit)
+    {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
-                            "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
-                            "WHERE country.Region = '%s' " +
-                            "ORDER BY city.Population DESC;"
-            , region);
+            String strSelect = format(
+                    "SELECT * from city where District='%s' ORDER BY Population DESC LIMIT %d;"
+                    , district, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
             return getCitiesFromQuery(rset);
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get populated cities of the region");
+            System.out.println("Failed to get top populated cities of the district");
             return null;
         }
     }
 
     /**
-     * Get populated cities in continent
-     * @param continent continent name
-     * @return return an ArrayList of populated cities in continent
+     * 17. Get populated capital cities in the world
+     * @return return an ArrayList of top populated capital cities in the world
      */
-    public ArrayList<City> cityInContinentDesc(String continent){
+    public ArrayList<City> populateCapitalCitiesInWorld()
+    {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
-                            "FROM city INNER JOIN country on city.CountryCode = country.Code " +
-                            "WHERE country.Continent = '%s' " +
-                            "ORDER BY city.Population DESC;"
-            , continent);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCitiesFromQuery(rset);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get populated cities of the continent");
-            return null;
-        }
-    }
-
-    /**
-     * Get populated cities in the world
-     * @return return an ArrayList of populated cities in the world
-     */
-    public ArrayList<City> cityInWorldDesc(){
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect = "SELECT * FROM city ORDER by Population DESC";
+            String strSelect = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                    "ORDER BY city.Population DESC;";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -392,18 +726,47 @@ public class App
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get populated cities of the world");
+            System.out.println("Failed to get top populated cities of the world");
             return null;
         }
     }
 
     /**
-     * Get top populated capital cities in a region
+     * 18. Get top populated capital cities in a continent
+     * @param continent continent name
+     * @return return an ArrayList of top populated capital cities in that continent
+     */
+    public ArrayList<City> populateCapitalCitiesInContinent(String continent)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                            "WHERE country.Continent = '%s' " +
+                            "ORDER BY city.Population DESC;"
+                    , continent);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top populated cities of the continent");
+            return null;
+        }
+    }
+
+    /**
+     * 19. Get top populated capital cities in a region
      * @param region region name
-     * @param nCity number of cities
      * @return return an ArrayList of top populated capital cities in that country
      */
-    public ArrayList<City> populatedCapitalCitiesInRegion(String region, int nCity)
+    public ArrayList<City> populatedCapitalCitiesInRegion(String region)
     {
         try
         {
@@ -413,8 +776,8 @@ public class App
             String strSelect = format(
                     "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population FROM " +
                             "country INNER JOIN city WHERE country.Capital=city.ID AND Region='%s' " +
-                            "ORDER BY city.Population DESC LIMIT %d;"
-                    , region, nCity);
+                            "ORDER BY city.Population DESC;"
+                    , region);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -429,227 +792,63 @@ public class App
     }
 
     /**
-     * Get top populated capital cities in a continent
-     * @param continent continent name
-     * @param nCity number of cities
-     * @return return an ArrayList of top populated capital cities in that continent
+     * 20. Get all populated capital cities in world in descending order
+     * @param limit limit given by user
+     * @return return an ArrayList of populated cities in world
      */
-    public ArrayList<City> populateCapitalCitiesInContinent(String continent, int nCity)
-    {
-        try
-        {
-            // Create an SQL statement
+    public ArrayList<City> topNPopulatedCapitalCityInWorld(int limit){
+        try { //To Catch Error
+            // create the java statement
             Statement stmt = con.createStatement();
-            // Create string for SQL statement
+            String strSelect = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                    "ORDER BY city.Population DESC LIMIT "+ limit +";";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated capital cities in the world");
+            return null;
+        }
+    }
+
+    /**
+     * 21. Get all populated capital cities in region in descending order
+     * @param continent continent name
+     * @param limit limit given by user
+     * @return return an ArrayList of populated cities in a continent
+     */
+    public ArrayList<City> topNPopulatedCapitalCityInContinent(String continent, int limit){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
             String strSelect = String.format(
                     "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
                             "FROM city INNER JOIN country ON city.ID = country.Capital " +
                             "WHERE country.Continent = '%s' " +
-                            "ORDER BY city.Population DESC limit %d;"
-            , continent, nCity);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCitiesFromQuery(rset);
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities of the continent");
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @param nCity number of cities
-     * @return return an ArrayList of top populated capital cities in the world
-     */
-    public ArrayList<City> populateCapitalCitiesInWorld(int nCity)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
-                            "FROM city INNER JOIN country ON city.ID = country.Capital " +
-                            "ORDER BY city.Population DESC limit %d;"
-            , nCity);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCitiesFromQuery(rset);
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated cities of the world");
-            return null;
-        }
-    }
-
-    /**
-     * Get top populated countries of a region
-     * @param region region name
-     * @return return an ArrayList of top populated countries in that region
-     */
-    public ArrayList<Country> regionCountryLargeToSmall(String region)
-    {
-        try
-        {
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // sql query
-            String strSelect = format(
-                    "SELECT Code, Name, Continent, Region, Population FROM country WHERE " +
-                            "Region='%s' ORDER BY Population DESC;"
-                    , region);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCountryFromQuery(rset);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries of the region");
-            return null;
-        }
-    }
-
-    /**
-     * Get top populated countries of a continent
-     * @param continent continent name
-     * @return return an ArrayList of top populated countries in that continent
-     */
-    public ArrayList<Country> continentCountryLargeToSmall(String continent)
-    {
-        try {
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // sql query
-            String strSelect = format(
-                    "SELECT Code, Name, Continent, Region, Population FROM country WHERE " +
-                            "Continent='%s' ORDER BY Population DESC;"
-            , continent);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCountryFromQuery(rset);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries of the continent");
-            return null;
-        }
-    }
-
-    /**
-     * Get top populated countries of the world
-     * @return return an ArrayList of top populated countries in the world
-     */
-    public ArrayList<Country> worldCountryLargeToSmall()
-    {
-        try {
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // sql query
-            String strSelect = "SELECT Code, Name, Continent, Region, Population FROM " +
-                    "country ORDER BY Population DESC;";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCountryFromQuery(rset);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries in the world");
-            return null;
-        }
-    }
-
-    /**
-     * Get certain number of populated countries in a region
-     * @param region region name
-     * @param limit number of countries
-     * @return return an ArrayList of top populated countries in the region
-     */
-    public ArrayList<Country> populatedCountriesInRegion(String region, int limit)
-    {
-        try {
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // sql query
-            String strSelect = String.format(
-                    "SELECT Code, Name, Continent, Region, Population FROM country " +
-                            "WHERE Region='%s' ORDER BY Population DESC LIMIT %d;"
-                    , region, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            return getCountryFromQuery(rset);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries in the region");
-            return null;
-        }
-    }
-
-    /**
-     * Get certain number of populated countries in a continent
-     * @param continent continent name
-     * @param limit number of countries
-     * @return return an ArrayList of top populated countries in the continent
-     */
-    public ArrayList<Country> populatedCountriesInContinent(String continent, int limit){
-        try {
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // sql query
-            String strSelect = String.format(
-                    "SELECT Code, Name, Continent, Region, Population FROM country " +
-                            "WHERE Continent='%s' ORDER BY Population DESC limit %d;"
+                            "ORDER BY city.Population DESC LIMIT %d;"
                     , continent, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            return getCountryFromQuery(rset);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries in the continent");
+            System.out.println("Failed to get populated capital cities in the continent");
             return null;
         }
     }
 
     /**
-     * Get certain number of populated countries in the world
-     * @param limit number of countries
-     * @return return an ArrayList of top populated countries in the world
-     */
-    public ArrayList<Country> populateCountriesInWorld(int limit){
-        try {
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // sql query
-            String strSelect = String.format(
-                    "SELECT Code, Name, Continent, Region, Population FROM country " +
-                            "ORDER BY Population DESC limit %d;"
-            , limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            return getCountryFromQuery(rset);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get top populated countries in the continent");
-            return null;
-        }
-    }
-
-    /**
-     * Get all populated capital cities in region in descending order
+     * 22. Get all populated capital cities in region in descending order
      * @param region region name
+     * @param limit limit given by user
      * @return return an ArrayList of populated cities in a region
      */
-    public ArrayList<City> capitalCityInRegionDesc(String region){
+    public ArrayList<City> topNPopulatedCapitalCityInRegion(String region, int limit){
         try {
             // create the java statement
             Statement stmt = con.createStatement();
@@ -658,8 +857,8 @@ public class App
                     "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
                             "FROM city INNER JOIN country ON city.ID = country.Capital " +
                             "WHERE country.Region = '%s' " +
-                            "ORDER BY city.Population DESC;"
-            , region);
+                            "ORDER BY city.Population DESC LIMIT %d;"
+            , region, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -672,49 +871,29 @@ public class App
     }
 
     /**
-     * Get population of region
-     * @param region name of region
+     * 23. Get population of a continent
      * @return return the array of population
      */
-    public long[] getPopulationOfRegion(String region)
+    public ArrayList<Population> getPopulationOfContinent()
     {
+        ArrayList<String> continentList = new ArrayList<>();
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getRegionPopulation = format(
-                    "SELECT SUM(Population) FROM country WHERE Region='%s';"
-                    , region);
+            String getContinent = "SELECT DISTINCT continent FROM country;";
             // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
-            // Return population if valid.
-            long population;
-            if (!rset1.next())
+            ResultSet rset = stmt.executeQuery(getContinent);
+            if (!rset.next())
                 return null;
-            else {
-                population = rset1.getLong("SUM(Population)");
+            else
+            {
+                do {
+                    continentList.add(rset.getString("continent"));
+                } while (rset.next());
             }
-            // Create string for SQL statement
-            String getCityPopulationOfRegion = format(
-                    "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
-                            "city.CountryCode=country.Code AND country.Region='%s';"
-                    , region);
-            // Execute SQL statement
-            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfRegion);
-            // Return population if valid.
-            long populationOfCity;
-            if (!rset2.next())
-                return null;
-            else {
-                populationOfCity = rset2.getInt("SUM(city.Population)");
-            }
-            long populationOfNotCity = population - populationOfCity;
-            long[] result = new long[3];
-            result[0] = population;
-            result[1] = populationOfCity;
-            result[2] = populationOfNotCity;
-            return result;
+            return getPopulation(continentList, "Continent");
         }
         catch (Exception e)
         {
@@ -725,49 +904,29 @@ public class App
     }
 
     /**
-     * Get population of a country
-     * @param country country name
+     * 24. Get population of region
      * @return return the array of population
      */
-    public long[] getPopulationOfCountry(String country)
+    public ArrayList<Population> getPopulationOfRegion()
     {
+        ArrayList<String> regionList = new ArrayList<>();
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getCountryPopulation = format(
-                    "SELECT Population FROM country WHERE Name='%s';"
-                    , country);
+            String getRegion = "SELECT DISTINCT region FROM country;";
             // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getCountryPopulation);
-            // Return population if valid.
-            long population;
-            if (!rset1.next())
+            ResultSet rset = stmt.executeQuery(getRegion);
+            if (!rset.next())
                 return null;
-            else {
-                population = rset1.getLong("Population");
+            else
+            {
+                do {
+                    regionList.add(rset.getString("region"));
+                } while (rset.next());
             }
-            // Create string for SQL statement
-            String getCityPopulationOfCountry = format(
-                    "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
-                            "city.CountryCode=country.Code AND country.Name='%s';"
-                    , country);
-            // Execute SQL statement
-            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfCountry);
-            // Return population if valid.
-            long populationOfCity;
-            if (!rset2.next())
-                return null;
-            else {
-                populationOfCity = rset2.getLong("SUM(city.Population)");
-            }
-            long populationOfNotCity = population - populationOfCity;
-            long[] result = new long[3];
-            result[0] = population;
-            result[1] = populationOfCity;
-            result[2] = populationOfNotCity;
-            return result;
+            return getPopulation(regionList, "Region");
         }
         catch (Exception e)
         {
@@ -778,55 +937,337 @@ public class App
     }
 
     /**
-     * Get population of a continent
+     * 25. Get population of a country
+     * @return return the array of population
+     */
+    public ArrayList<Population> getPopulationOfCountry()
+    {
+        ArrayList<String> countryList = new ArrayList<>();
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String getCountry = "SELECT DISTINCT name FROM country;";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(getCountry);
+            if (!rset.next())
+                return null;
+            else
+            {
+                do {
+                    countryList.add(rset.getString("name"));
+                } while (rset.next());
+            }
+            return getPopulation(countryList, "Name");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+
+    /**
+     * 26. Get population of the world
+     * @return return population
+     */
+    public Long populationOfTheWorld(){
+        try {
+            // sql query
+            String query = "SELECT SUM(Population) FROM country;";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(query);
+            // iterate through the java ResultSet
+            long total = 0;
+            while(rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close();
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating World Population");
+            return null;
+        }
+    }
+
+    /**
+     * 27. Get population of the continent
      * @param continent continent name
-     * @return return the array of population
+     * @return return population
      */
-    public long[] getPopulationOfContinent(String continent)
+    public Long populationOfTheContinent(String continent) {
+        try {
+            // sql query
+            String query = "SELECT SUM(Population) FROM  country WHERE Continent = '" + continent + "';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(query);
+            // iterate through the java ResultSet
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close();
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Continent Population");
+            return null;
+        }
+    }
+
+    /**
+     * 28. Get population of the region
+     * @param region region name
+     * @return return population
+     */
+    public Long populationOfTheRegion(String region){
+        try { //To Catch Error
+            String execute = "SELECT SUM(Population) FROM country WHERE Region= '"+ region +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Region Population");
+            return null;
+        }
+    }
+
+    /**
+     * 29. Get population of the country
+     * @param country country name
+     * @return return population
+     */
+    public Long populationOfTheCountry(String country){
+        try { //To Catch Error
+            String execute = "SELECT SUM(Population) FROM country WHERE Name= '"+ country +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating Country Population");
+            return null;
+        }
+    }
+
+    /**
+     * 30. Get population of the district
+     * @param district district name
+     * @return return population
+     */
+    public Long populationOfTheDistrict(String district){
+        try {
+            // sql query
+            String execute = "SELECT SUM(Population) FROM city where District='"+ district +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating District Population");
+            return null;
+        }
+    }
+
+    /**
+     * 31. Get population of the city
+     * @param city city name
+     * @return return population
+     */
+    public Long populationOfTheCity(String city){
+        try {
+            // sql query
+            String execute = "SELECT SUM(Population) FROM city WHERE Name='"+ city +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating City Population");
+            return null;
+        }
+    }
+
+    /**
+     * 32.Get Language percentage
+     * @param language languages
+     * @return return speaking percentage
+     */
+    public Float getLanguagePercentage(String language)
     {
         try
         {
+            long languagePopulation = 0;
+            long worldPopulation;
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String getRegionPopulation = format(
-                    "SELECT SUM(Population) FROM country WHERE Continent='%s';"
-                    , continent);
+            String getPopulation = format(
+                    "SELECT country.population, countrylanguage.percentage FROM countrylanguage " +
+                            "INNER JOIN country ON country.code=countrylanguage.countrycode " +
+                            "WHERE countrylanguage.language='%s';"
+                    , language);
             // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getRegionPopulation);
-            // Return population if valid.
-            long population;
+            ResultSet rset1 = stmt.executeQuery(getPopulation);
+            // Get population
             if (!rset1.next())
                 return null;
-            else {
-                population = rset1.getLong("SUM(Population)");
+            else
+            {
+                long population;
+                double percentage;
+                long countryPopulation;
+                ArrayList<Long> countryPopulationArray = new ArrayList<>();
+                do {
+                    population = rset1.getLong("population");
+                    percentage = rset1.getDouble("percentage");
+                    countryPopulation = (long) ((percentage/100)*population);
+                    countryPopulationArray.add(countryPopulation);
+                } while(rset1.next());
+                for (long popul: countryPopulationArray)
+                    languagePopulation += popul;
             }
-            // Create string for SQL statement
-            String getCityPopulationOfContinent = format(
-                    "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
-                            "city.CountryCode=country.Code AND country.Continent='%s';"
-                    , continent);
-            // Execute SQL statement
-            ResultSet rset2 = stmt.executeQuery(getCityPopulationOfContinent);
-            // Return population if valid.
-            long populationOfCity = 0;
+            String getWorldPopulation = "SELECT SUM(Population) FROM country;";
+            ResultSet rset2 = stmt.executeQuery(getWorldPopulation);
             if (!rset2.next())
                 return null;
-            else {
-                populationOfCity += rset2.getLong("SUM(city.Population)");
-            }
-            long populationOfNotCity = population - populationOfCity;
-            long[] result = new long[3];
-            result[0] = population;
-            result[1] = populationOfCity;
-            result[2] = populationOfNotCity;
-            return result;
+            else
+                worldPopulation = rset2.getLong("SUM(Population)");
+            return ((float) languagePopulation/(float) worldPopulation) * 100;
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
             System.out.println("Failed to get population");
             return null;
+        }
+    }
+
+    /**
+     * Get population from each country, region, continent
+     * @param places list of country, region, continent
+     * @param column_name column name such as Name, Region, Continent
+     * @return return the array of population
+     */
+    public ArrayList<Population> getPopulation(ArrayList<String> places, String column_name)
+    {
+        try
+        {
+            ArrayList<Population> populationOfPlace = new ArrayList<>();
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            for (String place: places)
+            {
+                // Create string for SQL statement
+                String getPopulation = format(
+                        "SELECT SUM(Population) FROM country WHERE %s='%s';"
+                        , column_name, place);
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(getPopulation);
+                // Return population if valid.
+                long population;
+                if (!rset.next())
+                    return null;
+                else {
+                    population = rset.getLong("SUM(Population)");
+                }
+                // Create string for SQL statement
+                String getCityPopulation = format(
+                        "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
+                                "city.CountryCode=country.Code AND country.%s='%s';"
+                        , column_name, place);
+                // Execute SQL statement
+                ResultSet rset1 = stmt.executeQuery(getCityPopulation);
+                // Return population if valid.
+                long populationOfCity;
+                if (!rset1.next())
+                    return null;
+                else {
+                    populationOfCity = rset1.getLong("SUM(city.Population)");
+                }
+                long populationOfNotCity = population - populationOfCity;
+                float percentagePopulationInCity = ((float) populationOfCity / (float) population) * 100;
+                float percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
+                Population pop = new Population();
+                pop.name = place;
+                pop.population = population;
+                pop.populationInCities = populationOfCity;
+                pop.populationNotInCities = populationOfNotCity;
+                pop.percentagePopulationInCities = percentagePopulationInCity;
+                pop.percentagePopulationNotInCities = percentagePopulationNotInCity;
+                populationOfPlace.add(pop);
+            }
+            return populationOfPlace;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
+    }
+
+    /**
+     * Sort language by percentage
+     */
+    public void sortLanguageByPercentage()
+    {
+        String[] languages = new String[]{"Chinese","English", "Hindi", "Spanish", "Arabic"};
+        Float[] percentage = new Float[5];
+        int i = 0;
+        for (String language: languages)
+        {
+            percentage[i] = getLanguagePercentage(language);
+            i++;
+        }
+        Map<Float, String> languagePercentage = new TreeMap<>(Collections.reverseOrder());
+        int j = 0;
+        while (j < languages.length)
+        {
+            languagePercentage.put(percentage[j], languages[j]);
+            j++;
+        }
+        Set<Entry<Float, String>> set = languagePercentage.entrySet();
+        for (Object o : set) {
+            @SuppressWarnings("unchecked")
+            Entry<Float, String> me = (Entry<Float, String>) o;
+            System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
         }
     }
 
@@ -877,6 +1318,7 @@ public class App
                 ctry.continent = rset.getString("Continent");
                 ctry.region = rset.getString("Region");
                 ctry.population = rset.getLong("Population");
+                ctry.capital = rset.getString("Capital");
                 country.add(ctry);
             } while (rset.next());
             return country;
@@ -934,20 +1376,33 @@ public class App
     /**
      * Display population
      * @param type type of place (region, country or continent)
-     * @param name name of place
      * @param result array of population
      */
-    public  void displayPopulationOfPlace(String type, String name, long[] result)
+    public  void displayPopulationOfPlace(String type, ArrayList<Population> result)
     {
         if (result != null)
         {
-            System.out.println(format(
-                    "%s Name: " + name + "\n" +
-                            "Population of %s: " + result[0] + "\n" +
-                            "Population in Cities: " + result[1] + "\n" +
-                            "Population outside Cities: " + result[2]
-                    , type, type)
-            );
+            for (Population population: result)
+            {
+                System.out.println(
+                        type + " Name: " + population.name + "\n" +
+                                "Population of "+ type +": " + population.population + "\n" +
+                                "Population in Cities: " + population.populationInCities + "\n" +
+                                "Percentage Population in Cities: " + population.percentagePopulationInCities + "%\n" +
+                                "Population outside Cities: " + population.populationNotInCities + "\n" +
+                                "Percentage Population outside Cities: " + population.percentagePopulationNotInCities + "%"
+                        );
+            }
         }
+    }
+
+    /**
+     * Display population of world, continent, region, country, district, city
+     * @param name world or name of continent, region, country, district, city
+     * @param total total population
+     */
+    public void displayPopulation(String name, long total)
+    {
+        System.out.format("Total Population of the %s = %s\n", name, total);
     }
 }

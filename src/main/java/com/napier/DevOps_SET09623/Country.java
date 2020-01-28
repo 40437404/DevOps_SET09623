@@ -29,4 +29,9 @@ public class Country {
      * Population of country
      */
     public long population;
+
+    /**
+     * Capital city of that country
+     */
+    public String capital;
 }

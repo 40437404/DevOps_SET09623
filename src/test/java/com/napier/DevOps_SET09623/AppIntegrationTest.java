@@ -23,7 +23,7 @@ public class AppIntegrationTest
     void testTopPopulatedCities()
     {
         ArrayList<City> getTopCities;
-        getTopCities = app.topPopulatedCities(1);
+        getTopCities = app.topNPopulatedCitiesInWorld(1);
         for (City city: getTopCities)
         {
             assertEquals(city.id, 1024);

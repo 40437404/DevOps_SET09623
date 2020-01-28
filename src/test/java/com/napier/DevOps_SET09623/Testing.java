@@ -23,25 +23,25 @@ public class Testing
     @Test
     void populateCapitalCitiesInWorldTestZero()
     {
-        app.populateCapitalCitiesInWorld(0);
+        app.populateCapitalCitiesInWorld();
     }
 
     @Test
     void populateCapitalCitiesInWorldTestMany()
     {
-        app.topPopulatedCities(9999);
+        app.topNPopulatedCitiesInWorld(9999);
     }
 
     @Test
     void populateCapitalCitiesInWorldTestNull()
     {
-        app.populateCapitalCitiesInWorld(0);
+        app.populateCapitalCitiesInWorld();
     }
 
     @Test
     void populateCapitalCitiesInWorldTestWrong()
     {
-        app.populateCapitalCitiesInWorld(999999999);
+        app.populateCapitalCitiesInWorld();
     }
     //END OF WORLD//
     //*********************************************//
@@ -51,25 +51,25 @@ public class Testing
     @Test
     void populatedCapitalCitiesInRegionTestZero()
     {
-        app.populatedCapitalCitiesInRegion(null,0);
+        app.populatedCapitalCitiesInRegion(null);
     }
 
     @Test
     void populatedCapitalCitiesInRegionTestMany()
     {
-        app.populatedCapitalCitiesInRegion("Australia and New Zealand", 100);
+        app.populatedCapitalCitiesInRegion("Australia and New Zealand");
     }
 
     @Test
     void populatedCapitalCitiesInRegionTestNull()
     {
-        app.populatedCapitalCitiesInRegion(null,0);
+        app.populatedCapitalCitiesInRegion(null);
     }
 
     @Test
     void populatedCapitalCitiesInRegionTestWrong()
     {
-        app.populatedCapitalCitiesInRegion("aaa",999999999);
+        app.populatedCapitalCitiesInRegion("aaa");
     }
     //  End of Region //
     // *********************************** //
@@ -79,25 +79,25 @@ public class Testing
     @Test
     void populateCapitalCitiesInContinentTestZero()
     {
-        app.populateCapitalCitiesInContinent(null,0);
+        app.populateCapitalCitiesInContinent(null);
     }
 
     @Test
     void populateCapitalCitiesInContinentTestMany()
     {
-        app.populateCapitalCitiesInContinent("Australia and New Zealand", 100);
+        app.populateCapitalCitiesInContinent("Australia and New Zealand");
     }
 
     @Test
     void populateCapitalCitiesInContinentTestNull()
     {
-        app.populateCapitalCitiesInContinent(null,0);
+        app.populateCapitalCitiesInContinent(null);
     }
 
     @Test
     void populateCapitalCitiesInContinentTestWrong()
     {
-        app.populateCapitalCitiesInContinent("aaa",999999999);
+        app.populateCapitalCitiesInContinent("aaa");
     }
     // End Of Continent//
     // *********************************** //
@@ -107,25 +107,14 @@ public class Testing
     @Test
     void capitalCityInRegionDescTestZero()
     {
-        app.capitalCityInRegionDesc(null);
+        app.populatedCapitalCitiesInRegion(null);
     }
 
-    @Test
-    void capitalCityInRegionDescTestMany()
-    {
-        app.capitalCityInRegionDesc("Australia and New Zealand");
-    }
-
-    @Test
-    void capitalCityInRegionDescTestNull()
-    {
-        app.capitalCityInRegionDesc(null);
-    }
 
     @Test
     void capitalCityInRegionDescTestWrong()
     {
-        app.capitalCityInRegionDesc("AAA");
+        app.populatedCapitalCitiesInRegion("AAA");
     }
     // END OF DESC //
     // ******************************************* //
@@ -135,25 +124,25 @@ public class Testing
     @Test
     void getPopulationOfRegionTestZero()
     {
-        app.getPopulationOfRegion(null);
+        app.getPopulationOfRegion();
     }
 
     @Test
     void getPopulationOfRegionTestMany()
     {
-        app.getPopulationOfRegion("Australia and New Zealand");
+        app.getPopulationOfRegion();
     }
 
     @Test
     void getPopulationOfRegionTestNull()
     {
-        app.getPopulationOfRegion(null);
+        app.getPopulationOfRegion();
     }
 
     @Test
     void getPopulationOfRegionTestWrong()
     {
-        app.getPopulationOfRegion("AAA");
+        app.getPopulationOfRegion();
     }
     // END OF POPULATION OF REGION //
     // ******************************************* //
@@ -163,25 +152,25 @@ public class Testing
     @Test
     void getPopulationOfCountryTestZero()
     {
-        app.getPopulationOfCountry(null);
+        app.getPopulationOfCountry();
     }
 
     @Test
     void getPopulationOfCountryTestMany()
     {
-        app.getPopulationOfCountry("Congo, The Democratic Republic of the");
+        app.getPopulationOfCountry();
     }
 
     @Test
     void getPopulationOfCountryTestNull()
     {
-        app.getPopulationOfCountry(null);
+        app.getPopulationOfCountry();
     }
 
     @Test
     void getPopulationOfCountryTestWrong()
     {
-        app.getPopulationOfCountry("AAA");
+        app.getPopulationOfCountry();
     }
     // END OF POPULATION OF REGION //
     // ******************************************* //
@@ -213,19 +202,19 @@ public class Testing
     @Test
     void getPopulationOfContinentTestNull()
     {
-        app.getPopulationOfContinent(null);
+        app.getPopulationOfContinent();
     }
 
     @Test
     void getPopulationOfContinentTestWrong()
     {
-        app.getPopulationOfContinent("AAA");
+        app.getPopulationOfContinent();
     }
 
     @Test
     void displayPopulationOfPlaceTestNull()
     {
-        app.displayPopulationOfPlace(null,null,null);
+        app.displayPopulationOfPlace(null,null);
     }
 
     @Test
@@ -295,22 +284,22 @@ public class Testing
     @Test
     void topPopulatedCitiesTestNull()
     {
-        app.topPopulatedCities(0);
+        app.topNPopulatedCitiesInWorld(0);
     }
     @Test
     void topPopulatedCitiesTestMany()
     {
-        app.topPopulatedCities(9999);
+        app.topNPopulatedCitiesInWorld(9999);
     }
     @Test
     void topPopulatedCitiesTestZero()
     {
-        app.topPopulatedCities(0);
+        app.topNPopulatedCitiesInWorld(0);
     }
     @Test
     void topPopulatedCitiesTestWrong()
     {
-        app.topPopulatedCities(999999999);
+        app.topNPopulatedCitiesInWorld(999999999);
     }
     //__________________________BOBOTUNZAW Top Populated Cities In worldwide________________________
 
@@ -321,22 +310,22 @@ public class Testing
     @Test
     void populatedCitiesInDistrictTestNull()
     {
-        app.populatedCitiesInDistrict(null);
+        app.topNPopulatedCitiesInDistrict(null,1);
     }
     @Test
     void populatedCitiesInDistrictTestMany()
     {
-        app.populatedCitiesInDistrict("Andorra la Vella");
+        app.topNPopulatedCitiesInDistrict("Andorra la Vella", 999);
     }
     @Test
     void populatedCitiesInDistrictTestZero()
     {
-        app.populatedCitiesInDistrict(null);
+        app.topNPopulatedCitiesInDistrict("Andorra la Vella", 0);
     }
     @Test
     void populatedCitiesInDistrictTestWrong()
     {
-        app.populatedCitiesInDistrict("superman");
+        app.topNPopulatedCitiesInDistrict("superman",2);
     }
     //__________________________BOBOTUNZAW Top Populated Cities In district______________________
 
@@ -347,22 +336,22 @@ public class Testing
     @Test
     void populatedCitiesInACountryTestNull()
     {
-        app.populatedCitiesInACountry(null);
+        app.topNPopulatedCitiesInCountry(null,1);
     }
     @Test
     void populatedCitiesInACountryTestMany()
     {
-        app.populatedCitiesInACountry("South Georgia and the South Sandwich Islands");
+        app.topNPopulatedCitiesInCountry("South Georgia and the South Sandwich Islands", 999);
     }
     @Test
     void populatedCitiesInACountryTestWrong()
     {
-        app.populatedCitiesInACountry("Batman");
+        app.topNPopulatedCitiesInCountry("Batman", 1);
     }
     @Test
     void populatedCitiesInACountryTestZero()
     {
-        app.populatedCitiesInACountry(null);
+        app.topNPopulatedCitiesInCountry("South Georgia", 0);
     }
     //__________________________BOBOTUNZAW Top Populated Cities In Country______________________
 
@@ -373,22 +362,22 @@ public class Testing
     @Test
     void cityInRegionDescTestNull()
     {
-        app.cityInRegionDesc(null);
+        app.topNPopulatedCitiesInRegion(null, 1);
     }
     @Test
     void cityInRegionDescTestMany()
     {
-        app.cityInRegionDesc("Southern and Central Asia");
+        app.topNPopulatedCitiesInRegion("Southern and Central Asia", 999);
     }
     @Test
     void cityInRegionDescTestWrong()
     {
-        app.cityInRegionDesc("Wonder Woman");
+        app.topNPopulatedCitiesInRegion("Wonder Woman", 1);
     }
     @Test
     void cityInRegionDescTestZero()
     {
-        app.cityInRegionDesc(null);
+        app.topNPopulatedCitiesInRegion("Central Asia", 0);
     }
     //__________________________BOBOTUNZAW Top Populated Cities In Region______________________
 
@@ -399,22 +388,22 @@ public class Testing
     @Test
     void cityInContinentDescTestNull()
     {
-        app.cityInContinentDesc(null);
+        app.topNPopulatedCitiesInDistrict(null, 1);
     }
     @Test
     void cityInContinentDescTestMany()
     {
-        app.cityInContinentDesc("South America");
+        app.topNPopulatedCitiesInDistrict("South America", 999);
     }
     @Test
     void cityInContinentDescTestWrong()
     {
-        app.cityInContinentDesc("Flash");
+        app.topNPopulatedCitiesInDistrict("Flash", 1);
     }
     @Test
     void cityInContinentDescTestZero()
     {
-        app.cityInContinentDesc(null);
+        app.topNPopulatedCitiesInDistrict("South America", 0);
     }
     //__________________________BOBOTUNZAW Top Populated Cities In Continent______________________
 
