@@ -1125,7 +1125,7 @@ public class App
     }
 
     /**
-     * 32. Get Language percentage
+     * 32.Get Language percentage
      * @param language languages
      * @return return speaking percentage
      */
