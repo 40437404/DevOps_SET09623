@@ -490,6 +490,26 @@ public class App
             return null;
         }
     }
+    public void TopNPopulatedCitiesInADistrict(String District, int Limit){
+        if (con != null)
+        {
+            try { //To Catch Error
+                String execute = "SELECT * FROM city where District= '"+ District +"' ORDER BY Population DESC limit "+ Limit +";";
+                //Preparing mysql command as a string
+                Statement st = con.createStatement(); //Statement Creation
+                ResultSet rs = st.executeQuery(execute); //Mysql Command Execution
+                while (rs.next()) { //Preparing Output
+                    String Code = rs.getString("CountryCode"); //Creating Variable For Country Code
+                    String name = rs.getString("Name"); //Creating Variable For Country Name
+                    int populationnumber = rs.getInt("Population"); //Creating Variable For Population
+                    System.out.format("CountryCode = %s, Name = %s,Population = %s\n", Code, name, populationnumber); //Output Statement
+                }
+                st.close(); //Closing Statement
+            } catch (Exception e) {
+                e.printStackTrace(); // To Print Out System Error Messages
+            }
+        }
+    }
 
     /**
      * 12. Get top populated cities around the world
