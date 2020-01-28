@@ -35,6 +35,8 @@ public class App
         String region = "Caribbean";
         // Continent name
         String continent = "Asia";
+        // City name
+        String city = "Tokyo";
         // Store type of place
         String type;
 
@@ -198,15 +200,19 @@ public class App
 
         // 28. Get population of the region
         long totalRegion = app.populationOfTheRegion(region);
-        app.displayPopulation(continent, totalRegion);
+        app.displayPopulation(region, totalRegion);
 
         // 29. Get population of the country
         long totalCountry = app.populationOfTheCountry(country);
-        app.displayPopulation(continent, totalCountry);
+        app.displayPopulation(country, totalCountry);
 
         // 30. Get population of the district
         long totalDistrict = app.populationOfTheDistrict(district);
-        app.displayPopulation(continent, totalDistrict);
+        app.displayPopulation(district, totalDistrict);
+
+        // 31. Get population of the city
+        long totalCity = app.populationOfTheCity(city);
+        app.displayPopulation(city, totalCity);
 
         // Disconnect from database
         app.disconnect();
@@ -966,7 +972,7 @@ public class App
     public Long populationOfTheWorld(){
         try {
             // sql query
-            String query = "SELECT SUM(Population) FROM world.country;";
+            String query = "SELECT SUM(Population) FROM country;";
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
@@ -993,7 +999,7 @@ public class App
     public Long populationOfTheContinent(String continent) {
         try {
             // sql query
-            String query = "SELECT SUM(Population) FROM  world.country WHERE Continent = '" + continent + "';";
+            String query = "SELECT SUM(Population) FROM  country WHERE Continent = '" + continent + "';";
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
@@ -1057,7 +1063,7 @@ public class App
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Error Calculating Region Country");
+            System.out.println("Error Calculating Country Population");
             return null;
         }
     }
@@ -1070,7 +1076,7 @@ public class App
     public Long populationOfTheDistrict(String district){
         try {
             // sql query
-            String execute = "SELECT SUM(Population) FROM world.city where District='"+ district +"';";
+            String execute = "SELECT SUM(Population) FROM city where District='"+ district +"';";
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
@@ -1083,7 +1089,33 @@ public class App
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Error Calculating Region District");
+            System.out.println("Error Calculating District Population");
+            return null;
+        }
+    }
+
+    /**
+     * 31. Get population of the city
+     * @param city city name
+     * @return return population
+     */
+    public Long populationOfTheCity(String city){
+        try {
+            // sql query
+            String execute = "SELECT SUM(Population) FROM city WHERE Name='"+ city +"';";
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // execute the query, and get a java ResultSet
+            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            long total = 0;
+            while (rs.next()) {
+                total = rs.getLong("SUM(Population)");
+            }
+            stmt.close(); //Closing Statement
+            return total;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error Calculating City Population");
             return null;
         }
     }
