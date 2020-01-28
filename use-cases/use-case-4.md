@@ -4,8 +4,8 @@
 
 ### Goal in Context
 
-- As a user I want to view the countries, cities and capital cities population in largest to smallest.
-- As a user I want to view and input top (N) populated countries, cities and capital cities population.
+- As a user I want to view the report of countries, cities and capital cities population in largest to smallest.
+- As a user I want to view the report of top (N) populated countries, cities and capital cities population with input.
 ### Scope
 
 Organization.
