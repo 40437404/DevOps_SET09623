@@ -152,7 +152,19 @@ public class App
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInRegion);
 
-        // 22. Get N populated capital cities in the world
+        // 20. Get N populated capital cities in the world
+        ArrayList<City> capitalCitiesInWorldDesc;
+        capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
+
+        // 21. Get N populated capital cities in the continent
+        ArrayList<City> capitalCitiesInContinentDesc;
+        capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
+        // Display results
+        app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
+
+        // 22. Get N populated capital cities in the region
         ArrayList<City> capitalCitiesInRegionDesc;
         capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
         // Display results
@@ -750,8 +762,60 @@ public class App
     }
 
     /**
+     * 20. Get all populated capital cities in world in descending order
+     * @param limit limit given by user
+     * @return return an ArrayList of populated cities in world
+     */
+    public ArrayList<City> topNPopulatedCapitalCityInWorld(int limit){
+        try { //To Catch Error
+            // create the java statement
+            Statement stmt = con.createStatement();
+            String strSelect = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                    "ORDER BY city.Population DESC LIMIT "+ limit +";";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated capital cities in the world");
+            return null;
+        }
+    }
+
+    /**
+     * 21. Get all populated capital cities in region in descending order
+     * @param continent continent name
+     * @param limit limit given by user
+     * @return return an ArrayList of populated cities in a continent
+     */
+    public ArrayList<City> topNPopulatedCapitalCityInContinent(String continent, int limit){
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // sql query
+            String strSelect = String.format(
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                            "FROM city INNER JOIN country ON city.ID = country.Capital " +
+                            "WHERE country.Continent = '%s' " +
+                            "ORDER BY city.Population DESC LIMIT %d;"
+                    , continent, limit);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Get cities from query
+            return getCitiesFromQuery(rset);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get populated capital cities in the continent");
+            return null;
+        }
+    }
+
+    /**
      * 22. Get all populated capital cities in region in descending order
      * @param region region name
+     * @param limit limit given by user
      * @return return an ArrayList of populated cities in a region
      */
     public ArrayList<City> topNPopulatedCapitalCityInRegion(String region, int limit){
