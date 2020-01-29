@@ -454,7 +454,8 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = "SELECT * FROM city ORDER by Population DESC";
+            String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code ORDER by Population DESC;";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
@@ -475,7 +476,7 @@ public class App
     public ArrayList<City> cityInContinentDesc(String continent){
         try {
             // sql query
-            String getCitiesInContinent = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+            String getCitiesInContinent = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Continent='"+ continent +"' ORDER BY city.Population DESC";
             // create the java statement
@@ -499,7 +500,7 @@ public class App
     public ArrayList<City> cityInRegionDesc(String region){
         try {
             // sql query
-            String getCitiesInRegion = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+            String getCitiesInRegion = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Region = '"+ region +"' ORDER BY city.Population DESC;";
             // create the java statement
@@ -523,7 +524,8 @@ public class App
     public ArrayList<City> cityInCountryDesc(String country){
         try {
             // sql query
-            String getCitiesInCountry = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+            String getCitiesInCountry = "SELECT city.ID, city.Name, country.Name AS countryName, " +
+                    "city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Code = '"+ country +"' ORDER BY city.Population DESC;";
             // create the java statement
@@ -546,7 +548,8 @@ public class App
      */
     public ArrayList<City> cityInDistrictDesc(String district){
         try { //To Catch Error
-            String getCitiesInDistrict = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+            String getCitiesInDistrict = "SELECT city.ID, city.Name, country.Name AS countryName, " +
+                    "city.District, city.Population " +
                     "FROM city WHERE District= '"+ district +"' ORDER BY Population DESC;";
             // create the java statement
             Statement stmt = con.createStatement();
@@ -574,7 +577,8 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
-                    "SELECT * FROM city order by Population DESC LIMIT %d;"
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
+                            "FROM city order by Population DESC LIMIT %d;"
                     , limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -601,7 +605,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country on city.CountryCode = country.Code " +
                             "WHERE country.Continent = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
@@ -630,7 +634,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                             "WHERE country.Region = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
@@ -660,7 +664,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
-                    "SELECT city.Id, city.Name, city.CountryCode, city.District, city.Population " +
+                    "SELECT city.Id, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country where city.CountryCode = country.Code " +
                             "AND country.Name = '%s' ORDER BY city.Population DESC LIMIT %d;"
                     , country, limit);
@@ -690,7 +694,8 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
-                    "SELECT * from city where District='%s' ORDER BY Population DESC LIMIT %d;"
+                    "SELECT city.Id, city.Name, country.Name AS countryName, city.District, city.Population " +
+                            "FROM city where District='%s' ORDER BY Population DESC LIMIT %d;"
                     , district, limit);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -716,7 +721,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+            String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.ID = country.Capital " +
                     "ORDER BY city.Population DESC;";
             // Execute SQL statement
@@ -744,7 +749,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country ON city.ID = country.Capital " +
                             "WHERE country.Continent = '%s' " +
                             "ORDER BY city.Population DESC;"
@@ -774,7 +779,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population FROM " +
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population FROM " +
                             "country INNER JOIN city WHERE country.Capital=city.ID AND Region='%s' " +
                             "ORDER BY city.Population DESC;"
                     , region);
@@ -800,7 +805,7 @@ public class App
         try { //To Catch Error
             // create the java statement
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+            String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.ID = country.Capital " +
                     "ORDER BY city.Population DESC LIMIT "+ limit +";";
             // Execute SQL statement
@@ -826,7 +831,7 @@ public class App
             Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country ON city.ID = country.Capital " +
                             "WHERE country.Continent = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
@@ -854,7 +859,7 @@ public class App
             Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population " +
+                    "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country ON city.ID = country.Capital " +
                             "WHERE country.Region = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
@@ -1289,7 +1294,7 @@ public class App
                 City city = new City();
                 city.id = rset.getInt("ID");
                 city.name = rset.getString("Name");
-                city.countryCode = rset.getString("CountryCode");
+                city.countryName = rset.getString("countryName");
                 city.district = rset.getString("District");
                 city.population = rset.getInt("Population");
                 cty.add(city);
@@ -1340,7 +1345,7 @@ public class App
                         "No: " + i + "\n" +
                                 "ID: " + city.id + "\n" +
                                 "Name: " + city.name + "\n" +
-                                "Country Code: " + city.countryCode + "\n" +
+                                "Country Name: " + city.countryName + "\n" +
                                 "District: " + city.district + "\n" +
                                 "Population: " + city.population
                 );

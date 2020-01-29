@@ -191,7 +191,7 @@ public class Testing
         City cty = new City();
         cty.id = 1;
         cty.name = "Yangon";
-        cty.countryCode = "MMR";
+        cty.countryName = "Myanmar";
         cty.district = "Yangon";
         cty.population = 2345678;
         city.add(cty);

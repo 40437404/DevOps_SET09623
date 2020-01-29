@@ -28,7 +28,7 @@ public class AppIntegrationTest
         {
             assertEquals(city.id, 1024);
             assertEquals(city.name, "Mumbai (Bombay)");
-            assertEquals(city.countryCode, "IND");
+            assertEquals(city.countryName, "India");
             assertEquals(city.district, "Maharashtra");
             assertEquals(city.population, 10500000);
         }
