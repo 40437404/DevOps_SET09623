@@ -2,11 +2,11 @@ package com.napier.DevOps_SET09623;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
 
 public class Testing {
     static App app;
@@ -18,7 +18,7 @@ public class Testing {
 
     // 1. Get Populated Countries of the world
     @Test
-    void worldCountryLargeToSmallTestNull() {
+    void worldCountryLargeToSmallTest() {
         app.worldCountryLargeToSmall();
     }
 
@@ -27,7 +27,6 @@ public class Testing {
     void continentCountryLargeToSmallTestNull() {
         app.continentCountryLargeToSmall(null);
     }
-
     @Test
     void continentCountryLargeToSmallTestWrong() {
         app.continentCountryLargeToSmall("AAA");
@@ -44,7 +43,6 @@ public class Testing {
     void populateCountriesInWorldTestNull() {
         app.populateCountriesInWorld(0);
     }
-
     @Test
     void populateCountriesInWorldTestWrong() {
         app.populateCountriesInWorld(999);
@@ -64,7 +62,7 @@ public class Testing {
 
     // 7. Get populated cities in the world
     @Test
-    void cityInWorldDescTestNull() {
+    void cityInWorldDescTest() {
         app.cityInWorldDesc();
     }
 
@@ -192,15 +190,7 @@ public class Testing {
 
     // 17. Get populated capital cities in the world
     @Test
-    void populateCapitalCitiesInWorldTestZero() {
-        app.populateCapitalCitiesInWorld();
-    }
-    @Test
-    void populateCapitalCitiesInWorldTestNull() {
-        app.populateCapitalCitiesInWorld();
-    }
-    @Test
-    void populateCapitalCitiesInWorldTestWrong() {
+    void populateCapitalCitiesInWorldTest() {
         app.populateCapitalCitiesInWorld();
     }
 
@@ -280,57 +270,25 @@ public class Testing {
 
     // 23. Get Population of a continent
     @Test
-    void getPopulationOfContinentTestNull() {
+    void getPopulationOfContinentTest() {
         app.getPopulationOfContinent();
-    }
-    @Test
-    void getPopulationOfContinentTestWrong() {
-        app.getPopulationOfContinent();
-    }
-    @Test
-    void displayPopulationOfPlaceTestNull() {
-        app.displayPopulationOfPlace(null, null);
     }
 
     // 24. Get Population of a region
     @Test
-    void getPopulationOfRegionTestZero() {
-        app.getPopulationOfRegion();
-    }
-    @Test
-    void getPopulationOfRegionTestMany() {
-        app.getPopulationOfRegion();
-    }
-    @Test
-    void getPopulationOfRegionTestNull() {
-        app.getPopulationOfRegion();
-    }
-    @Test
-    void getPopulationOfRegionTestWrong() {
+    void getPopulationOfRegionTest() {
         app.getPopulationOfRegion();
     }
 
     // 25. Get Population of a country
     @Test
-    void getPopulationOfCountryTestZero() {
-        app.getPopulationOfCountry();
-    }
-    @Test
-    void getPopulationOfCountryTestMany() {
-        app.getPopulationOfCountry();
-    }
-    @Test
-    void getPopulationOfCountryTestNull() {
-        app.getPopulationOfCountry();
-    }
-    @Test
-    void getPopulationOfCountryTestWrong() {
+    void getPopulationOfCountryTest() {
         app.getPopulationOfCountry();
     }
 
     // 26. Get population of the world
     @Test
-    void populationOfTheWorldTestNull(){
+    void populationOfTheWorldTest(){
         app.populationOfTheWorld();
     }
 
@@ -384,6 +342,35 @@ public class Testing {
         app.populationOfTheCity("AAA");
     }
 
+    // Get Language percentage
+    @Test
+    void getLanguagePercentageTestNull(){app.getLanguagePercentage(null);}
+    @Test
+    void getLanguagePercentageTestWrong(){app.getLanguagePercentage("Burmese");}
+
+    // Get population from each country, region, continent
+    @Test
+    void getPopulationTestNull(){app.getPopulation(null, null);}
+    // Create test ArrayList with random values
+    ArrayList<String> places = new ArrayList<>(Arrays. asList("London", "Tokyo", "New York"));
+    @Test
+    void getPopulationTestWrong(){app.getPopulation(places, "testing");}
+
+    // test query string
+    String testQueryNull = null;
+    String testQueryCity = "SELECT * FROM city;";
+    String testQueryCountry = "SELECT * FROM country;";
+    // Get Countries from SQL query
+    @Test
+    void getCitiesFromQueryTestNull() {app.getCitiesFromQuery(testQueryNull);}
+    @Test
+    void getCitiesFromQueryTestWrong() {app.getCitiesFromQuery(testQueryCity);}
+
+    // Get Countries from SQL query
+    @Test
+    void getCountryFromQueryTestNull() {app.getCountryFromQuery(testQueryNull);}
+    @Test
+    void getCountryFromQueryTestWrong() {app.getCountryFromQuery(testQueryCountry);}
 
     // Display Top Populated Cities
     @Test
@@ -391,14 +378,13 @@ public class Testing {
         ArrayList<City> city = new ArrayList<>();
         app.displayTopPopulatedCities(city);
     }
-
     @Test
     void displayTopPopulatedCitiesTest() {
         ArrayList<City> city = new ArrayList<>();
         City cty = new City();
         cty.id = 1;
         cty.name = "Yangon";
-        cty.countryCode = "MMR";
+        cty.countryName = "MMR";
         cty.district = "Yangon";
         cty.population = 2345678;
         city.add(cty);
@@ -406,6 +392,11 @@ public class Testing {
     }
 
     // Display Top Populated Countries
+    @Test
+    void displayTopPopulatedCountriesTestNull() {
+        ArrayList<Country> cty = new ArrayList<>();
+        app.displayTopPopulatedCountries(cty);
+    }
     @Test
     void displayTopPopulatedCountriesTestDisplay() {
         ArrayList<Country> cty = new ArrayList<>();
@@ -419,16 +410,32 @@ public class Testing {
         app.displayTopPopulatedCountries(cty);
     }
 
+    // Display population
+    @Test
+    void displayPopulationOfPlaceTestNull() {
+        ArrayList<Population> result = new ArrayList<>();
+        app.displayPopulationOfPlace(null, result);
+    }
+    @Test
+    void displayPopulationOfPlaceTestDisplay() {
+        ArrayList<Population> result = new ArrayList<>();
+        Population population = new Population();
+        population.name = "Myanmar";
+        population.population = 1234567;
+        population.populationInCities = 1234;
+        population.populationNotInCities = 456;
+        population.percentagePopulationInCities = (float) 12.01;
+        population.percentagePopulationNotInCities = (float) 23.0;
+        result.add(population);
+        app.displayPopulationOfPlace("Country", result);
+    }
 
+    // Display population of world, continent, region, country, district, city
+    @Test
+    void displayPopulationTestNull() {app.displayPopulation(null, 0);}
 
-
-
-
-
-
-
-
-
-
-
+    // Display sorted language with percentage
+    Set<Map.Entry<Float, String>> setNull;
+    @Test
+    void displayLanguageSortingTestNull() {app.displayLanguageSorting(setNull);}
 }

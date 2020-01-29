@@ -297,19 +297,12 @@ public class App
     public ArrayList<Country> worldCountryLargeToSmall()
     {
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = "SELECT Code, Name, Continent, Region, Population, Capital FROM " +
                     "country ORDER BY Population DESC;";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
             // Get countries from query
-            ArrayList<Country> countries = getCountryFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return countries;
+            return getCountryFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the world");
@@ -325,21 +318,14 @@ public class App
     public ArrayList<Country> continentCountryLargeToSmall(String continent)
     {
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = format(
                     "SELECT Code, Name, Continent, Region, Population, Capital FROM country WHERE " +
                             "Continent='%s' ORDER BY Population DESC;"
                     , continent);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
             // Get countries from query
-            ArrayList<Country> countries = getCountryFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return countries;
+            return getCountryFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries of the continent");
@@ -356,21 +342,13 @@ public class App
     {
         try
         {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = format(
                     "SELECT Code, Name, Continent, Region, Population, Capital FROM country WHERE " +
                             "Region='%s' ORDER BY Population DESC;"
                     , region);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            ArrayList<Country> countries = getCountryFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return countries;
+            return getCountryFromQuery(strSelect);
         }
         catch (Exception e)
         {
@@ -387,21 +365,13 @@ public class App
      */
     public ArrayList<Country> populateCountriesInWorld(int limit){
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
                     "SELECT Code, Name, Continent, Region, Population, Capital FROM country " +
                             "ORDER BY Population DESC limit %d;"
                     , limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            ArrayList<Country> countries = getCountryFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return countries;
+            return getCountryFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the continent");
@@ -417,21 +387,13 @@ public class App
      */
     public ArrayList<Country> populatedCountriesInContinent(String continent, int limit){
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
                     "SELECT Code, Name, Continent, Region, Population, Capital FROM country " +
                             "WHERE Continent='%s' ORDER BY Population DESC limit %d;"
                     , continent, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            ArrayList<Country> countries = getCountryFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return countries;
+            return getCountryFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the continent");
@@ -448,21 +410,13 @@ public class App
     public ArrayList<Country> populatedCountriesInRegion(String region, int limit)
     {
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
                     "SELECT Code, Name, Continent, Region, Population, Capital FROM country " +
                             "WHERE Region='%s' ORDER BY Population DESC LIMIT %d;"
                     , region, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get countries from query
-            ArrayList<Country> countries = getCountryFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return countries;
+            return getCountryFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the region");
@@ -477,19 +431,11 @@ public class App
     public ArrayList<City> cityInWorldDesc(){
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code ORDER by Population DESC;";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -509,16 +455,8 @@ public class App
             String getCitiesInContinent = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Continent='"+ continent +"' ORDER BY city.Population DESC";
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // execute the query, and get a java ResultSet
-            ResultSet rset = stmt.executeQuery(getCitiesInContinent);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(getCitiesInContinent);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the continent");
@@ -537,16 +475,8 @@ public class App
             String getCitiesInRegion = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Region = '"+ region +"' ORDER BY city.Population DESC;";
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // execute the query, and get a java ResultSet
-            ResultSet rset = stmt.executeQuery(getCitiesInRegion);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(getCitiesInRegion);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the region");
@@ -566,16 +496,8 @@ public class App
                     "city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Code = '"+ country +"' ORDER BY city.Population DESC;";
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // execute the query, and get a java ResultSet
-            ResultSet rset = stmt.executeQuery(getCitiesInCountry);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(getCitiesInCountry);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the country");
@@ -592,17 +514,10 @@ public class App
         try { //To Catch Error
             String getCitiesInDistrict = "SELECT city.ID, city.Name, country.Name AS countryName, " +
                     "city.District, city.Population " +
-                    "FROM city WHERE District= '"+ district +"' ORDER BY Population DESC;";
-            // create the java statement
-            Statement stmt = con.createStatement();
-            // execute the query, and get a java ResultSet
-            ResultSet rset = stmt.executeQuery(getCitiesInDistrict);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE District= '"+ district +"' ORDER BY city.Population DESC;";
             // return
-            return cities;
+            return getCitiesFromQuery(getCitiesInDistrict);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the district");
@@ -619,21 +534,14 @@ public class App
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
-                            "FROM city order by Population DESC LIMIT %d;"
+                            "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                            "ORDER BY city.Population DESC LIMIT %d;"
                     , limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e)
         {
@@ -651,8 +559,6 @@ public class App
     public ArrayList<City> topNPopulatedCitiesInContinent(String continent, int limit){
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
@@ -660,14 +566,8 @@ public class App
                             "WHERE country.Continent = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
                     , continent, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -684,8 +584,6 @@ public class App
     public ArrayList<City> topNPopulatedCitiesInRegion(String region, int limit){
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
@@ -693,14 +591,8 @@ public class App
                             "WHERE country.Region = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
                     , region, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -718,22 +610,14 @@ public class App
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
                     "SELECT city.Id, city.Name, country.Name AS countryName, city.District, city.Population " +
                             "FROM city INNER JOIN country where city.CountryCode = country.Code " +
                             "AND country.Name = '%s' ORDER BY city.Population DESC LIMIT %d;"
                     , country, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e)
         {
@@ -752,21 +636,14 @@ public class App
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
                     "SELECT city.Id, city.Name, country.Name AS countryName, city.District, city.Population " +
-                            "FROM city where District='%s' ORDER BY Population DESC LIMIT %d;"
+                            "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                            "WHERE District='%s' ORDER BY city.Population DESC LIMIT %d;"
                     , district, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e)
         {
@@ -784,20 +661,12 @@ public class App
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.ID = country.Capital " +
                     "ORDER BY city.Population DESC;";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -815,8 +684,6 @@ public class App
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = String.format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
@@ -824,14 +691,8 @@ public class App
                             "WHERE country.Continent = '%s' " +
                             "ORDER BY city.Population DESC;"
                     , continent);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -849,22 +710,14 @@ public class App
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population FROM " +
                             "country INNER JOIN city WHERE country.Capital=city.ID AND Region='%s' " +
                             "ORDER BY city.Population DESC;"
                     , region);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         }
         catch (Exception e)
         {
@@ -880,20 +733,13 @@ public class App
      * @return return an ArrayList of populated cities in world
      */
     public ArrayList<City> topNPopulatedCapitalCityInWorld(int limit){
-        try { //To Catch Error
-            // create the java statement
-            Statement stmt = con.createStatement();
+        try
+        {
             String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.ID = country.Capital " +
                     "ORDER BY city.Population DESC LIMIT "+ limit +";";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated capital cities in the world");
@@ -909,8 +755,6 @@ public class App
      */
     public ArrayList<City> topNPopulatedCapitalCityInContinent(String continent, int limit){
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
@@ -918,14 +762,8 @@ public class App
                             "WHERE country.Continent = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
                     , continent, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated capital cities in the continent");
@@ -941,8 +779,6 @@ public class App
      */
     public ArrayList<City> topNPopulatedCapitalCityInRegion(String region, int limit){
         try {
-            // create the java statement
-            Statement stmt = con.createStatement();
             // sql query
             String strSelect = String.format(
                     "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
@@ -950,14 +786,8 @@ public class App
                             "WHERE country.Region = '%s' " +
                             "ORDER BY city.Population DESC LIMIT %d;"
             , region, limit);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            ArrayList<City> cities = getCitiesFromQuery(rset);
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset, stmt);
             // return
-            return cities;
+            return getCitiesFromQuery(strSelect);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated capital cities in the region");
@@ -1164,14 +994,14 @@ public class App
      */
     public Long populationOfTheCountry(String country){
         try { //To Catch Error
-            String execute = "SELECT SUM(Population) FROM country WHERE Name= '"+ country +"';";
+            String execute = "SELECT Population FROM country WHERE Name= '"+ country +"';";
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(execute); //Mysql Command Execution
             long total = 0;
             while (rset.next()) {
-                total = rset.getLong("SUM(Population)");
+                total = rset.getLong("Population");
             }
             // Close ResultSet and Statement
             closeResultSetAndStatement(rset, stmt);
@@ -1220,14 +1050,14 @@ public class App
     public Long populationOfTheCity(String city){
         try {
             // sql query
-            String execute = "SELECT SUM(Population) FROM city WHERE Name='"+ city +"';";
+            String execute = "SELECT Population FROM city WHERE Name='"+ city +"';";
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(execute); //Mysql Command Execution
             long total = 0;
             while (rset.next()) {
-                total = rset.getLong("SUM(Population)");
+                total = rset.getLong("Population");
             }
             // Close ResultSet and Statement
             closeResultSetAndStatement(rset, stmt);
@@ -1398,56 +1228,78 @@ public class App
 
     /**
      * Get Cities from SQL query
-     * @param rset SQL query result
+     * @param strSelect SQL Query String
      * @return return an ArrayList containing cities
-     * @throws SQLException throws an instance of SQLException
      */
-    public ArrayList<City> getCitiesFromQuery(ResultSet rset) throws SQLException
-    {
-        // Return new city if valid.
-        ArrayList<City> cty = new ArrayList<>();
-        if (!rset.next())
-            return null;
-        else
+    public ArrayList<City> getCitiesFromQuery(String strSelect) {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            ArrayList<City> cty = new ArrayList<>();
+            if (!rset.next())
+                return null;
+            else
             {
-            do {
-                City city = new City();
-                city.id = rset.getInt("ID");
-                city.name = rset.getString("Name");
-                city.countryName = rset.getString("countryName");
-                city.district = rset.getString("District");
-                city.population = rset.getInt("Population");
-                cty.add(city);
-            } while (rset.next());
-            return cty;
+                do {
+                    City city = new City();
+                    city.id = rset.getInt("ID");
+                    city.name = rset.getString("Name");
+                    city.countryName = rset.getString("countryName");
+                    city.district = rset.getString("District");
+                    city.population = rset.getInt("Population");
+                    cty.add(city);
+                } while (rset.next());
+                // Close ResultSet and Statement
+                closeResultSetAndStatement(rset, stmt);
+                return cty;
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city");
+            return null;
         }
     }
 
     /**
      * Get Countries from SQL query
-     * @param rset SQL query result
+     * @param strSelect SQL Query String
      * @return return an ArrayList containing countries
-     * @throws SQLException throws an instance of SQLException
      */
-    public ArrayList<Country> getCountryFromQuery(ResultSet rset) throws SQLException
-    {
-        // Return new country if valid
-        ArrayList<Country> country = new ArrayList<>();
-        if (!rset.next())
-            return  null;
-        else {
-            do {
-                Country ctry = new Country();
-                ctry.code = rset.getString("Code");
-                ctry.name = rset.getString("Name");
-                ctry.continent = rset.getString("Continent");
-                ctry.region = rset.getString("Region");
-                ctry.population = rset.getLong("Population");
-                ctry.capital = rset.getString("Capital");
-                country.add(ctry);
-            } while (rset.next());
-            return country;
+    public ArrayList<Country> getCountryFromQuery(String strSelect) {
+        try {
+            // create the java statement
+            Statement stmt = con.createStatement();
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid
+            ArrayList<Country> country = new ArrayList<>();
+            if (!rset.next())
+                return  null;
+            else {
+                do {
+                    Country ctry = new Country();
+                    ctry.code = rset.getString("Code");
+                    ctry.name = rset.getString("Name");
+                    ctry.continent = rset.getString("Continent");
+                    ctry.region = rset.getString("Region");
+                    ctry.population = rset.getLong("Population");
+                    ctry.capital = rset.getString("Capital");
+                    country.add(ctry);
+                } while (rset.next());
+                // Close ResultSet and Statement
+                closeResultSetAndStatement(rset, stmt);
+                return country;
+            }
         }
+        catch (Exception e) {
+        System.out.println(e.getMessage());
+        System.out.println("Failed to get country");
+        return null;
+    }
     }
 
     /**
@@ -1528,7 +1380,14 @@ public class App
      */
     public void displayPopulation(String name, long total)
     {
-        System.out.format("Total Population of the %s = %s\n", name, total);
+        try {
+            System.out.format("Total Population of the %s = %s\n", name, total);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to display population");
+        }
+
     }
 
     /**
@@ -1537,10 +1396,16 @@ public class App
      */
     public void displayLanguageSorting(Set<Entry<Float, String>> set)
     {
-        for (Object o : set) {
-            @SuppressWarnings("unchecked")
-            Entry<Float, String> me = (Entry<Float, String>) o;
-            System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
+        try {
+            for (Object o : set) {
+                @SuppressWarnings("unchecked")
+                Entry<Float, String> me = (Entry<Float, String>) o;
+                System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to display sorted languages");
         }
     }
 
