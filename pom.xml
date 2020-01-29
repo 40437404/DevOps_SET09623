@@ -6,7 +6,7 @@
 
     <groupId>com.napier.DevOps_SET09623</groupId>
     <artifactId>DevOps_SET09623</artifactId>
-    <version>0.1.0.2</version>
+    <version>0.1.0.3</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
