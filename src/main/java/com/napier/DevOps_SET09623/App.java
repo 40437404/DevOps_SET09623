@@ -60,19 +60,19 @@ public class App
         // Display results
         app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
 
-        // 4. Get Populated certain number of Countries of world
+        // 4. Get Populated certain number of Countries in world
         ArrayList<Country> getNPopulatedCountriesInWorld;
         getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
         // Display results
         app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
 
-        // 5. Get Populated certain number of Countries of a continent
+        // 5. Get Populated certain number of Countries in continent
         ArrayList<Country> getNPopulatedCountriesInContinent;
         getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
         // Display results
         app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
 
-        // 6. Get Populated certain number of Countries of a region
+        // 6. Get Populated certain number of Countries in region
         ArrayList<Country> getNPopulatedCountriesInRegion;
         getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
         // Display results
@@ -156,19 +156,19 @@ public class App
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInRegion);
 
-        // 20. Get N populated capital cities in the world
+        // 20. Get N populated capital cities in the world in descending order
         ArrayList<City> capitalCitiesInWorldDesc;
         capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
 
-        // 21. Get N populated capital cities in the continent
+        // 21. Get N populated capital cities in the continent in descending order
         ArrayList<City> capitalCitiesInContinentDesc;
         capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
         // Display results
         app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
 
-        // 22. Get N populated capital cities in the region
+        // 22. Get N populated capital cities in the region in descending order
         ArrayList<City> capitalCitiesInRegionDesc;
         capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
         // Display results
@@ -291,7 +291,7 @@ public class App
     }
 
     /**
-     * 1. Get top populated countries of the world
+     * 1. Get top populated countries of the world by large to small
      * @return return an ArrayList of top populated countries in the world
      */
     public ArrayList<Country> worldCountryLargeToSmall()
@@ -318,7 +318,7 @@ public class App
     }
 
     /**
-     * 2. Get top populated countries of a continent
+     * 2. Get top populated countries of a continent large to small
      * @param continent continent name
      * @return return an ArrayList of top populated countries in that continent
      */
@@ -348,7 +348,7 @@ public class App
     }
 
     /**
-     * 3. Get top populated countries of a region
+     * 3. Get top populated countries of a region large to small
      * @param region region name
      * @return return an ArrayList of top populated countries in that region
      */
@@ -471,7 +471,7 @@ public class App
     }
 
     /**
-     * 7. Get populated cities in the world
+     * 7. Get populated cities in the world in descending order
      * @return return an ArrayList of populated cities in the world
      */
     public ArrayList<City> cityInWorldDesc(){
@@ -498,7 +498,7 @@ public class App
     }
 
     /**
-     * 8. Get populated cities in the continent
+     * 8. Get populated cities in the continent in descending order
      * @param continent name of continent
      * @return return an ArrayList of populated cities in a continent
      */
@@ -526,7 +526,7 @@ public class App
     }
 
     /**
-     * 9. Get populated cities in the region
+     * 9. Get populated cities in the region in descending order
      * @param region name of region
      * @return return an ArrayList of populated cities in a region
      */
@@ -554,7 +554,7 @@ public class App
     }
 
     /**
-     * 10. Get populated cities in the country
+     * 10. Get populated cities in the country in descending order
      * @param country name of country
      * @return return an ArrayList of populated cities in a country
      */
@@ -582,7 +582,7 @@ public class App
     }
 
     /**
-     * 11. Get populated cities in the district
+     * 11. Get populated cities in the district in descending order
      * @param district name of district
      * @return return an ArrayList of populated cities in a district
      */
@@ -608,7 +608,7 @@ public class App
     }
 
     /**
-     * 12. Get top populated cities around the world
+     * 12. Get top populated cities in the world
      * @param limit number of countries
      * @return get an ArrayList of top populated cities
      */
@@ -870,7 +870,7 @@ public class App
     }
 
     /**
-     * 20. Get all populated capital cities in world in descending order
+     * 20. Get top populated capital cities in world
      * @param limit limit given by user
      * @return return an ArrayList of populated cities in world
      */
@@ -897,7 +897,7 @@ public class App
     }
 
     /**
-     * 21. Get all populated capital cities in region in descending order
+     * 21. Get top populated capital cities in continent
      * @param continent continent name
      * @param limit limit given by user
      * @return return an ArrayList of populated cities in a continent
@@ -929,7 +929,7 @@ public class App
     }
 
     /**
-     * 22. Get all populated capital cities in region in descending order
+     * 22. Get top populated capital cities in region
      * @param region region name
      * @param limit limit given by user
      * @return return an ArrayList of populated cities in a region
