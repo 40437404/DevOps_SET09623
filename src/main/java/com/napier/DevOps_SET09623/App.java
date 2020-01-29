@@ -216,7 +216,9 @@ public class App
         long totalCity = app.populationOfTheCity(city);
         app.displayPopulation(city, totalCity);
 
-        app.sortLanguageByPercentage();
+        //32. Sort language by percentage
+        Set<Entry<Float, String>> set = app.sortLanguageByPercentage();
+        app.displayLanguageSorting(set);
 
         // Disconnect from database
         app.disconnect();
@@ -302,8 +304,12 @@ public class App
                     "country ORDER BY Population DESC;";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCountryFromQuery(rset);
+            // Get countries from query
+            ArrayList<Country> countries = getCountryFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the world");
@@ -328,8 +334,12 @@ public class App
                     , continent);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCountryFromQuery(rset);
+            // Get countries from query
+            ArrayList<Country> countries = getCountryFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries of the continent");
@@ -355,8 +365,12 @@ public class App
                     , region);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Get cities from query
-            return getCountryFromQuery(rset);
+            // Get countries from query
+            ArrayList<Country> countries = getCountryFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return countries;
         }
         catch (Exception e)
         {
@@ -383,7 +397,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get countries from query
-            return getCountryFromQuery(rset);
+            ArrayList<Country> countries = getCountryFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the continent");
@@ -409,7 +427,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get countries from query
-            return getCountryFromQuery(rset);
+            ArrayList<Country> countries = getCountryFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the continent");
@@ -436,7 +458,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get countries from query
-            return getCountryFromQuery(rset);
+            ArrayList<Country> countries = getCountryFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get top populated countries in the region");
@@ -458,7 +484,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -483,7 +513,11 @@ public class App
             // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(getCitiesInContinent);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the continent");
@@ -507,7 +541,11 @@ public class App
             // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(getCitiesInRegion);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the region");
@@ -531,7 +569,11 @@ public class App
             // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(getCitiesInCountry);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the country");
@@ -553,7 +595,11 @@ public class App
             // execute the query, and get a java ResultSet
             ResultSet rset = stmt.executeQuery(getCitiesInDistrict);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated cities of the district");
@@ -579,7 +625,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e)
         {
@@ -609,7 +659,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -638,7 +692,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -667,7 +725,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e)
         {
@@ -695,7 +757,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e)
         {
@@ -722,7 +788,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -752,7 +822,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -781,7 +855,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         }
         catch (Exception e)
         {
@@ -806,7 +884,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated capital cities in the world");
@@ -834,7 +916,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated capital cities in the continent");
@@ -862,7 +948,11 @@ public class App
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Get cities from query
-            return getCitiesFromQuery(rset);
+            ArrayList<City> cities = getCitiesFromQuery(rset);
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
+            return cities;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get populated capital cities in the region");
@@ -893,6 +983,9 @@ public class App
                     continentList.add(rset.getString("continent"));
                 } while (rset.next());
             }
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return getPopulation(continentList, "Continent");
         }
         catch (Exception e)
@@ -926,6 +1019,9 @@ public class App
                     regionList.add(rset.getString("region"));
                 } while (rset.next());
             }
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return getPopulation(regionList, "Region");
         }
         catch (Exception e)
@@ -959,6 +1055,9 @@ public class App
                     countryList.add(rset.getString("name"));
                 } while (rset.next());
             }
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return getPopulation(countryList, "Name");
         }
         catch (Exception e)
@@ -980,13 +1079,15 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rset = stmt.executeQuery(query);
             // iterate through the java ResultSet
             long total = 0;
-            while(rs.next()) {
-                total = rs.getLong("SUM(Population)");
+            while(rset.next()) {
+                total = rset.getLong("SUM(Population)");
             }
-            stmt.close();
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1007,13 +1108,15 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rset = stmt.executeQuery(query);
             // iterate through the java ResultSet
             long total = 0;
-            while (rs.next()) {
-                total = rs.getLong("SUM(Population)");
+            while (rset.next()) {
+                total = rset.getLong("SUM(Population)");
             }
-            stmt.close();
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1033,12 +1136,14 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
-            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            ResultSet rset = stmt.executeQuery(execute); //Mysql Command Execution
             long total = 0;
-            while (rs.next()) {
-                total = rs.getLong("SUM(Population)");
+            while (rset.next()) {
+                total = rset.getLong("SUM(Population)");
             }
-            stmt.close(); //Closing Statement
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1058,12 +1163,14 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
-            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            ResultSet rset = stmt.executeQuery(execute); //Mysql Command Execution
             long total = 0;
-            while (rs.next()) {
-                total = rs.getLong("SUM(Population)");
+            while (rset.next()) {
+                total = rset.getLong("SUM(Population)");
             }
-            stmt.close(); //Closing Statement
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1084,12 +1191,14 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
-            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            ResultSet rset = stmt.executeQuery(execute); //Mysql Command Execution
             long total = 0;
-            while (rs.next()) {
-                total = rs.getLong("SUM(Population)");
+            while (rset.next()) {
+                total = rset.getLong("SUM(Population)");
             }
-            stmt.close(); //Closing Statement
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1110,12 +1219,14 @@ public class App
             // create the java statement
             Statement stmt = con.createStatement();
             // execute the query, and get a java ResultSet
-            ResultSet rs = stmt.executeQuery(execute); //Mysql Command Execution
+            ResultSet rset = stmt.executeQuery(execute); //Mysql Command Execution
             long total = 0;
-            while (rs.next()) {
-                total = rs.getLong("SUM(Population)");
+            while (rset.next()) {
+                total = rset.getLong("SUM(Population)");
             }
-            stmt.close(); //Closing Statement
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset, stmt);
+            // return
             return total;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1125,7 +1236,32 @@ public class App
     }
 
     /**
-     * 32.Get Language percentage
+     * 32. Sort language by percentage
+     * @return return Set
+     */
+    public Set<Entry<Float, String>> sortLanguageByPercentage()
+    {
+        String[] languages = new String[]{"Chinese","English", "Hindi", "Spanish", "Arabic"};
+        Float[] percentage = new Float[5];
+        int i = 0;
+        for (String language: languages)
+        {
+            percentage[i] = getLanguagePercentage(language);
+            i++;
+        }
+        Map<Float, String> languagePercentage = new TreeMap<>(Collections.reverseOrder());
+        int j = 0;
+        while (j < languages.length)
+        {
+            languagePercentage.put(percentage[j], languages[j]);
+            j++;
+        }
+        // return
+        return languagePercentage.entrySet();
+    }
+
+    /**
+     * Get Language percentage
      * @param language languages
      * @return return speaking percentage
      */
@@ -1136,7 +1272,7 @@ public class App
             long languagePopulation = 0;
             long worldPopulation;
             // Create an SQL statement
-            Statement stmt = con.createStatement();
+            Statement stmt1 = con.createStatement();
             // Create string for SQL statement
             String getPopulation = format(
                     "SELECT country.population, countrylanguage.percentage FROM countrylanguage " +
@@ -1144,7 +1280,7 @@ public class App
                             "WHERE countrylanguage.language='%s';"
                     , language);
             // Execute SQL statement
-            ResultSet rset1 = stmt.executeQuery(getPopulation);
+            ResultSet rset1 = stmt1.executeQuery(getPopulation);
             // Get population
             if (!rset1.next())
                 return null;
@@ -1163,12 +1299,19 @@ public class App
                 for (long popul: countryPopulationArray)
                     languagePopulation += popul;
             }
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset1, stmt1);
+            // Create an SQL statement
+            Statement stmt2 = con.createStatement();
             String getWorldPopulation = "SELECT SUM(Population) FROM country;";
-            ResultSet rset2 = stmt.executeQuery(getWorldPopulation);
+            ResultSet rset2 = stmt2.executeQuery(getWorldPopulation);
             if (!rset2.next())
                 return null;
             else
                 worldPopulation = rset2.getLong("SUM(Population)");
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset2, stmt2);
+            // return
             return ((float) languagePopulation/(float) worldPopulation) * 100;
         }
         catch (Exception e)
@@ -1191,7 +1334,8 @@ public class App
         {
             ArrayList<Population> populationOfPlace = new ArrayList<>();
             // Create an SQL statement
-            Statement stmt = con.createStatement();
+            Statement stmt1 = con.createStatement();
+            Statement stmt2 = con.createStatement();
             for (String place: places)
             {
                 // Create string for SQL statement
@@ -1199,28 +1343,32 @@ public class App
                         "SELECT SUM(Population) FROM country WHERE %s='%s';"
                         , column_name, place);
                 // Execute SQL statement
-                ResultSet rset = stmt.executeQuery(getPopulation);
+                ResultSet rset1 = stmt1.executeQuery(getPopulation);
                 // Return population if valid.
                 long population;
-                if (!rset.next())
+                if (!rset1.next())
                     return null;
                 else {
-                    population = rset.getLong("SUM(Population)");
+                    population = rset1.getLong("SUM(Population)");
                 }
+                // Close ResultSet and Statement
+                closeResultSetAndStatement(rset1, stmt1);
                 // Create string for SQL statement
                 String getCityPopulation = format(
                         "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
                                 "city.CountryCode=country.Code AND country.%s='%s';"
                         , column_name, place);
                 // Execute SQL statement
-                ResultSet rset1 = stmt.executeQuery(getCityPopulation);
+                ResultSet rset2 = stmt2.executeQuery(getCityPopulation);
                 // Return population if valid.
                 long populationOfCity;
-                if (!rset1.next())
+                if (!rset2.next())
                     return null;
                 else {
-                    populationOfCity = rset1.getLong("SUM(city.Population)");
+                    populationOfCity = rset2.getLong("SUM(city.Population)");
                 }
+                // Close ResultSet and Statement
+                closeResultSetAndStatement(rset2, stmt2);
                 long populationOfNotCity = population - populationOfCity;
                 float percentagePopulationInCity = ((float) populationOfCity / (float) population) * 100;
                 float percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
@@ -1240,34 +1388,6 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get population");
             return null;
-        }
-    }
-
-    /**
-     * Sort language by percentage
-     */
-    public void sortLanguageByPercentage()
-    {
-        String[] languages = new String[]{"Chinese","English", "Hindi", "Spanish", "Arabic"};
-        Float[] percentage = new Float[5];
-        int i = 0;
-        for (String language: languages)
-        {
-            percentage[i] = getLanguagePercentage(language);
-            i++;
-        }
-        Map<Float, String> languagePercentage = new TreeMap<>(Collections.reverseOrder());
-        int j = 0;
-        while (j < languages.length)
-        {
-            languagePercentage.put(percentage[j], languages[j]);
-            j++;
-        }
-        Set<Entry<Float, String>> set = languagePercentage.entrySet();
-        for (Object o : set) {
-            @SuppressWarnings("unchecked")
-            Entry<Float, String> me = (Entry<Float, String>) o;
-            System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
         }
     }
 
@@ -1404,5 +1524,30 @@ public class App
     public void displayPopulation(String name, long total)
     {
         System.out.format("Total Population of the %s = %s\n", name, total);
+    }
+
+    /**
+     * Display sorted language with percentage
+     * @param set Set containing language and its percentage
+     */
+    public void displayLanguageSorting(Set<Entry<Float, String>> set)
+    {
+        for (Object o : set) {
+            @SuppressWarnings("unchecked")
+            Entry<Float, String> me = (Entry<Float, String>) o;
+            System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
+        }
+    }
+
+    /**
+     * Close ResultSet and Statement
+     * @param rset ResultSet
+     * @param stmt Statement
+     * @throws SQLException throws an instance of SQLException
+     */
+    public void closeResultSetAndStatement(ResultSet rset, Statement stmt) throws SQLException {
+        // Close ResultSet and Statement
+        rset.close();
+        stmt.close();
     }
 }
