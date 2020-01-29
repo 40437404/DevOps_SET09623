@@ -33,6 +33,8 @@ public class App
         String district = "Zuid-Holland";
         // Country name
         String country = "Japan";
+        // Country code
+        String countryCode = "JPN";
         // Region name
         String region = "Caribbean";
         // Continent name
@@ -98,7 +100,7 @@ public class App
 
         // 10. Get populated cities in the country
         ArrayList<City> getCitiesInCountry;
-        getCitiesInCountry = app.cityInCountryDesc(country);
+        getCitiesInCountry = app.cityInCountryDesc(countryCode);
         // Display results
         app.displayTopPopulatedCities(getCitiesInCountry);
 
@@ -248,7 +250,7 @@ public class App
         int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
-            System.out.println("Connecting to database...");
+            System.out.println("Connecting to database ...");
             try
             {
                 // Wait a bit for db to start
@@ -1173,8 +1175,8 @@ public class App
         {
             ArrayList<Population> populationOfPlace = new ArrayList<>();
             // Create an SQL statement
-            Statement stmt1 = con.createStatement();
-            Statement stmt2 = con.createStatement();
+            Statement stmt = con.createStatement();
+            ResultSet rset = null;
             for (String place: places)
             {
                 // Create string for SQL statement
@@ -1182,35 +1184,36 @@ public class App
                         "SELECT SUM(Population) FROM country WHERE %s='%s';"
                         , column_name, place);
                 // Execute SQL statement
-                ResultSet rset1 = stmt1.executeQuery(getPopulation);
+                rset = stmt.executeQuery(getPopulation);
                 // Return population if valid.
                 long population;
-                if (!rset1.next())
+                if (!rset.next())
                     return null;
                 else {
-                    population = rset1.getLong("SUM(Population)");
+                    population = rset.getLong("SUM(Population)");
                 }
-                // Close ResultSet and Statement
-                closeResultSetAndStatement(rset1, stmt1);
                 // Create string for SQL statement
                 String getCityPopulation = format(
                         "SELECT SUM(city.Population) FROM city INNER JOIN country WHERE " +
                                 "city.CountryCode=country.Code AND country.%s='%s';"
                         , column_name, place);
                 // Execute SQL statement
-                ResultSet rset2 = stmt2.executeQuery(getCityPopulation);
+                rset = stmt.executeQuery(getCityPopulation);
                 // Return population if valid.
                 long populationOfCity;
-                if (!rset2.next())
+                if (!rset.next())
                     return null;
                 else {
-                    populationOfCity = rset2.getLong("SUM(city.Population)");
+                    populationOfCity = rset.getLong("SUM(city.Population)");
                 }
-                // Close ResultSet and Statement
-                closeResultSetAndStatement(rset2, stmt2);
-                long populationOfNotCity = population - populationOfCity;
-                float percentagePopulationInCity = ((float) populationOfCity / (float) population) * 100;
-                float percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
+                long populationOfNotCity = 0;
+                float percentagePopulationInCity = 0;
+                float percentagePopulationNotInCity = 0;
+                if (population != 0) {
+                    populationOfNotCity = population - populationOfCity;
+                    percentagePopulationInCity = ((float) populationOfCity / (float) population) * 100;
+                    percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
+                }
                 Population pop = new Population();
                 pop.name = place;
                 pop.population = population;
@@ -1220,6 +1223,9 @@ public class App
                 pop.percentagePopulationNotInCities = percentagePopulationNotInCity;
                 populationOfPlace.add(pop);
             }
+            // Close ResultSet and Statement
+            assert rset != null;
+            closeResultSetAndStatement(rset, stmt);
             return populationOfPlace;
         }
         catch (Exception e)
