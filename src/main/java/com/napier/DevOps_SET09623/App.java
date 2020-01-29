@@ -432,8 +432,10 @@ public class App
         try
         {
             // Create string for SQL statement
-            String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
-                    "FROM city INNER JOIN country ON city.CountryCode = country.Code ORDER by Population DESC;";
+            String strSelect = "SELECT city.ID, city.Name, country.Name AS countryName, " +
+                    "city.District, city.Population " +
+                    "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
+                    "ORDER by Population DESC;";
             // return
             return getCitiesFromQuery(strSelect);
         }
@@ -452,7 +454,8 @@ public class App
     public ArrayList<City> cityInContinentDesc(String continent){
         try {
             // sql query
-            String getCitiesInContinent = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
+            String getCitiesInContinent = "SELECT city.ID, city.Name, country.Name AS countryName, " +
+                    "city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Continent='"+ continent +"' ORDER BY city.Population DESC";
             // return
@@ -472,7 +475,8 @@ public class App
     public ArrayList<City> cityInRegionDesc(String region){
         try {
             // sql query
-            String getCitiesInRegion = "SELECT city.ID, city.Name, country.Name AS countryName, city.District, city.Population " +
+            String getCitiesInRegion = "SELECT city.ID, city.Name, country.Name AS countryName, " +
+                    "city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
                     "WHERE country.Region = '"+ region +"' ORDER BY city.Population DESC;";
             // return
