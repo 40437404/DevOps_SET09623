@@ -8,185 +8,392 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class Testing
-{
+public class Testing {
     static App app;
 
     @BeforeAll
-    static void init()
-    {
+    static void init() {
         app = new App();
     }
-    // Kyaw zaw lwin start
-    // World Starts from here//
-    // *********************************** //
+
+    // 1. Get Populated Countries of the world
     @Test
-    void populateCapitalCitiesInWorldTestZero()
-    {
-        app.populateCapitalCitiesInWorld();
+    void worldCountryLargeToSmallTestNull() {
+        app.worldCountryLargeToSmall();
+    }
+
+    // 2. Get Populated Countries of a continent
+    @Test
+    void continentCountryLargeToSmallTestNull() {
+        app.continentCountryLargeToSmall(null);
     }
 
     @Test
-    void populateCapitalCitiesInWorldTestMany()
-    {
+    void continentCountryLargeToSmallTestWrong() {
+        app.continentCountryLargeToSmall("AAA");
+    }
+
+    // 3. Get Populated Countries of a region
+    @Test
+    void regionCountryLargeToSmallTestNull() {
+        app.regionCountryLargeToSmall(null);
+    }
+
+    // 4. Get Populated certain number of Countries of world
+    @Test
+    void populateCountriesInWorldTestNull() {
+        app.populateCountriesInWorld(0);
+    }
+
+    @Test
+    void populateCountriesInWorldTestWrong() {
+        app.populateCountriesInWorld(999);
+    }
+
+    // 5. Get Populated certain number of Countries of a continent
+    @Test
+    void populatedCountriesInContinentTestWrong() {
+        app.populatedCountriesInContinent("AAA", 999);
+    }
+
+    // 6. Get Populated certain number of Countries of a region
+    @Test
+    void populatedCountriesInRegionTestNull() {
+        app.populatedCountriesInRegion(null, 0);
+    }
+
+    // 7. Get populated cities in the world
+    @Test
+    void cityInWorldDescTestNull() {
+        app.cityInWorldDesc();
+    }
+
+    // 8. Get populated cities in the continent
+    @Test
+    void cityInContinentDescTestNull() {
+        app.topNPopulatedCitiesInDistrict(null, 1);
+    }
+    @Test
+    void cityInContinentDescTestMany() {
+        app.topNPopulatedCitiesInDistrict("South America", 999);
+    }
+    @Test
+    void cityInContinentDescTestWrong() {
+        app.topNPopulatedCitiesInDistrict("Flash", 1);
+    }
+    @Test
+    void cityInContinentDescTestZero() {
+        app.topNPopulatedCitiesInDistrict("South America", 0);
+    }
+
+    // 9. Get populated cities in the region
+    @Test
+    void capitalCityInRegionDescTestZero() {
+        app.populatedCapitalCitiesInRegion(null);
+    }
+    @Test
+    void capitalCityInRegionDescTestWrong() {
+        app.populatedCapitalCitiesInRegion("AAA");
+    }
+
+    // 10. Get populated cities in the country
+    @Test
+    void cityInCountryDescTestNull(){
+        app.cityInCountryDesc(null);
+    }
+    @Test
+    void cityInCountryDescTestWrong(){
+        app.cityInCountryDesc("AAA");
+    }
+
+    // 11. Get populated cities in the district
+    @Test
+    void cityInDistrictDescTestNull(){
+        app.cityInDistrictDesc(null);
+    }
+    @Test
+    void cityInDistrictDescTestWrong(){
+        app.cityInDistrictDesc("AAA");
+    }
+
+    // 12. Get top N populated cities worldwide
+    @Test
+    void topPopulatedCitiesTestNull() {
+        app.topNPopulatedCitiesInWorld(0);
+    }
+    @Test
+    void topPopulatedCitiesTestMany() {
         app.topNPopulatedCitiesInWorld(9999);
     }
 
+    // 13. Get top N populated cities in a continent
     @Test
-    void populateCapitalCitiesInWorldTestNull()
-    {
+    void topNPopulatedCitiesInContinentTestNull(){
+        app.topNPopulatedCitiesInContinent(null,0);
+    }
+    @Test
+    void topNPopulatedCitiesInContinentTestWrong(){
+        app.topNPopulatedCitiesInContinent("AAA", 99999);
+    }
+
+    // 14. Get top N populated cities in a region
+    @Test
+    void cityInRegionDescTestNull() {
+        app.topNPopulatedCitiesInRegion(null, 1);
+    }
+    @Test
+    void cityInRegionDescTestMany() {
+        app.topNPopulatedCitiesInRegion("Southern and Central Asia", 999);
+    }
+    @Test
+    void cityInRegionDescTestWrong() {
+        app.topNPopulatedCitiesInRegion("Wonder Woman", 1);
+    }
+    @Test
+    void cityInRegionDescTestZero() {
+        app.topNPopulatedCitiesInRegion("Central Asia", 0);
+    }
+
+    // 15. Get top N populated cities in a country
+    @Test
+    void populatedCitiesInACountryTestNull() {
+        app.topNPopulatedCitiesInCountry(null, 1);
+    }
+    @Test
+    void populatedCitiesInACountryTestMany() {
+        app.topNPopulatedCitiesInCountry("South Georgia and the South Sandwich Islands", 999);
+    }
+    @Test
+    void populatedCitiesInACountryTestWrong() {
+        app.topNPopulatedCitiesInCountry("Batman", 1);
+    }
+    @Test
+    void populatedCitiesInACountryTestZero() {
+        app.topNPopulatedCitiesInCountry("South Georgia", 0);
+    }
+
+    // 16. Get top N populated cities in a district
+    @Test
+    void populatedCitiesInDistrictTestNull() {
+        app.topNPopulatedCitiesInDistrict(null, 1);
+    }
+    @Test
+    void populatedCitiesInDistrictTestMany() {
+        app.topNPopulatedCitiesInDistrict("Andorra la Vella", 999);
+    }
+    @Test
+    void populatedCitiesInDistrictTestZero() {
+        app.topNPopulatedCitiesInDistrict("Andorra la Vella", 0);
+    }
+    @Test
+    void populatedCitiesInDistrictTestWrong() {
+        app.topNPopulatedCitiesInDistrict("superman", 2);
+    }
+
+    // 17. Get populated capital cities in the world
+    @Test
+    void populateCapitalCitiesInWorldTestZero() {
+        app.populateCapitalCitiesInWorld();
+    }
+    @Test
+    void populateCapitalCitiesInWorldTestNull() {
+        app.populateCapitalCitiesInWorld();
+    }
+    @Test
+    void populateCapitalCitiesInWorldTestWrong() {
         app.populateCapitalCitiesInWorld();
     }
 
+    // 18. Get populated capital cities in a continent
     @Test
-    void populateCapitalCitiesInWorldTestWrong()
-    {
-        app.populateCapitalCitiesInWorld();
-    }
-    //END OF WORLD//
-    //*********************************************//
-
-    //REGION STARTS FROM HERE//
-    //*********************************************//
-    @Test
-    void populatedCapitalCitiesInRegionTestZero()
-    {
-        app.populatedCapitalCitiesInRegion(null);
-    }
-
-    @Test
-    void populatedCapitalCitiesInRegionTestMany()
-    {
-        app.populatedCapitalCitiesInRegion("Australia and New Zealand");
-    }
-
-    @Test
-    void populatedCapitalCitiesInRegionTestNull()
-    {
-        app.populatedCapitalCitiesInRegion(null);
-    }
-
-    @Test
-    void populatedCapitalCitiesInRegionTestWrong()
-    {
-        app.populatedCapitalCitiesInRegion("aaa");
-    }
-    //  End of Region //
-    // *********************************** //
-
-    // Continent Starts From here //
-    // *********************************** //
-    @Test
-    void populateCapitalCitiesInContinentTestZero()
-    {
+    void populateCapitalCitiesInContinentTestZero() {
         app.populateCapitalCitiesInContinent(null);
     }
-
     @Test
-    void populateCapitalCitiesInContinentTestMany()
-    {
+    void populateCapitalCitiesInContinentTestMany() {
         app.populateCapitalCitiesInContinent("Australia and New Zealand");
     }
-
     @Test
-    void populateCapitalCitiesInContinentTestNull()
-    {
+    void populateCapitalCitiesInContinentTestNull() {
         app.populateCapitalCitiesInContinent(null);
     }
-
     @Test
-    void populateCapitalCitiesInContinentTestWrong()
-    {
+    void populateCapitalCitiesInContinentTestWrong() {
         app.populateCapitalCitiesInContinent("aaa");
     }
-    // End Of Continent//
-    // *********************************** //
 
-    // DESC //
-    // *********************************** //
+    // 19. Get populated capital cities in a region
     @Test
-    void capitalCityInRegionDescTestZero()
-    {
+    void populatedCapitalCitiesInRegionTestZero() {
         app.populatedCapitalCitiesInRegion(null);
     }
-
-
     @Test
-    void capitalCityInRegionDescTestWrong()
-    {
-        app.populatedCapitalCitiesInRegion("AAA");
+    void populatedCapitalCitiesInRegionTestMany() {
+        app.populatedCapitalCitiesInRegion("Australia and New Zealand");
     }
-    // END OF DESC //
-    // ******************************************* //
-
-    // POPULATION OF REGION //
-    // *********************************** //
     @Test
-    void getPopulationOfRegionTestZero()
-    {
+    void populatedCapitalCitiesInRegionTestNull() {
+        app.populatedCapitalCitiesInRegion(null);
+    }
+    @Test
+    void populatedCapitalCitiesInRegionTestWrong() {
+        app.populatedCapitalCitiesInRegion("aaa");
+    }
+
+    // 20. Get N populated capital cities in the world
+    @Test
+    void topNPopulatedCapitalCityInWorldTestNull(){
+        app.topNPopulatedCapitalCityInWorld(0);
+    }
+    @Test
+    void topNPopulatedCapitalCityInWorldTestMany(){
+        app.topNPopulatedCapitalCityInWorld(9999);
+    }
+
+    // 21. Get N populated capital cities in the continent
+    @Test
+    void topNPopulatedCapitalCityInContinentTestNull(){
+        app.topNPopulatedCapitalCityInContinent(null, 0);
+    }
+    @Test
+    void topNPopulatedCapitalCityInContinentTestWrong(){
+        app.topNPopulatedCapitalCityInContinent("AAA",0);
+    }
+    @Test
+    void topNPopulatedCapitalCityInContinentTestMany(){
+        app.topNPopulatedCapitalCityInContinent("BBBB", 99999);
+    }
+
+    // 22. Get N populated capital cities in the region
+    @Test
+    void topNPopulatedCapitalCityInRegionTestNull(){
+        app.topNPopulatedCapitalCityInRegion(null, 0);
+    }
+    @Test
+    void topNPopulatedCapitalCityInRegionTestWrong(){
+        app.topNPopulatedCapitalCityInRegion("AAA", 0);
+    }
+    @Test
+    void topNPopulatedCapitalCityInRegionTestMany(){
+        app.topNPopulatedCapitalCityInRegion("AAA", 99999);
+    }
+
+    // 23. Get Population of a continent
+    @Test
+    void getPopulationOfContinentTestNull() {
+        app.getPopulationOfContinent();
+    }
+    @Test
+    void getPopulationOfContinentTestWrong() {
+        app.getPopulationOfContinent();
+    }
+    @Test
+    void displayPopulationOfPlaceTestNull() {
+        app.displayPopulationOfPlace(null, null);
+    }
+
+    // 24. Get Population of a region
+    @Test
+    void getPopulationOfRegionTestZero() {
+        app.getPopulationOfRegion();
+    }
+    @Test
+    void getPopulationOfRegionTestMany() {
+        app.getPopulationOfRegion();
+    }
+    @Test
+    void getPopulationOfRegionTestNull() {
+        app.getPopulationOfRegion();
+    }
+    @Test
+    void getPopulationOfRegionTestWrong() {
         app.getPopulationOfRegion();
     }
 
+    // 25. Get Population of a country
     @Test
-    void getPopulationOfRegionTestMany()
-    {
-        app.getPopulationOfRegion();
+    void getPopulationOfCountryTestZero() {
+        app.getPopulationOfCountry();
     }
-
     @Test
-    void getPopulationOfRegionTestNull()
-    {
-        app.getPopulationOfRegion();
+    void getPopulationOfCountryTestMany() {
+        app.getPopulationOfCountry();
     }
-
     @Test
-    void getPopulationOfRegionTestWrong()
-    {
-        app.getPopulationOfRegion();
+    void getPopulationOfCountryTestNull() {
+        app.getPopulationOfCountry();
     }
-    // END OF POPULATION OF REGION //
-    // ******************************************* //
-
-    // POPULATION OF REGION //
-    // *********************************** //
     @Test
-    void getPopulationOfCountryTestZero()
-    {
+    void getPopulationOfCountryTestWrong() {
         app.getPopulationOfCountry();
     }
 
+    // 26. Get population of the world
     @Test
-    void getPopulationOfCountryTestMany()
-    {
-        app.getPopulationOfCountry();
+    void populationOfTheWorldTestNull(){
+        app.populationOfTheWorld();
     }
 
+    // 27. Get population of the continent
     @Test
-    void getPopulationOfCountryTestNull()
-    {
-        app.getPopulationOfCountry();
+    void populationOfTheContinentTestNull(){
+        app.populationOfTheContinent(null);
+    }
+    @Test
+    void populationOfTheContinentTestWrong(){
+        app.populationOfTheContinent("AAA");
     }
 
+    // 28. Get population of the region
     @Test
-    void getPopulationOfCountryTestWrong()
-    {
-        app.getPopulationOfCountry();
+    void populationOfTheRegionTestNull(){
+        app.populationOfTheRegion(null);
     }
-    // END OF POPULATION OF REGION //
-    // ******************************************* //
-    // kyaw zaw lwin end
-
-
     @Test
-    void displayTopPopulatedCitiesTestNull()
-    {
+    void populationOfTheRegionTestWrong(){
+        app.populationOfTheRegion("AAAA");
+    }
+
+    // 29. Get population of the country
+    @Test
+    void populationOfTheCountryTestNull(){
+        app.populationOfTheCountry(null);
+    }
+    @Test
+    void populationOfTheCountryTestWrong(){
+        app.populationOfTheCountry("AAA");
+    }
+
+    // 30. Get population of the district
+    @Test
+    void populationOfTheDistrictTestNull(){
+        app.populationOfTheDistrict(null);
+    }
+    @Test
+    void populationOfTheDistrictTestWrong(){
+        app.populationOfTheDistrict("AAA");
+    }
+
+    // 31. Get population of the city
+    @Test
+    void populationOfTheCityTestNull(){
+        app.populationOfTheCity(null);
+    }
+    @Test
+    void populationOfTheCityTestWrong(){
+        app.populationOfTheCity("AAA");
+    }
+
+
+    // Display Top Populated Cities
+    @Test
+    void displayTopPopulatedCitiesTestNull() {
         ArrayList<City> city = new ArrayList<>();
         app.displayTopPopulatedCities(city);
     }
 
     @Test
-    void displayTopPopulatedCitiesTest()
-    {
+    void displayTopPopulatedCitiesTest() {
         ArrayList<City> city = new ArrayList<>();
         City cty = new City();
         cty.id = 1;
@@ -198,34 +405,9 @@ public class Testing
         app.displayTopPopulatedCities(city);
     }
 
-    // Zabu Kyaw Start
+    // Display Top Populated Countries
     @Test
-    void getPopulationOfContinentTestNull()
-    {
-        app.getPopulationOfContinent();
-    }
-
-    @Test
-    void getPopulationOfContinentTestWrong()
-    {
-        app.getPopulationOfContinent();
-    }
-
-    @Test
-    void displayPopulationOfPlaceTestNull()
-    {
-        app.displayPopulationOfPlace(null,null);
-    }
-
-    @Test
-    void regionCountryLargeToSmallTestNull()
-    {
-        app.regionCountryLargeToSmall(null);
-    }
-
-    @Test
-    void displayTopPopulatedCountriesTestDisplay()
-    {
+    void displayTopPopulatedCountriesTestDisplay() {
         ArrayList<Country> cty = new ArrayList<>();
         Country ctry = new Country();
         ctry.code = "AA";
@@ -237,200 +419,16 @@ public class Testing
         app.displayTopPopulatedCountries(cty);
     }
 
-    @Test
-    void continentCountryLargeToSmallTestNull()
-    {
-        app.continentCountryLargeToSmall(null);
-    }
-
-    @Test
-    void continentCountryLargeToSmallTestWrong()
-    {
-        app.continentCountryLargeToSmall("AAA");
-    }
-
-    @Test
-    void worldCountryLargeToSmallTestNull()
-    {
-        app.worldCountryLargeToSmall();
-    }
-
-    @Test
-    void populatedCountriesInRegionTestNull()
-    {
-        app.populatedCountriesInRegion(null,0);
-    }
-
-   @Test
-    void populatedCountriesInContinentTestWrong()
-   {
-       app.populatedCountriesInContinent("AAA",999);
-   }
-
-   @Test
-    void populateCountriesInWorldTestNull()
-   {
-       app.populateCountriesInWorld(0);
-   }
-
-   @Test
-    void populateCountriesInWorldTestWrong()
-   {
-       app.populateCountriesInWorld(999);
-   }
-
-    // Zabu Kyaw End
-    //____________BOBOTUNZAW Top Populated cities in worldwide________________________
-    @Test
-    void topPopulatedCitiesTestNull()
-    {
-        app.topNPopulatedCitiesInWorld(0);
-    }
-    @Test
-    void topPopulatedCitiesTestMany()
-    {
-        app.topNPopulatedCitiesInWorld(9999);
-    }
-    @Test
-    void topPopulatedCitiesTestZero()
-    {
-        app.topNPopulatedCitiesInWorld(0);
-    }
-    @Test
-    void topPopulatedCitiesTestWrong()
-    {
-        app.topNPopulatedCitiesInWorld(999999999);
-    }
-    //__________________________BOBOTUNZAW Top Populated Cities In worldwide________________________
 
 
 
 
-    //__________________________BOBOTUNZAW Top Populated Cities In district______________________
-    @Test
-    void populatedCitiesInDistrictTestNull()
-    {
-        app.topNPopulatedCitiesInDistrict(null,1);
-    }
-    @Test
-    void populatedCitiesInDistrictTestMany()
-    {
-        app.topNPopulatedCitiesInDistrict("Andorra la Vella", 999);
-    }
-    @Test
-    void populatedCitiesInDistrictTestZero()
-    {
-        app.topNPopulatedCitiesInDistrict("Andorra la Vella", 0);
-    }
-    @Test
-    void populatedCitiesInDistrictTestWrong()
-    {
-        app.topNPopulatedCitiesInDistrict("superman",2);
-    }
-    //__________________________BOBOTUNZAW Top Populated Cities In district______________________
 
 
 
 
-    //__________________________BOBOTUNZAW Top Populated Cities In Country______________________
-    @Test
-    void populatedCitiesInACountryTestNull()
-    {
-        app.topNPopulatedCitiesInCountry(null,1);
-    }
-    @Test
-    void populatedCitiesInACountryTestMany()
-    {
-        app.topNPopulatedCitiesInCountry("South Georgia and the South Sandwich Islands", 999);
-    }
-    @Test
-    void populatedCitiesInACountryTestWrong()
-    {
-        app.topNPopulatedCitiesInCountry("Batman", 1);
-    }
-    @Test
-    void populatedCitiesInACountryTestZero()
-    {
-        app.topNPopulatedCitiesInCountry("South Georgia", 0);
-    }
-    //__________________________BOBOTUNZAW Top Populated Cities In Country______________________
 
 
 
 
-    //__________________________BOBOTUNZAW Top Populated Cities In Region______________________
-    @Test
-    void cityInRegionDescTestNull()
-    {
-        app.topNPopulatedCitiesInRegion(null, 1);
-    }
-    @Test
-    void cityInRegionDescTestMany()
-    {
-        app.topNPopulatedCitiesInRegion("Southern and Central Asia", 999);
-    }
-    @Test
-    void cityInRegionDescTestWrong()
-    {
-        app.topNPopulatedCitiesInRegion("Wonder Woman", 1);
-    }
-    @Test
-    void cityInRegionDescTestZero()
-    {
-        app.topNPopulatedCitiesInRegion("Central Asia", 0);
-    }
-    //__________________________BOBOTUNZAW Top Populated Cities In Region______________________
-
-
-
-
-    //__________________________BOBOTUNZAW Top Populated Cities In Continent______________________
-    @Test
-    void cityInContinentDescTestNull()
-    {
-        app.topNPopulatedCitiesInDistrict(null, 1);
-    }
-    @Test
-    void cityInContinentDescTestMany()
-    {
-        app.topNPopulatedCitiesInDistrict("South America", 999);
-    }
-    @Test
-    void cityInContinentDescTestWrong()
-    {
-        app.topNPopulatedCitiesInDistrict("Flash", 1);
-    }
-    @Test
-    void cityInContinentDescTestZero()
-    {
-        app.topNPopulatedCitiesInDistrict("South America", 0);
-    }
-    //__________________________BOBOTUNZAW Top Populated Cities In Continent______________________
-
-
-
-
-    //__________________________BOBOTUNZAW Top Populated Cities In World______________________
-    @Test
-    void cityInWorldDescTestNull()
-    {
-        app.cityInWorldDesc();
-    }
-    @Test
-    void cityInWorldDescTestMany()
-    {
-        app.cityInWorldDesc();
-    }
-    @Test
-    void cityInWorldDescTestWrong()
-    {
-        app.cityInWorldDesc();
-    }
-    @Test
-    void cityInWorldDescTestZero()
-    {
-        app.cityInWorldDesc();
-    }
-
-    //__________________________BOBOTUNZAW Top Populated Cities In World______________________
 }
