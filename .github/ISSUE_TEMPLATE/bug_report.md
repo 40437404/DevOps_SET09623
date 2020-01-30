@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: Issues
-labels: bug, good first issue, invalid, question
+labels: bug
 assignees: 40437404, ZabuKyaw99, KyawZawLwin, bagu6tt6
 
 ---
