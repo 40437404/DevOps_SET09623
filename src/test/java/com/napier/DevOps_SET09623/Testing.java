@@ -382,11 +382,11 @@ public class Testing {
     void displayTopPopulatedCitiesTest() {
         ArrayList<City> city = new ArrayList<>();
         City cty = new City();
-        cty.id = 1;
-        cty.name = "Yangon";
-        cty.countryName = "MMR";
-        cty.district = "Yangon";
-        cty.population = 2345678;
+        cty.setId(1);
+        cty.setName("Yangon");
+        cty.setCountryName("MMR");
+        cty.setDistrict("Yangon");
+        cty.setPopulation(2345678);
         city.add(cty);
         app.displayTopPopulatedCities(city);
     }
@@ -401,11 +401,11 @@ public class Testing {
     void displayTopPopulatedCountriesTestDisplay() {
         ArrayList<Country> cty = new ArrayList<>();
         Country ctry = new Country();
-        ctry.code = "AA";
-        ctry.name = "Yangon";
-        ctry.continent = "Asia";
-        ctry.region = "West";
-        ctry.population = 43636363;
+        ctry.setCode("AA");
+        ctry.setName("Yangon");
+        ctry.setContinent("Asia");
+        ctry.setRegion("West");
+        ctry.setPopulation(43636363);
         cty.add(ctry);
         app.displayTopPopulatedCountries(cty);
     }
@@ -420,12 +420,12 @@ public class Testing {
     void displayPopulationOfPlaceTestDisplay() {
         ArrayList<Population> result = new ArrayList<>();
         Population population = new Population();
-        population.name = "Myanmar";
-        population.population = 1234567;
-        population.populationInCities = 1234;
-        population.populationNotInCities = 456;
-        population.percentagePopulationInCities = (float) 12.01;
-        population.percentagePopulationNotInCities = (float) 23.0;
+        population.setName("Myanmar");
+        population.setPopulation(1234567);
+        population.setPopulationInCities(1234);
+        population.setPopulationNotInCities(456);
+        population.setPercentagePopulationInCities((float) 12.01);
+        population.setPercentagePopulationNotInCities((float) 23.0);
         result.add(population);
         app.displayPopulationOfPlace("Country", result);
     }

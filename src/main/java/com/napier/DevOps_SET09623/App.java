@@ -1215,12 +1215,12 @@ public class App
                     percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
                 }
                 Population pop = new Population();
-                pop.name = place;
-                pop.population = population;
-                pop.populationInCities = populationOfCity;
-                pop.populationNotInCities = populationOfNotCity;
-                pop.percentagePopulationInCities = percentagePopulationInCity;
-                pop.percentagePopulationNotInCities = percentagePopulationNotInCity;
+                pop.setName(place);
+                pop.setPopulation(population);
+                pop.setPopulationInCities(populationOfCity);
+                pop.setPopulationNotInCities(populationOfNotCity);
+                pop.setPercentagePopulationInCities(percentagePopulationInCity);
+                pop.setPercentagePopulationNotInCities(percentagePopulationNotInCity);
                 populationOfPlace.add(pop);
             }
             // Close ResultSet and Statement
@@ -1255,11 +1255,11 @@ public class App
             {
                 do {
                     City city = new City();
-                    city.id = rset.getInt("ID");
-                    city.name = rset.getString("Name");
-                    city.countryName = rset.getString("countryName");
-                    city.district = rset.getString("District");
-                    city.population = rset.getInt("Population");
+                    city.setId(rset.getInt("ID"));
+                    city.setName(rset.getString("Name"));
+                    city.setCountryName(rset.getString("countryName"));
+                    city.setDistrict(rset.getString("District"));
+                    city.setPopulation(rset.getInt("Population"));
                     cty.add(city);
                 } while (rset.next());
                 // Close ResultSet and Statement
@@ -1292,12 +1292,12 @@ public class App
             else {
                 do {
                     Country ctry = new Country();
-                    ctry.code = rset.getString("Code");
-                    ctry.name = rset.getString("Name");
-                    ctry.continent = rset.getString("Continent");
-                    ctry.region = rset.getString("Region");
-                    ctry.population = rset.getLong("Population");
-                    ctry.capital = rset.getString("Capital");
+                    ctry.setCode(rset.getString("Code"));
+                    ctry.setName(rset.getString("Name"));
+                    ctry.setContinent(rset.getString("Continent"));
+                    ctry.setRegion(rset.getString("Region"));
+                    ctry.setPopulation(rset.getLong("Population"));
+                    ctry.setCapital(rset.getString("Capital"));
                     country.add(ctry);
                 } while (rset.next());
                 // Close ResultSet and Statement
@@ -1325,11 +1325,11 @@ public class App
             {
                 System.out.println(
                         "No: " + i + "\n" +
-                                "ID: " + city.id + "\n" +
-                                "Name: " + city.name + "\n" +
-                                "Country Name: " + city.countryName + "\n" +
-                                "District: " + city.district + "\n" +
-                                "Population: " + city.population
+                                "ID: " + city.getId() + "\n" +
+                                "Name: " + city.getName() + "\n" +
+                                "Country Name: " + city.getCountryName() + "\n" +
+                                "District: " + city.getDistrict() + "\n" +
+                                "Population: " + city.getPopulation()
                 );
                 i++;
             }
@@ -1349,11 +1349,11 @@ public class App
             {
                 System.out.println(
                         "No: " + i + "\n" +
-                                "Code: " + ctry.code + "\n" +
-                                "Name: " + ctry.name + "\n" +
-                                "Continent: " + ctry.continent + "\n" +
-                                "Region: " + ctry.region + "\n" +
-                                "Population: " + ctry.population
+                                "Code: " + ctry.getCode() + "\n" +
+                                "Name: " + ctry.getName() + "\n" +
+                                "Continent: " + ctry.getContinent() + "\n" +
+                                "Region: " + ctry.getRegion() + "\n" +
+                                "Population: " + ctry.getPopulation()
                 );
                 i++;
             }
@@ -1372,12 +1372,12 @@ public class App
             for (Population population: result)
             {
                 System.out.println(
-                        type + " Name: " + population.name + "\n" +
-                                "Population of "+ type +": " + population.population + "\n" +
-                                "Population in Cities: " + population.populationInCities + "\n" +
-                                "Percentage Population in Cities: " + population.percentagePopulationInCities + "%\n" +
-                                "Population outside Cities: " + population.populationNotInCities + "\n" +
-                                "Percentage Population outside Cities: " + population.percentagePopulationNotInCities + "%"
+                        type + " Name: " + population.getName() + "\n" +
+                                "Population of "+ type +": " + population.getPopulation() + "\n" +
+                                "Population in Cities: " + population.getPopulationInCities() + "\n" +
+                                "Percentage Population in Cities: " + population.getPercentagePopulationInCities() + "%\n" +
+                                "Population outside Cities: " + population.getPopulationNotInCities() + "\n" +
+                                "Percentage Population outside Cities: " + population.getPercentagePopulationNotInCities() + "%"
                         );
             }
         }
