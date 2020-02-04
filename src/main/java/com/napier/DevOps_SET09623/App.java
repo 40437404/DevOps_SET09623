@@ -1,5 +1,6 @@
 package com.napier.DevOps_SET09623;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -12,8 +13,7 @@ public class App
      * Main function of the program
      * @param args an array of command-line arguments for the application
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         // Create new Application
         App app = new App();
 
@@ -26,6 +26,9 @@ public class App
         {
             app.connect(args[0]);
         }
+
+        Menu menu = new Menu();
+        menu.showMenu();
 
         // Number of cities
         int limit = 10;
@@ -44,183 +47,183 @@ public class App
         // Store type of place
         String type;
 
-        // 1. Get Populated Countries of the world
-        ArrayList<Country> getPopulatedCountriesOfWorld;
-        getPopulatedCountriesOfWorld = app.worldCountryLargeToSmall();
-        // Display results
-        app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
-
-        // 2. Get Populated Countries of a continent
-        ArrayList<Country> getPopulatedCountriesOfContinent;
-        getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
-        // Display results
-        app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
-
-        // 3. Get Populated Countries of a region
-        ArrayList<Country> getPopulatedCountriesOfRegion;
-        getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
-        // Display results
-        app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
-
-        // 4. Get Populated certain number of Countries in world
-        ArrayList<Country> getNPopulatedCountriesInWorld;
-        getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
-        // Display results
-        app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
-
-        // 5. Get Populated certain number of Countries in continent
-        ArrayList<Country> getNPopulatedCountriesInContinent;
-        getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
-        // Display results
-        app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
-
-        // 6. Get Populated certain number of Countries in region
-        ArrayList<Country> getNPopulatedCountriesInRegion;
-        getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
-        // Display results
-        app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
-
-        // 7. Get populated cities in the world
-        ArrayList<City> getCitiesInWorld;
-        getCitiesInWorld = app.cityInWorldDesc();
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInWorld);
-
-        // 8. Get populated cities in the continent
-        ArrayList<City> getCitiesInContinent;
-        getCitiesInContinent = app.cityInContinentDesc(continent);
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInContinent);
-
-        // 9. Get populated cities in the region
-        ArrayList<City> getCitiesInRegion;
-        getCitiesInRegion = app.cityInRegionDesc(region);
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInRegion);
-
-        // 10. Get populated cities in the country
-        ArrayList<City> getCitiesInCountry;
-        getCitiesInCountry = app.cityInCountryDesc(countryCode);
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInCountry);
-
-        // 11. Get populated cities in the district
-        ArrayList<City> getCitiesInDistrict;
-        getCitiesInDistrict = app.cityInDistrictDesc(district);
-        // Display results
-        app.displayTopPopulatedCities(getCitiesInDistrict);
-
-        // 12. Get top N populated cities worldwide
-        ArrayList<City> getTopCitiesInWorld;
-        getTopCitiesInWorld = app.topNPopulatedCitiesInWorld(limit);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInWorld);
-
-        // 13. Get top N populated cities in a continent
-        ArrayList<City> getTopCitiesInContinent;
-        getTopCitiesInContinent = app.topNPopulatedCitiesInContinent(continent, limit);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInContinent);
-
-        // 14. Get top N populated cities in a region
-        ArrayList<City> getTopCitiesInRegion;
-        getTopCitiesInRegion = app.topNPopulatedCitiesInRegion(region, limit);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInRegion);
-
-        // 15. Get top N populated cities in a country
-        ArrayList<City> getTopCitiesInCountry;
-        getTopCitiesInCountry = app.topNPopulatedCitiesInCountry(country, limit);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInCountry);
-
-        // 16. Get top N populated cities in a district
-        ArrayList<City> getTopCitiesInDistrict;
-        getTopCitiesInDistrict = app.topNPopulatedCitiesInDistrict(district, limit);
-        // Display results
-        app.displayTopPopulatedCities(getTopCitiesInDistrict);
-
-        // 17. Get populated capital cities in the world
-        ArrayList<City> capitalCitiesInWorld;
-        capitalCitiesInWorld = app.populateCapitalCitiesInWorld();
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInWorld);
-
-        // 18. Get populated capital cities in a continent
-        ArrayList<City> capitalCitiesInContinent;
-        capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInContinent);
-
-        // 19. Get populated capital cities in a region
-        ArrayList<City> capitalCitiesInRegion;
-        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInRegion);
-
-        // 20. Get N populated capital cities in the world in descending order
-        ArrayList<City> capitalCitiesInWorldDesc;
-        capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
-
-        // 21. Get N populated capital cities in the continent in descending order
-        ArrayList<City> capitalCitiesInContinentDesc;
-        capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
-
-        // 22. Get N populated capital cities in the region in descending order
-        ArrayList<City> capitalCitiesInRegionDesc;
-        capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
-        // Display results
-        app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
-
-        // 23. Get Population of a continent
-        ArrayList<Population> populationOfContinent = app.getPopulationOfContinent();
-        // Display results
-        type = "Continent";
-        app.displayPopulationOfPlace(type, populationOfContinent);
-
-        // 24. Get Population of a region
-        ArrayList<Population> populationOfRegion = app.getPopulationOfRegion();
-        // Display results
-        type = "Region";
-        app.displayPopulationOfPlace(type, populationOfRegion);
-
-        // 25. Get Population of a country
-        ArrayList<Population> populationOfCountry = app.getPopulationOfCountry();
-        // Display results
-        type = "Country";
-        app.displayPopulationOfPlace(type, populationOfCountry);
-
-        // 26. Get population of the world
-        long totalWorld = app.populationOfTheWorld();
-        app.displayPopulation("World", totalWorld);
-
-        // 27. Get population of the continent
-        long totalContinent = app.populationOfTheContinent(continent);
-        app.displayPopulation(continent, totalContinent);
-
-        // 28. Get population of the region
-        long totalRegion = app.populationOfTheRegion(region);
-        app.displayPopulation(region, totalRegion);
-
-        // 29. Get population of the country
-        long totalCountry = app.populationOfTheCountry(country);
-        app.displayPopulation(country, totalCountry);
-
-        // 30. Get population of the district
-        long totalDistrict = app.populationOfTheDistrict(district);
-        app.displayPopulation(district, totalDistrict);
-
-        // 31. Get population of the city
-        long totalCity = app.populationOfTheCity(city);
-        app.displayPopulation(city, totalCity);
-
-        //32. Sort language by percentage
-        Set<Entry<Float, String>> set = app.sortLanguageByPercentage();
-        app.displayLanguageSorting(set);
+//        // 1. Get Populated Countries of the world
+//        ArrayList<Country> getPopulatedCountriesOfWorld;
+//        getPopulatedCountriesOfWorld = worldCountryLargeToSmall();
+//        // Display results
+//        app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
+////
+//        // 2. Get Populated Countries of a continent
+//        ArrayList<Country> getPopulatedCountriesOfContinent;
+//        getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
+//        // Display results
+//        app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
+//
+//        // 3. Get Populated Countries of a region
+//        ArrayList<Country> getPopulatedCountriesOfRegion;
+//        getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
+//        // Display results
+//        app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
+//
+//        // 4. Get Populated certain number of Countries in world
+//        ArrayList<Country> getNPopulatedCountriesInWorld;
+//        getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
+//        // Display results
+//        app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
+//
+//        // 5. Get Populated certain number of Countries in continent
+//        ArrayList<Country> getNPopulatedCountriesInContinent;
+//        getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
+//        // Display results
+//        app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
+//
+//        // 6. Get Populated certain number of Countries in region
+//        ArrayList<Country> getNPopulatedCountriesInRegion;
+//        getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
+//        // Display results
+//        app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
+//
+//        // 7. Get populated cities in the world
+//        ArrayList<City> getCitiesInWorld;
+//        getCitiesInWorld = app.cityInWorldDesc();
+//        // Display results
+//        app.displayTopPopulatedCities(getCitiesInWorld);
+//
+//        // 8. Get populated cities in the continent
+//        ArrayList<City> getCitiesInContinent;
+//        getCitiesInContinent = app.cityInContinentDesc(continent);
+//        // Display results
+//        app.displayTopPopulatedCities(getCitiesInContinent);
+//
+//        // 9. Get populated cities in the region
+//        ArrayList<City> getCitiesInRegion;
+//        getCitiesInRegion = app.cityInRegionDesc(region);
+//        // Display results
+//        app.displayTopPopulatedCities(getCitiesInRegion);
+//
+//        // 10. Get populated cities in the country
+//        ArrayList<City> getCitiesInCountry;
+//        getCitiesInCountry = app.cityInCountryDesc(countryCode);
+//        // Display results
+//        app.displayTopPopulatedCities(getCitiesInCountry);
+//
+//        // 11. Get populated cities in the district
+//        ArrayList<City> getCitiesInDistrict;
+//        getCitiesInDistrict = app.cityInDistrictDesc(district);
+//        // Display results
+//        app.displayTopPopulatedCities(getCitiesInDistrict);
+//
+//        // 12. Get top N populated cities worldwide
+//        ArrayList<City> getTopCitiesInWorld;
+//        getTopCitiesInWorld = app.topNPopulatedCitiesInWorld(limit);
+//        // Display results
+//        app.displayTopPopulatedCities(getTopCitiesInWorld);
+//
+//        // 13. Get top N populated cities in a continent
+//        ArrayList<City> getTopCitiesInContinent;
+//        getTopCitiesInContinent = app.topNPopulatedCitiesInContinent(continent, limit);
+//        // Display results
+//        app.displayTopPopulatedCities(getTopCitiesInContinent);
+//
+//        // 14. Get top N populated cities in a region
+//        ArrayList<City> getTopCitiesInRegion;
+//        getTopCitiesInRegion = app.topNPopulatedCitiesInRegion(region, limit);
+//        // Display results
+//        app.displayTopPopulatedCities(getTopCitiesInRegion);
+//
+//        // 15. Get top N populated cities in a country
+//        ArrayList<City> getTopCitiesInCountry;
+//        getTopCitiesInCountry = app.topNPopulatedCitiesInCountry(country, limit);
+//        // Display results
+//        app.displayTopPopulatedCities(getTopCitiesInCountry);
+//
+//        // 16. Get top N populated cities in a district
+//        ArrayList<City> getTopCitiesInDistrict;
+//        getTopCitiesInDistrict = app.topNPopulatedCitiesInDistrict(district, limit);
+//        // Display results
+//        app.displayTopPopulatedCities(getTopCitiesInDistrict);
+//
+//        // 17. Get populated capital cities in the world
+//        ArrayList<City> capitalCitiesInWorld;
+//        capitalCitiesInWorld = app.populateCapitalCitiesInWorld();
+//        // Display results
+//        app.displayTopPopulatedCities(capitalCitiesInWorld);
+//
+//        // 18. Get populated capital cities in a continent
+//        ArrayList<City> capitalCitiesInContinent;
+//        capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent);
+//        // Display results
+//        app.displayTopPopulatedCities(capitalCitiesInContinent);
+//
+//        // 19. Get populated capital cities in a region
+//        ArrayList<City> capitalCitiesInRegion;
+//        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region);
+//        // Display results
+//        app.displayTopPopulatedCities(capitalCitiesInRegion);
+//
+//        // 20. Get N populated capital cities in the world in descending order
+//        ArrayList<City> capitalCitiesInWorldDesc;
+//        capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
+//        // Display results
+//        app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
+//
+//        // 21. Get N populated capital cities in the continent in descending order
+//        ArrayList<City> capitalCitiesInContinentDesc;
+//        capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
+//        // Display results
+//        app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
+//
+//        // 22. Get N populated capital cities in the region in descending order
+//        ArrayList<City> capitalCitiesInRegionDesc;
+//        capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
+//        // Display results
+//        app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
+//
+//        // 23. Get Population of a continent
+//        ArrayList<Population> populationOfContinent = app.getPopulationOfContinent();
+//        // Display results
+//        type = "Continent";
+//        app.displayPopulationOfPlace(type, populationOfContinent);
+//
+//        // 24. Get Population of a region
+//        ArrayList<Population> populationOfRegion = app.getPopulationOfRegion();
+//        // Display results
+//        type = "Region";
+//        app.displayPopulationOfPlace(type, populationOfRegion);
+//
+//        // 25. Get Population of a country
+//        ArrayList<Population> populationOfCountry = app.getPopulationOfCountry();
+//        // Display results
+//        type = "Country";
+//        app.displayPopulationOfPlace(type, populationOfCountry);
+//
+//        // 26. Get population of the world
+//        long totalWorld = app.populationOfTheWorld();
+//        app.displayPopulation("World", totalWorld);
+//
+//        // 27. Get population of the continent
+//        long totalContinent = app.populationOfTheContinent(continent);
+//        app.displayPopulation(continent, totalContinent);
+//
+//        // 28. Get population of the region
+//        long totalRegion = app.populationOfTheRegion(region);
+//        app.displayPopulation(region, totalRegion);
+//
+//        // 29. Get population of the country
+//        long totalCountry = app.populationOfTheCountry(country);
+//        app.displayPopulation(country, totalCountry);
+//
+//        // 30. Get population of the district
+//        long totalDistrict = app.populationOfTheDistrict(district);
+//        app.displayPopulation(district, totalDistrict);
+//
+//        // 31. Get population of the city
+//        long totalCity = app.populationOfTheCity(city);
+//        app.displayPopulation(city, totalCity);
+//
+//        //32. Sort language by percentage
+//        Set<Entry<Float, String>> set = app.sortLanguageByPercentage();
+//        app.displayLanguageSorting(set);
 
         // Disconnect from database
         app.disconnect();
@@ -229,7 +232,7 @@ public class App
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    private static Connection con;
 
     /**
      * Connect to the MySQL database.
@@ -254,7 +257,7 @@ public class App
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+//                Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?" +
                         "allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
@@ -266,10 +269,10 @@ public class App
                 System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
-            catch (InterruptedException ie)
-            {
-                System.out.println("Thread interrupted? Should not happen.");
-            }
+//            catch (InterruptedException ie)
+//            {
+//                System.out.println("Thread interrupted? Should not happen.");
+//            }
         }
     }
 
@@ -1177,6 +1180,7 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             ResultSet rset = null;
+            Population pop = new Population();
             for (String place: places)
             {
                 // Create string for SQL statement
@@ -1214,7 +1218,6 @@ public class App
                     percentagePopulationInCity = ((float) populationOfCity / (float) population) * 100;
                     percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
                 }
-                Population pop = new Population();
                 pop.setName(place);
                 pop.setPopulation(population);
                 pop.setPopulationInCities(populationOfCity);
@@ -1279,7 +1282,7 @@ public class App
      * @param strSelect SQL Query String
      * @return return an ArrayList containing countries
      */
-    public ArrayList<Country> getCountryFromQuery(String strSelect) {
+    public static ArrayList<Country> getCountryFromQuery(String strSelect) {
         try {
             // create the java statement
             Statement stmt = con.createStatement();
@@ -1324,11 +1327,11 @@ public class App
             for (City city: cty)
             {
                 System.out.println(
-                        "No: " + i + "\n" +
-                                "ID: " + city.getId() + "\n" +
-                                "Name: " + city.getName() + "\n" +
-                                "Country Name: " + city.getCountryName() + "\n" +
-                                "District: " + city.getDistrict() + "\n" +
+                        "No: " + i + " | " +
+                                "ID: " + city.getId() + " | " +
+                                "Name: " + city.getName() + " | " +
+                                "Country Name: " + city.getCountryName() + " | " +
+                                "District: " + city.getDistrict() + " | " +
                                 "Population: " + city.getPopulation()
                 );
                 i++;
@@ -1348,11 +1351,11 @@ public class App
             for (Country ctry: country)
             {
                 System.out.println(
-                        "No: " + i + "\n" +
-                                "Code: " + ctry.getCode() + "\n" +
-                                "Name: " + ctry.getName() + "\n" +
-                                "Continent: " + ctry.getContinent() + "\n" +
-                                "Region: " + ctry.getRegion() + "\n" +
+                        "No: " + i + " | " +
+                                "Code: " + ctry.getCode() + " | " +
+                                "Name: " + ctry.getName() + " | " +
+                                "Continent: " + ctry.getContinent() + " | " +
+                                "Region: " + ctry.getRegion() + " | " +
                                 "Population: " + ctry.getPopulation()
                 );
                 i++;
@@ -1372,11 +1375,11 @@ public class App
             for (Population population: result)
             {
                 System.out.println(
-                        type + " Name: " + population.getName() + "\n" +
-                                "Population of "+ type +": " + population.getPopulation() + "\n" +
-                                "Population in Cities: " + population.getPopulationInCities() + "\n" +
-                                "Percentage Population in Cities: " + population.getPercentagePopulationInCities() + "%\n" +
-                                "Population outside Cities: " + population.getPopulationNotInCities() + "\n" +
+                        type + " Name: " + population.getName() + " | " +
+                                "Population of "+ type +": " + population.getPopulation() + " | " +
+                                "Population in Cities: " + population.getPopulationInCities() + " | " +
+                                "Percentage Population in Cities: " + population.getPercentagePopulationInCities() + "% | " +
+                                "Population outside Cities: " + population.getPopulationNotInCities() + " | " +
                                 "Percentage Population outside Cities: " + population.getPercentagePopulationNotInCities() + "%"
                         );
             }
@@ -1425,7 +1428,7 @@ public class App
      * @param stmt Statement
      * @throws SQLException throws an instance of SQLException
      */
-    public void closeResultSetAndStatement(ResultSet rset, Statement stmt) throws SQLException {
+    public static void closeResultSetAndStatement(ResultSet rset, Statement stmt) throws SQLException {
         // Close ResultSet and Statement
         rset.close();
         stmt.close();

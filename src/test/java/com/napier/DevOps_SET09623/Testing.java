@@ -357,7 +357,7 @@ public class Testing {
     void getPopulationTestWrong(){app.getPopulation(places, "testing");}
 
     // test query string
-    String testQueryNull = null;
+    String testQueryNull;
     String testQueryCity = "SELECT * FROM city;";
     String testQueryCountry = "SELECT * FROM country;";
     // Get Countries from SQL query

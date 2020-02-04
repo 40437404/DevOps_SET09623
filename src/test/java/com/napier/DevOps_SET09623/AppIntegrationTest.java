@@ -25,11 +25,11 @@ public class AppIntegrationTest
         getTopCities = app.topNPopulatedCitiesInWorld(1);
         for (City city: getTopCities)
         {
-            assertEquals(city.getId(), 1024);
-            assertEquals(city.getName(), "Mumbai (Bombay)");
-            assertEquals(city.getCountryName(), "India");
-            assertEquals(city.getDistrict(), "Maharashtra");
-            assertEquals(city.getPopulation(), 10500000);
+            assertEquals(city.getId(), 1024, "City ID");
+            assertEquals(city.getName(), "Mumbai (Bombay)", "City Name");
+            assertEquals(city.getCountryName(), "India", "Country Name");
+            assertEquals(city.getDistrict(), "Maharashtra", "District Name");
+            assertEquals(city.getPopulation(), 10500000, "Population");
         }
     }
 }
