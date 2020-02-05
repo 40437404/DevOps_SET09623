@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    private static String line = new String(new char[30]).replace("\0", "=");
-    private static Scanner input = new Scanner(System.in);
-    private boolean check = false;
+    private String line = new String(new char[30]).replace("\0", "=");
+    private Scanner input = new Scanner(System.in);
+    private String continent;
+    private String region;
+    private int limit;
     App app = new App();
     public void showMenu() throws IOException {
         String selectMainMenu;
@@ -28,9 +30,9 @@ public class Menu {
             case "1":
                 viewAllCountriesMenu();
                 break;
-//            case 2:
-//                //
-//                break;
+            case "2":
+                viewTopCountriesMenu();
+                break;
 //            case 3:
 //                //
 //                break;
@@ -57,16 +59,14 @@ public class Menu {
     }
     public void viewAllCountriesMenu() throws IOException {
         String selectViewAllCountries;
-        do {
-            System.out.println("View All Countries");
-            System.out.println(line);
-            System.out.println("1. All Countries in the World");
-            System.out.println("2. All Countries in a Continent");
-            System.out.println("3. All Countries in a Region");
-            System.out.println("4. Back");
-            selectViewAllCountries = input.next();
-            check = checkInt(selectViewAllCountries);
-        } while (!check);
+        System.out.println("View All Countries");
+        System.out.println(line);
+        System.out.println("1. All Countries in the World");
+        System.out.println("2. All Countries in a Continent");
+        System.out.println("3. All Countries in a Region");
+        System.out.println("4. Back");
+        System.out.print("> ");
+        selectViewAllCountries = input.next();
         clearScreen();
         switch (selectViewAllCountries) {
             case "1":
@@ -76,12 +76,26 @@ public class Menu {
                 // Display results
                 app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
                 break;
-//            case 2:
-//                //
-//                break;
-//            case 3:
-//                //
-//                break;
+            case "2":
+                // 2. Get Populated Countries of a continent
+                ArrayList<Country> getPopulatedCountriesOfContinent;
+                System.out.print("Enter Continent Name: ");
+                input.nextLine();
+                continent = input.nextLine();
+                getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
+                // Display results
+                app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
+                break;
+            case "3":
+                // 3. Get Populated Countries of a region
+                ArrayList<Country> getPopulatedCountriesOfRegion;
+                System.out.print("Enter Region Name: ");
+                input.nextLine();
+                region = input.nextLine();
+                getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
+                // Display results
+                app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
+                break;
             case "4":
                 showMenu();
                 break;
@@ -90,9 +104,64 @@ public class Menu {
                 viewAllCountriesMenu();
                 break;
         }
-        System.out.println("Press ENTER To Go Back");
-        pressEnter();
+        goBack();
         viewAllCountriesMenu();
+    }
+    public void viewTopCountriesMenu() throws IOException {
+        String selectViewTopCountries;
+        System.out.println("View Top Countries");
+        System.out.println(line);
+        System.out.println("1. All Countries in the World");
+        System.out.println("2. All Countries in a Continent");
+        System.out.println("3. All Countries in a Region");
+        System.out.println("4. Back");
+        System.out.print("> ");
+        selectViewTopCountries = input.next();
+        clearScreen();
+        switch (selectViewTopCountries){
+            case "1":
+                // 4. Get Populated certain number of Countries in world
+                ArrayList<Country> getNPopulatedCountriesInWorld;
+                System.out.print("Number of top countries to view: ");
+                limit = input.nextInt();
+                getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
+                // Display results
+                app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
+                break;
+            case "2":
+                // 5. Get Populated certain number of Countries in continent
+                ArrayList<Country> getNPopulatedCountriesInContinent;
+                System.out.print("Number of top countries to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Continent Name: ");
+                continent = input.nextLine();
+                getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
+                // Display results
+                app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
+                break;
+            case "3":
+                // 6. Get Populated certain number of Countries in region
+                ArrayList<Country> getNPopulatedCountriesInRegion;
+                System.out.print("Number of top countries to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Region Name: ");
+                region = input.nextLine();
+                getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
+                // Display results
+                app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
+                break;
+            case "4":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewTopCountriesMenu();
+                break;
+        }
+        goBack();
+        viewTopCountriesMenu();
     }
     public void clearScreen() {
         try {
@@ -111,23 +180,17 @@ public class Menu {
             System.out.println(e);
         }
     }
-    public boolean checkInt(String input) throws IOException {
-        try {
-            Integer.parseInt(input);
-            return true;
-        }
-        catch (Exception e) {
-            clearScreen();
-            errorMessage();
-            return false;
-        }
-    }
     public void errorMessage() throws IOException {
         System.out.println("Wrong input!!!");
         System.out.println("Press ENTER To Try Again");
-        pressEnter();
+        //noinspection ResultOfMethodCallIgnored
+        System.in.read();
+        input.nextLine();
+        input.nextLine();
+        clearScreen();
     }
-    public void pressEnter() throws IOException {
+    public void goBack() throws IOException {
+        System.out.println("Press ENTER To Go Back");
         //noinspection ResultOfMethodCallIgnored
         System.in.read();
         clearScreen();

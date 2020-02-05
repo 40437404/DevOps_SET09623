@@ -47,41 +47,11 @@ public class App
         // Store type of place
         String type;
 
-//        // 1. Get Populated Countries of the world
-//        ArrayList<Country> getPopulatedCountriesOfWorld;
-//        getPopulatedCountriesOfWorld = worldCountryLargeToSmall();
-//        // Display results
-//        app.displayTopPopulatedCountries(getPopulatedCountriesOfWorld);
-////
-//        // 2. Get Populated Countries of a continent
-//        ArrayList<Country> getPopulatedCountriesOfContinent;
-//        getPopulatedCountriesOfContinent = app.continentCountryLargeToSmall(continent);
-//        // Display results
-//        app.displayTopPopulatedCountries(getPopulatedCountriesOfContinent);
+
 //
-//        // 3. Get Populated Countries of a region
-//        ArrayList<Country> getPopulatedCountriesOfRegion;
-//        getPopulatedCountriesOfRegion = app.regionCountryLargeToSmall(region);
-//        // Display results
-//        app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
+
 //
-//        // 4. Get Populated certain number of Countries in world
-//        ArrayList<Country> getNPopulatedCountriesInWorld;
-//        getNPopulatedCountriesInWorld = app.populateCountriesInWorld(limit);
-//        // Display results
-//        app.displayTopPopulatedCountries(getNPopulatedCountriesInWorld);
-//
-//        // 5. Get Populated certain number of Countries in continent
-//        ArrayList<Country> getNPopulatedCountriesInContinent;
-//        getNPopulatedCountriesInContinent = app.populatedCountriesInContinent(continent, limit);
-//        // Display results
-//        app.displayTopPopulatedCountries(getNPopulatedCountriesInContinent);
-//
-//        // 6. Get Populated certain number of Countries in region
-//        ArrayList<Country> getNPopulatedCountriesInRegion;
-//        getNPopulatedCountriesInRegion = app.populatedCountriesInRegion(region, limit);
-//        // Display results
-//        app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
+
 //
 //        // 7. Get populated cities in the world
 //        ArrayList<City> getCitiesInWorld;
@@ -1282,7 +1252,7 @@ public class App
      * @param strSelect SQL Query String
      * @return return an ArrayList containing countries
      */
-    public static ArrayList<Country> getCountryFromQuery(String strSelect) {
+    public ArrayList<Country> getCountryFromQuery(String strSelect) {
         try {
             // create the java statement
             Statement stmt = con.createStatement();
@@ -1291,7 +1261,7 @@ public class App
             // Return new country if valid
             ArrayList<Country> country = new ArrayList<>();
             if (!rset.next())
-                return  null;
+                return null;
             else {
                 do {
                     Country ctry = new Country();
@@ -1337,6 +1307,10 @@ public class App
                 i++;
             }
         }
+        else
+        {
+            System.out.println("No city found.");
+        }
     }
 
     /**
@@ -1361,6 +1335,10 @@ public class App
                 i++;
             }
         }
+        else
+        {
+            System.out.println("No country found.");
+        }
     }
 
     /**
@@ -1383,6 +1361,10 @@ public class App
                                 "Percentage Population outside Cities: " + population.getPercentagePopulationNotInCities() + "%"
                         );
             }
+        }
+        else
+        {
+            System.out.println("Cannot display population of " + type);
         }
     }
 
