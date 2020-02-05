@@ -9,6 +9,8 @@ public class Menu {
     private Scanner input = new Scanner(System.in);
     private String continent;
     private String region;
+    private String country;
+    private String district;
     private int limit;
     App app = new App();
     public void showMenu() throws IOException {
@@ -22,6 +24,8 @@ public class Menu {
         System.out.println("5. View All Capital Cities");
         System.out.println("6. View Top Capital Cities");
         System.out.println("7. Percentage of People Living/Not Living in Cities");
+        System.out.println("8. Total Population");
+        System.out.println("9. Language");
         System.out.println("0. EXIT");
         System.out.print("> ");
         selectMainMenu = input.next();
@@ -33,21 +37,21 @@ public class Menu {
             case "2":
                 viewTopCountriesMenu();
                 break;
-//            case 3:
-//                //
-//                break;
-//            case 4:
-//                //
-//                break;
-//            case 5:
-//                //
-//                break;
-//            case 6:
-//                //
-//                break;
-//            case 7:
-//                //
-//                break;
+            case "3":
+                viewAllCitiesMenu();
+                break;
+            case "4":
+                viewTopCitiesMenu();
+                break;
+            case "5":
+                viewAllCapitalCitiesMenu();
+                break;
+            case "6":
+                viewTopCapitalCitiesMenu();
+                break;
+            case "7":
+                percentageOfPeople();
+                break;
             case "0":
                 break;
             default:
@@ -64,7 +68,7 @@ public class Menu {
         System.out.println("1. All Countries in the World");
         System.out.println("2. All Countries in a Continent");
         System.out.println("3. All Countries in a Region");
-        System.out.println("4. Back");
+        System.out.println("0. Back");
         System.out.print("> ");
         selectViewAllCountries = input.next();
         clearScreen();
@@ -96,7 +100,7 @@ public class Menu {
                 // Display results
                 app.displayTopPopulatedCountries(getPopulatedCountriesOfRegion);
                 break;
-            case "4":
+            case "0":
                 showMenu();
                 break;
             default:
@@ -111,10 +115,10 @@ public class Menu {
         String selectViewTopCountries;
         System.out.println("View Top Countries");
         System.out.println(line);
-        System.out.println("1. All Countries in the World");
-        System.out.println("2. All Countries in a Continent");
-        System.out.println("3. All Countries in a Region");
-        System.out.println("4. Back");
+        System.out.println("1. Top Countries in the World");
+        System.out.println("2. Top Countries in a Continent");
+        System.out.println("3. Top Countries in a Region");
+        System.out.println("0. Back");
         System.out.print("> ");
         selectViewTopCountries = input.next();
         clearScreen();
@@ -152,7 +156,7 @@ public class Menu {
                 // Display results
                 app.displayTopPopulatedCountries(getNPopulatedCountriesInRegion);
                 break;
-            case "4":
+            case "0":
                 showMenu();
                 break;
             default:
@@ -162,6 +166,269 @@ public class Menu {
         }
         goBack();
         viewTopCountriesMenu();
+    }
+    public void viewAllCitiesMenu() throws IOException {
+        String selectViewAllCities;
+        System.out.println("View All Cities");
+        System.out.println(line);
+        System.out.println("1. All Cities in the World");
+        System.out.println("2. All Cities in a Continent");
+        System.out.println("3. All Cities in a Region");
+        System.out.println("4. All Cities in a Country");
+        System.out.println("5. All Cities in a District");
+        System.out.println("0. Back");
+        System.out.print("> ");
+        selectViewAllCities = input.next();
+        clearScreen();
+        switch (selectViewAllCities) {
+            case "1":
+                // 7. Get populated cities in the world
+                ArrayList<City> getCitiesInWorld;
+                getCitiesInWorld = app.cityInWorldDesc();
+                // Display results
+                app.displayTopPopulatedCities(getCitiesInWorld);
+                break;
+            case "2":
+                // 8. Get populated cities in the continent
+                ArrayList<City> getCitiesInContinent;
+                input.nextLine();
+                System.out.print("Enter Continent Name: ");
+                continent = input.nextLine();
+                getCitiesInContinent = app.cityInContinentDesc(continent);
+                // Display results
+                app.displayTopPopulatedCities(getCitiesInContinent);
+                break;
+            case "3":
+                // 9. Get populated cities in the region
+                ArrayList<City> getCitiesInRegion;
+                input.nextLine();
+                System.out.print("Enter Region Name: ");
+                region = input.nextLine();
+                getCitiesInRegion = app.cityInRegionDesc(region);
+                // Display results
+                app.displayTopPopulatedCities(getCitiesInRegion);
+                break;
+            case "4":
+                // 10. Get populated cities in the country
+                ArrayList<City> getCitiesInCountry;
+                input.nextLine();
+                System.out.print("Enter Counter Name: ");
+                country = input.nextLine();
+                getCitiesInCountry = app.cityInCountryDesc(country);
+                // Display results
+                app.displayTopPopulatedCities(getCitiesInCountry);
+                break;
+            case "5":
+                // 11. Get populated cities in the district
+                ArrayList<City> getCitiesInDistrict;
+                input.nextLine();
+                System.out.print("Enter District Name: ");
+                district = input.nextLine();
+                getCitiesInDistrict = app.cityInDistrictDesc(district);
+                // Display results
+                app.displayTopPopulatedCities(getCitiesInDistrict);
+                break;
+            case "0":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewAllCitiesMenu();
+                break;
+        }
+        goBack();
+        viewAllCitiesMenu();
+    }
+    public void viewTopCitiesMenu() throws IOException {
+        String selectViewTopCities;
+        System.out.println("View Top Cities");
+        System.out.println(line);
+        System.out.println("1. Top Cities in the World");
+        System.out.println("2. Top Cities in a Continent");
+        System.out.println("3. Top Cities in a Region");
+        System.out.println("4. Top Cities in a Country");
+        System.out.println("5. Top Cities in a District");
+        System.out.println("0. Back");
+        System.out.print("> ");
+        selectViewTopCities = input.next();
+        clearScreen();
+        switch (selectViewTopCities) {
+            case "1":
+                // 12. Get top N populated cities worldwide
+                ArrayList<City> getTopCitiesInWorld;
+                System.out.print("Number of top cities to view: ");
+                limit = input.nextInt();
+                getTopCitiesInWorld = app.topNPopulatedCitiesInWorld(limit);
+                // Display results
+                app.displayTopPopulatedCities(getTopCitiesInWorld);
+                break;
+            case "2":
+                // 13. Get top N populated cities in a continent
+                ArrayList<City> getTopCitiesInContinent;
+                System.out.print("Number of top cities to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Continent Name: ");
+                continent = input.nextLine();
+                getTopCitiesInContinent = app.topNPopulatedCitiesInContinent(continent, limit);
+                // Display results
+                app.displayTopPopulatedCities(getTopCitiesInContinent);
+                break;
+            case "3":
+                // 14. Get top N populated cities in a region
+                ArrayList<City> getTopCitiesInRegion;
+                System.out.print("Number of top cities to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Region Name: ");
+                region = input.nextLine();
+                getTopCitiesInRegion = app.topNPopulatedCitiesInRegion(region, limit);
+                // Display results
+                app.displayTopPopulatedCities(getTopCitiesInRegion);
+                break;
+            case "4":
+                // 15. Get top N populated cities in a country
+                ArrayList<City> getTopCitiesInCountry;
+                System.out.print("Number of top cities to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Country Name: ");
+                country = input.nextLine();
+                getTopCitiesInCountry = app.topNPopulatedCitiesInCountry(country, limit);
+                // Display results
+                app.displayTopPopulatedCities(getTopCitiesInCountry);
+                break;
+            case "5":
+                // 16. Get top N populated cities in a district
+                ArrayList<City> getTopCitiesInDistrict;
+                System.out.print("Number of top cities to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter District Name: ");
+                district = input.nextLine();
+                getTopCitiesInDistrict = app.topNPopulatedCitiesInDistrict(district, limit);
+                // Display results
+                app.displayTopPopulatedCities(getTopCitiesInDistrict);
+                break;
+            case "0":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewTopCitiesMenu();
+                break;
+        }
+        goBack();
+        viewTopCitiesMenu();
+    }
+    public void viewAllCapitalCitiesMenu() throws IOException {
+        String selectViewAllCapitalCities;
+        System.out.println("View All Capital Cities");
+        System.out.println(line);
+        System.out.println("1. All Capital Cities in the World");
+        System.out.println("2. All Capital Cities in a Continent");
+        System.out.println("3. All Capital Cities in a Region");
+        System.out.println("0. Back");
+        System.out.print("> ");
+        selectViewAllCapitalCities = input.next();
+        clearScreen();
+        switch (selectViewAllCapitalCities) {
+            case "1":
+                // 17. Get populated capital cities in the world
+                ArrayList<City> capitalCitiesInWorld;
+                capitalCitiesInWorld = app.populateCapitalCitiesInWorld();
+                // Display results
+                app.displayTopPopulatedCities(capitalCitiesInWorld);
+                break;
+            case "2":
+                // 18. Get populated capital cities in a continent
+                ArrayList<City> capitalCitiesInContinent;
+                input.nextLine();
+                System.out.print("Enter Continent Name: ");
+                continent = input.nextLine();
+                capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent);
+                // Display results
+                app.displayTopPopulatedCities(capitalCitiesInContinent);
+                break;
+            case "3":
+                // 19. Get populated capital cities in a region
+                ArrayList<City> capitalCitiesInRegion;
+                input.nextLine();
+                System.out.print("Enter Region Name: ");
+                region = input.nextLine();
+                capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region);
+                // Display results
+                app.displayTopPopulatedCities(capitalCitiesInRegion);
+                break;
+            case "0":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewAllCapitalCitiesMenu();
+                break;
+        }
+        goBack();
+        viewAllCapitalCitiesMenu();
+    }
+    public void viewTopCapitalCitiesMenu() throws IOException {
+        String selectViewTopCapitalCities;
+        System.out.println("View Top Capital Cities");
+        System.out.println(line);
+        System.out.println("1. Top Capital Cities in the World");
+        System.out.println("2. Top Capital Cities in a Continent");
+        System.out.println("3. Top Capital Cities in a Region");
+        System.out.println("0. Back");
+        System.out.print("> ");
+        selectViewTopCapitalCities = input.next();
+        clearScreen();
+        switch (selectViewTopCapitalCities) {
+            case "1":
+                // 20. Get N populated capital cities in the world in descending order
+                ArrayList<City> capitalCitiesInWorldDesc;
+                System.out.print("Number of top capital cities to view: ");
+                limit = input.nextInt();
+                capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
+                // Display results
+                app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
+                break;
+            case "2":
+                // 21. Get N populated capital cities in the continent in descending order
+                ArrayList<City> capitalCitiesInContinentDesc;
+                System.out.print("Number of top capital cities to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Continent Name: ");
+                continent = input.nextLine();
+                capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
+                // Display results
+                app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
+                break;
+            case "3":
+                // 22. Get N populated capital cities in the region in descending order
+                ArrayList<City> capitalCitiesInRegionDesc;
+                System.out.print("Number of top capital cities to view: ");
+                limit = input.nextInt();
+                input.nextLine();
+                System.out.print("Enter Region Name: ");
+                region = input.nextLine();
+                capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
+                // Display results
+                app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
+                break;
+            case "0":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewTopCapitalCitiesMenu();
+                break;
+        }
+        goBack();
+        viewTopCapitalCitiesMenu();
+    }
+    public void percentageOfPeople() {
+
     }
     public void clearScreen() {
         try {

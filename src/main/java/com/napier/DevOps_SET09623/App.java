@@ -30,125 +30,6 @@ public class App
         Menu menu = new Menu();
         menu.showMenu();
 
-        // Number of cities
-        int limit = 10;
-        // District name
-        String district = "Zuid-Holland";
-        // Country name
-        String country = "Japan";
-        // Country code
-        String countryCode = "JPN";
-        // Region name
-        String region = "Caribbean";
-        // Continent name
-        String continent = "Asia";
-        // City name
-        String city = "Tokyo";
-        // Store type of place
-        String type;
-
-
-//
-
-//
-
-//
-//        // 7. Get populated cities in the world
-//        ArrayList<City> getCitiesInWorld;
-//        getCitiesInWorld = app.cityInWorldDesc();
-//        // Display results
-//        app.displayTopPopulatedCities(getCitiesInWorld);
-//
-//        // 8. Get populated cities in the continent
-//        ArrayList<City> getCitiesInContinent;
-//        getCitiesInContinent = app.cityInContinentDesc(continent);
-//        // Display results
-//        app.displayTopPopulatedCities(getCitiesInContinent);
-//
-//        // 9. Get populated cities in the region
-//        ArrayList<City> getCitiesInRegion;
-//        getCitiesInRegion = app.cityInRegionDesc(region);
-//        // Display results
-//        app.displayTopPopulatedCities(getCitiesInRegion);
-//
-//        // 10. Get populated cities in the country
-//        ArrayList<City> getCitiesInCountry;
-//        getCitiesInCountry = app.cityInCountryDesc(countryCode);
-//        // Display results
-//        app.displayTopPopulatedCities(getCitiesInCountry);
-//
-//        // 11. Get populated cities in the district
-//        ArrayList<City> getCitiesInDistrict;
-//        getCitiesInDistrict = app.cityInDistrictDesc(district);
-//        // Display results
-//        app.displayTopPopulatedCities(getCitiesInDistrict);
-//
-//        // 12. Get top N populated cities worldwide
-//        ArrayList<City> getTopCitiesInWorld;
-//        getTopCitiesInWorld = app.topNPopulatedCitiesInWorld(limit);
-//        // Display results
-//        app.displayTopPopulatedCities(getTopCitiesInWorld);
-//
-//        // 13. Get top N populated cities in a continent
-//        ArrayList<City> getTopCitiesInContinent;
-//        getTopCitiesInContinent = app.topNPopulatedCitiesInContinent(continent, limit);
-//        // Display results
-//        app.displayTopPopulatedCities(getTopCitiesInContinent);
-//
-//        // 14. Get top N populated cities in a region
-//        ArrayList<City> getTopCitiesInRegion;
-//        getTopCitiesInRegion = app.topNPopulatedCitiesInRegion(region, limit);
-//        // Display results
-//        app.displayTopPopulatedCities(getTopCitiesInRegion);
-//
-//        // 15. Get top N populated cities in a country
-//        ArrayList<City> getTopCitiesInCountry;
-//        getTopCitiesInCountry = app.topNPopulatedCitiesInCountry(country, limit);
-//        // Display results
-//        app.displayTopPopulatedCities(getTopCitiesInCountry);
-//
-//        // 16. Get top N populated cities in a district
-//        ArrayList<City> getTopCitiesInDistrict;
-//        getTopCitiesInDistrict = app.topNPopulatedCitiesInDistrict(district, limit);
-//        // Display results
-//        app.displayTopPopulatedCities(getTopCitiesInDistrict);
-//
-//        // 17. Get populated capital cities in the world
-//        ArrayList<City> capitalCitiesInWorld;
-//        capitalCitiesInWorld = app.populateCapitalCitiesInWorld();
-//        // Display results
-//        app.displayTopPopulatedCities(capitalCitiesInWorld);
-//
-//        // 18. Get populated capital cities in a continent
-//        ArrayList<City> capitalCitiesInContinent;
-//        capitalCitiesInContinent = app.populateCapitalCitiesInContinent(continent);
-//        // Display results
-//        app.displayTopPopulatedCities(capitalCitiesInContinent);
-//
-//        // 19. Get populated capital cities in a region
-//        ArrayList<City> capitalCitiesInRegion;
-//        capitalCitiesInRegion = app.populatedCapitalCitiesInRegion(region);
-//        // Display results
-//        app.displayTopPopulatedCities(capitalCitiesInRegion);
-//
-//        // 20. Get N populated capital cities in the world in descending order
-//        ArrayList<City> capitalCitiesInWorldDesc;
-//        capitalCitiesInWorldDesc = app.topNPopulatedCapitalCityInWorld(limit);
-//        // Display results
-//        app.displayTopPopulatedCities(capitalCitiesInWorldDesc);
-//
-//        // 21. Get N populated capital cities in the continent in descending order
-//        ArrayList<City> capitalCitiesInContinentDesc;
-//        capitalCitiesInContinentDesc = app.topNPopulatedCapitalCityInContinent(continent, limit);
-//        // Display results
-//        app.displayTopPopulatedCities(capitalCitiesInContinentDesc);
-//
-//        // 22. Get N populated capital cities in the region in descending order
-//        ArrayList<City> capitalCitiesInRegionDesc;
-//        capitalCitiesInRegionDesc = app.topNPopulatedCapitalCityInRegion(region, limit);
-//        // Display results
-//        app.displayTopPopulatedCities(capitalCitiesInRegionDesc);
-//
 //        // 23. Get Population of a continent
 //        ArrayList<Population> populationOfContinent = app.getPopulationOfContinent();
 //        // Display results
@@ -474,7 +355,7 @@ public class App
             String getCitiesInCountry = "SELECT city.ID, city.Name, country.Name AS countryName, " +
                     "city.District, city.Population " +
                     "FROM city INNER JOIN country ON city.CountryCode = country.Code " +
-                    "WHERE country.Code = '"+ country +"' ORDER BY city.Population DESC;";
+                    "WHERE country.Name = '"+ country +"' ORDER BY city.Population DESC;";
             // return
             return getCitiesFromQuery(getCitiesInCountry);
         } catch (Exception e) {
