@@ -2,10 +2,12 @@ package com.napier.DevOps_SET09623;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Menu {
-    private String line = new String(new char[30]).replace("\0", "=");
+    private String line = new String(new char[50]).replace("\0", "=");
     private Scanner input = new Scanner(System.in);
     private String continent;
     private String region;
@@ -23,9 +25,9 @@ public class Menu {
         System.out.println("4. View Top Cities");
         System.out.println("5. View All Capital Cities");
         System.out.println("6. View Top Capital Cities");
-        System.out.println("7. Percentage of People Living/Not Living in Cities");
-        System.out.println("8. Total Population");
-        System.out.println("9. Language");
+        System.out.println("7. View Percentage of People Living/Not Living in Cities");
+        System.out.println("8. View Total Population");
+        System.out.println("9. View Most Used Languages");
         System.out.println("0. EXIT");
         System.out.print("> ");
         selectMainMenu = input.next();
@@ -50,7 +52,13 @@ public class Menu {
                 viewTopCapitalCitiesMenu();
                 break;
             case "7":
-                percentageOfPeople();
+                viewPercentageOfPeople();
+                break;
+            case "8":
+                viewTotalPopulation();
+                break;
+            case "9":
+                viewMostUsedLanguages();
                 break;
             case "0":
                 break;
@@ -108,7 +116,7 @@ public class Menu {
                 viewAllCountriesMenu();
                 break;
         }
-        goBack();
+        goBack(true);
         viewAllCountriesMenu();
     }
     public void viewTopCountriesMenu() throws IOException {
@@ -164,7 +172,7 @@ public class Menu {
                 viewTopCountriesMenu();
                 break;
         }
-        goBack();
+        goBack(true);
         viewTopCountriesMenu();
     }
     public void viewAllCitiesMenu() throws IOException {
@@ -236,7 +244,7 @@ public class Menu {
                 viewAllCitiesMenu();
                 break;
         }
-        goBack();
+        goBack(true);
         viewAllCitiesMenu();
     }
     public void viewTopCitiesMenu() throws IOException {
@@ -318,7 +326,7 @@ public class Menu {
                 viewTopCitiesMenu();
                 break;
         }
-        goBack();
+        goBack(true);
         viewTopCitiesMenu();
     }
     public void viewAllCapitalCitiesMenu() throws IOException {
@@ -368,7 +376,7 @@ public class Menu {
                 viewAllCapitalCitiesMenu();
                 break;
         }
-        goBack();
+        goBack(true);
         viewAllCapitalCitiesMenu();
     }
     public void viewTopCapitalCitiesMenu() throws IOException {
@@ -424,11 +432,130 @@ public class Menu {
                 viewTopCapitalCitiesMenu();
                 break;
         }
-        goBack();
+        goBack(true);
         viewTopCapitalCitiesMenu();
     }
-    public void percentageOfPeople() {
-
+    public void viewPercentageOfPeople() throws IOException {
+        String selectPercentageOfPeople;
+        System.out.println("View Percentage of People Living/Not Living in Cities");
+        System.out.println(line);
+        System.out.println("1. Population in Continents");
+        System.out.println("2. Population in Regions");
+        System.out.println("3. Population in Countries");
+        System.out.println("0. Back");
+        System.out.print("> ");
+        selectPercentageOfPeople = input.next();
+        clearScreen();
+        switch (selectPercentageOfPeople) {
+            case "1":
+                // 23. Get Population of a continent
+                ArrayList<Population> populationOfContinent = app.getPopulationOfContinent();
+                // Display results
+                String type = "Continent";
+                app.displayPopulationOfPlace(type, populationOfContinent);
+                break;
+            case "2":
+                // 24. Get Population of a region
+                ArrayList<Population> populationOfRegion = app.getPopulationOfRegion();
+                // Display results
+                type = "Region";
+                app.displayPopulationOfPlace(type, populationOfRegion);
+                break;
+            case "3":
+                // 25. Get Population of a country
+                ArrayList<Population> populationOfCountry = app.getPopulationOfCountry();
+                // Display results
+                type = "Country";
+                app.displayPopulationOfPlace(type, populationOfCountry);
+                break;
+            case "0":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewPercentageOfPeople();
+                break;
+        }
+        goBack(false);
+        viewPercentageOfPeople();
+    }
+    public void viewTotalPopulation() throws IOException {
+        String selectTotalPopulation;
+        System.out.println("View Total Population");
+        System.out.println(line);
+        System.out.println("1. Total Population in the World");
+        System.out.println("2. Total Population in a Continent");
+        System.out.println("3. Total Population in a Region");
+        System.out.println("4. Total Population in a Country");
+        System.out.println("5. Total Population in a District");
+        System.out.println("6. Total Population in a City");
+        System.out.println("0. Back");
+        System.out.print("> ");
+        selectTotalPopulation = input.next();
+        clearScreen();
+        switch (selectTotalPopulation) {
+            case "1":
+                // 26. Get population of the world
+                long totalWorld = app.populationOfTheWorld();
+                app.displayPopulation("World", totalWorld);
+                break;
+            case "2":
+                // 27. Get population of the continent
+                input.nextLine();
+                System.out.print("Enter Continent Name: ");
+                continent = input.nextLine();
+                long totalContinent = app.populationOfTheContinent(continent);
+                app.displayPopulation(continent, totalContinent);
+                break;
+            case "3":
+                // 28. Get population of the region
+                input.nextLine();
+                System.out.print("Enter Region Name: ");
+                region = input.nextLine();
+                long totalRegion = app.populationOfTheRegion(region);
+                app.displayPopulation(region, totalRegion);
+                break;
+            case "4":
+                // 29. Get population of the country
+                input.nextLine();
+                System.out.print("Enter Country Name: ");
+                country = input.nextLine();
+                long totalCountry = app.populationOfTheCountry(country);
+                app.displayPopulation(country, totalCountry);
+                break;
+            case "5":
+                // 30. Get population of the district
+                input.nextLine();
+                System.out.print("Enter District Name: ");
+                district = input.nextLine();
+                long totalDistrict = app.populationOfTheDistrict(district);
+                app.displayPopulation(district, totalDistrict);
+                break;
+            case "6":
+                // 31. Get population of the city
+                input.nextLine();
+                System.out.print("Enter City Name: ");
+                String city = input.nextLine();
+                long totalCity = app.populationOfTheCity(city);
+                app.displayPopulation(city, totalCity);
+                break;
+            case "0":
+                showMenu();
+                break;
+            default:
+                errorMessage();
+                viewTotalPopulation();
+                break;
+        }
+        goBack(true);
+        viewPercentageOfPeople();
+    }
+    public void viewMostUsedLanguages() throws IOException {
+        //32. Sort language by percentage
+        Set<Map.Entry<Float, String>> set = app.sortLanguageByPercentage();
+        app.displayLanguageSorting(set);
+        goBack(false);
+        showMenu();
     }
     public void clearScreen() {
         try {
@@ -450,16 +577,26 @@ public class Menu {
     public void errorMessage() throws IOException {
         System.out.println("Wrong input!!!");
         System.out.println("Press ENTER To Try Again");
+        getEnter();
+    }
+    public void goBack(boolean check) throws IOException {
+        System.out.println("Press ENTER To Go Back");
+        if (check)
+            getEnter();
+        else
+            get2Enter();
+    }
+    public void getEnter() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         System.in.read();
-        input.nextLine();
         input.nextLine();
         clearScreen();
     }
-    public void goBack() throws IOException {
-        System.out.println("Press ENTER To Go Back");
+    public void get2Enter() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         System.in.read();
+        input.nextLine();
+        input.nextLine();
         clearScreen();
     }
 }

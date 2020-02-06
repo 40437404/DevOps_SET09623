@@ -30,52 +30,6 @@ public class App
         Menu menu = new Menu();
         menu.showMenu();
 
-//        // 23. Get Population of a continent
-//        ArrayList<Population> populationOfContinent = app.getPopulationOfContinent();
-//        // Display results
-//        type = "Continent";
-//        app.displayPopulationOfPlace(type, populationOfContinent);
-//
-//        // 24. Get Population of a region
-//        ArrayList<Population> populationOfRegion = app.getPopulationOfRegion();
-//        // Display results
-//        type = "Region";
-//        app.displayPopulationOfPlace(type, populationOfRegion);
-//
-//        // 25. Get Population of a country
-//        ArrayList<Population> populationOfCountry = app.getPopulationOfCountry();
-//        // Display results
-//        type = "Country";
-//        app.displayPopulationOfPlace(type, populationOfCountry);
-//
-//        // 26. Get population of the world
-//        long totalWorld = app.populationOfTheWorld();
-//        app.displayPopulation("World", totalWorld);
-//
-//        // 27. Get population of the continent
-//        long totalContinent = app.populationOfTheContinent(continent);
-//        app.displayPopulation(continent, totalContinent);
-//
-//        // 28. Get population of the region
-//        long totalRegion = app.populationOfTheRegion(region);
-//        app.displayPopulation(region, totalRegion);
-//
-//        // 29. Get population of the country
-//        long totalCountry = app.populationOfTheCountry(country);
-//        app.displayPopulation(country, totalCountry);
-//
-//        // 30. Get population of the district
-//        long totalDistrict = app.populationOfTheDistrict(district);
-//        app.displayPopulation(district, totalDistrict);
-//
-//        // 31. Get population of the city
-//        long totalCity = app.populationOfTheCity(city);
-//        app.displayPopulation(city, totalCity);
-//
-//        //32. Sort language by percentage
-//        Set<Entry<Float, String>> set = app.sortLanguageByPercentage();
-//        app.displayLanguageSorting(set);
-
         // Disconnect from database
         app.disconnect();
     }
@@ -661,9 +615,9 @@ public class App
      */
     public ArrayList<Population> getPopulationOfContinent()
     {
-        ArrayList<String> continentList = new ArrayList<>();
         try
         {
+            ArrayList<String> continentList = new ArrayList<>();
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -1031,7 +985,6 @@ public class App
             // Create an SQL statement
             Statement stmt = con.createStatement();
             ResultSet rset = null;
-            Population pop = new Population();
             for (String place: places)
             {
                 // Create string for SQL statement
@@ -1069,6 +1022,7 @@ public class App
                     percentagePopulationInCity = ((float) populationOfCity / (float) population) * 100;
                     percentagePopulationNotInCity = ((float) populationOfNotCity / (float) population) * 100;
                 }
+                Population pop = new Population();
                 pop.setName(place);
                 pop.setPopulation(population);
                 pop.setPopulationInCities(populationOfCity);
