@@ -1188,12 +1188,12 @@ public class App
             for (Population population: result)
             {
                 System.out.println(
-                        type + " Name: " + population.getName() + " | " +
-                                "Population of "+ type +": " + population.getPopulation() + " | " +
-                                "Population in Cities: " + population.getPopulationInCities() + " | " +
-                                "Percentage Population in Cities: " + population.getPercentagePopulationInCities() + "% | " +
-                                "Population outside Cities: " + population.getPopulationNotInCities() + " | " +
-                                "Percentage Population outside Cities: " + population.getPercentagePopulationNotInCities() + "%"
+                        type + " Name: " + population.getName() + "\n" +
+                                "Population of "+ type +": " + population.getPopulation() + "\n" +
+                                "Population in Cities: " + population.getPopulationInCities() + "\n" +
+                                "Percentage Population in Cities: " + population.getPercentagePopulationInCities() + "%\n" +
+                                "Population outside Cities: " + population.getPopulationNotInCities() + "\n" +
+                                "Percentage Population outside Cities: " + population.getPercentagePopulationNotInCities() + "%\n"
                         );
             }
         }

@@ -15,6 +15,11 @@ public class Menu {
     private String district;
     private int limit;
     App app = new App();
+
+    /**
+     * Show main menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void showMenu() throws IOException {
         String selectMainMenu;
         System.out.println("Population Report");
@@ -69,6 +74,11 @@ public class Menu {
         }
         System.exit(0);
     }
+
+    /**
+     * View all countries menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewAllCountriesMenu() throws IOException {
         String selectViewAllCountries;
         System.out.println("View All Countries");
@@ -119,6 +129,11 @@ public class Menu {
         goBack(true);
         viewAllCountriesMenu();
     }
+
+    /**
+     * View top countries menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewTopCountriesMenu() throws IOException {
         String selectViewTopCountries;
         System.out.println("View Top Countries");
@@ -175,6 +190,11 @@ public class Menu {
         goBack(true);
         viewTopCountriesMenu();
     }
+
+    /**
+     * View all cities menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewAllCitiesMenu() throws IOException {
         String selectViewAllCities;
         System.out.println("View All Cities");
@@ -247,6 +267,11 @@ public class Menu {
         goBack(true);
         viewAllCitiesMenu();
     }
+
+    /**
+     * View top cities menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewTopCitiesMenu() throws IOException {
         String selectViewTopCities;
         System.out.println("View Top Cities");
@@ -329,6 +354,11 @@ public class Menu {
         goBack(true);
         viewTopCitiesMenu();
     }
+
+    /**
+     * View all capital cities menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewAllCapitalCitiesMenu() throws IOException {
         String selectViewAllCapitalCities;
         System.out.println("View All Capital Cities");
@@ -379,6 +409,11 @@ public class Menu {
         goBack(true);
         viewAllCapitalCitiesMenu();
     }
+
+    /**
+     * View top capital cities menu
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewTopCapitalCitiesMenu() throws IOException {
         String selectViewTopCapitalCities;
         System.out.println("View Top Capital Cities");
@@ -435,6 +470,11 @@ public class Menu {
         goBack(true);
         viewTopCapitalCitiesMenu();
     }
+
+    /**
+     * View percentage of people
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewPercentageOfPeople() throws IOException {
         String selectPercentageOfPeople;
         System.out.println("View Percentage of People Living/Not Living in Cities");
@@ -479,6 +519,11 @@ public class Menu {
         goBack(false);
         viewPercentageOfPeople();
     }
+
+    /**
+     * View total population
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewTotalPopulation() throws IOException {
         String selectTotalPopulation;
         System.out.println("View Total Population");
@@ -550,6 +595,11 @@ public class Menu {
         goBack(true);
         viewPercentageOfPeople();
     }
+
+    /**
+     * View most used languages
+     * @throws IOException throws an instance of SQLException
+     */
     public void viewMostUsedLanguages() throws IOException {
         //32. Sort language by percentage
         Set<Map.Entry<Float, String>> set = app.sortLanguageByPercentage();
@@ -557,6 +607,10 @@ public class Menu {
         goBack(false);
         showMenu();
     }
+
+    /**
+     * Clear screen
+     */
     public void clearScreen() {
         try {
             // Get OS Name
@@ -574,11 +628,22 @@ public class Menu {
             System.out.println(e);
         }
     }
+
+    /**
+     * Error message
+     * @throws IOException throws an instance of SQLException
+     */
     public void errorMessage() throws IOException {
         System.out.println("Wrong input!!!");
         System.out.println("Press ENTER To Try Again");
         getEnter();
     }
+
+    /**
+     * Go back
+     * @param check require two enter or one
+     * @throws IOException throws an instance of SQLException
+     */
     public void goBack(boolean check) throws IOException {
         System.out.println("Press ENTER To Go Back");
         if (check)
@@ -586,12 +651,22 @@ public class Menu {
         else
             get2Enter();
     }
+
+    /**
+     * Get one enter
+     * @throws IOException throws an instance of SQLException
+     */
     public void getEnter() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         System.in.read();
         input.nextLine();
         clearScreen();
     }
+
+    /**
+     * Get two enter
+     * @throws IOException throws an instance of SQLException
+     */
     public void get2Enter() throws IOException {
         //noinspection ResultOfMethodCallIgnored
         System.in.read();
