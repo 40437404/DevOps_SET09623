@@ -435,7 +435,7 @@ public class Testing {
     void displayPopulationTestNull() {app.displayPopulation(null, 0);}
 
     // Display sorted language with percentage
-    Set<Map.Entry<Float, String>> setNull;
+    ArrayList<Language> setNull;
     @Test
     void displayLanguageSortingTestNull() {app.displayLanguageSorting(setNull);}
 }

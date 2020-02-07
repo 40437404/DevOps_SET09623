@@ -888,25 +888,41 @@ public class App
      * 32. Sort language by percentage
      * @return return Set
      */
-    public Set<Entry<Float, String>> sortLanguageByPercentage()
+    public ArrayList<Language> sortLanguageByPercentage()
     {
+        long worldPopulation;
+        try {
+            // Create an SQL statement
+            Statement stmt2 = con.createStatement();
+            String getWorldPopulation = "SELECT SUM(Population) FROM country;";
+            ResultSet rset2 = stmt2.executeQuery(getWorldPopulation);
+            if (!rset2.next())
+                return null;
+            else
+                worldPopulation = rset2.getLong("SUM(Population)");
+            // Close ResultSet and Statement
+            closeResultSetAndStatement(rset2, stmt2);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population");
+            return null;
+        }
         String[] languages = new String[]{"Chinese","English", "Hindi", "Spanish", "Arabic"};
-        Float[] percentage = new Float[5];
-        int i = 0;
-        for (String language: languages)
+        ArrayList<Language> languageArrayList = new ArrayList<>();
+
+        for (String lan: languages)
         {
-            percentage[i] = getLanguagePercentage(language);
-            i++;
+            Language language = new Language();
+            long num = getLanguagePercentage(lan);
+            language.setName(lan);
+            language.setNumber(num);
+            language.setPercentage(((float) num / (float) worldPopulation) * 100);
+            languageArrayList.add(language);
         }
-        Map<Float, String> languagePercentage = new TreeMap<>(Collections.reverseOrder());
-        int j = 0;
-        while (j < languages.length)
-        {
-            languagePercentage.put(percentage[j], languages[j]);
-            j++;
-        }
-        // return
-        return languagePercentage.entrySet();
+
+        Collections.sort(languageArrayList, Language.percentageSort);
+        return languageArrayList;
     }
 
     /**
@@ -914,12 +930,11 @@ public class App
      * @param language languages
      * @return return speaking percentage
      */
-    public Float getLanguagePercentage(String language)
+    public Long getLanguagePercentage(String language)
     {
         try
         {
             long languagePopulation = 0;
-            long worldPopulation;
             // Create an SQL statement
             Statement stmt1 = con.createStatement();
             // Create string for SQL statement
@@ -950,18 +965,8 @@ public class App
             }
             // Close ResultSet and Statement
             closeResultSetAndStatement(rset1, stmt1);
-            // Create an SQL statement
-            Statement stmt2 = con.createStatement();
-            String getWorldPopulation = "SELECT SUM(Population) FROM country;";
-            ResultSet rset2 = stmt2.executeQuery(getWorldPopulation);
-            if (!rset2.next())
-                return null;
-            else
-                worldPopulation = rset2.getLong("SUM(Population)");
-            // Close ResultSet and Statement
-            closeResultSetAndStatement(rset2, stmt2);
             // return
-            return ((float) languagePopulation/(float) worldPopulation) * 100;
+            return languagePopulation;
         }
         catch (Exception e)
         {
@@ -1222,15 +1227,13 @@ public class App
 
     /**
      * Display sorted language with percentage
-     * @param set Set containing language and its percentage
+     * @param languages ArrayList containing language and its percentage
      */
-    public void displayLanguageSorting(Set<Entry<Float, String>> set)
+    public void displayLanguageSorting(ArrayList<Language> languages)
     {
         try {
-            for (Object o : set) {
-                @SuppressWarnings("unchecked")
-                Entry<Float, String> me = (Entry<Float, String>) o;
-                System.out.println("Language: " + me.getValue() + "\tPercentage: " + me.getKey() + "%");
+            for (Language language: languages) {
+                System.out.println(language);
             }
         }
         catch (Exception e) {

@@ -593,7 +593,7 @@ public class Menu {
                 break;
         }
         goBack(true);
-        viewPercentageOfPeople();
+        viewTotalPopulation();
     }
 
     /**
@@ -602,7 +602,7 @@ public class Menu {
      */
     public void viewMostUsedLanguages() throws IOException {
         //32. Sort language by percentage
-        Set<Map.Entry<Float, String>> set = app.sortLanguageByPercentage();
+        ArrayList<Language> set = app.sortLanguageByPercentage();
         app.displayLanguageSorting(set);
         goBack(false);
         showMenu();
