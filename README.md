@@ -45,4 +45,4 @@
 | 29    | The population of a country. | Yes | [image](images/29.png) |
 | 30    | The population of a district. | Yes | [image](images/30.png) |
 | 31    | The population of a city. | Yes | [image](images/31.png) |
-| 3     | All the countries in a region organised by largest population to smallest. | Yes | [image](images/) |
+| 32    | All the countries in a region organised by largest population to smallest. | Yes | [image](images/32.png) |

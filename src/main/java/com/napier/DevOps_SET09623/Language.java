@@ -36,15 +36,12 @@ public class Language {
         this.percentage = percentage;
     }
 
-    public static Comparator<Language> percentageSort = new Comparator<Language>() {
+    public static Comparator<Language> percentageSort = (s1, s2) -> {
+        Float percentage1 = s1.getPercentage();
+        Float percentage2 = s2.getPercentage();
 
-        public int compare(Language s1, Language s2) {
-            Float percentage1 = s1.getPercentage();
-            Float percentage2 = s2.getPercentage();
-
-            //descending order
-            return percentage2.compareTo(percentage1);
-        }
+        //descending order
+        return percentage2.compareTo(percentage1);
     };
 
     @Override
